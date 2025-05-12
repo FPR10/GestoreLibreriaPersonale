@@ -1,2 +1,4 @@
 # GestoreLibreriaPersonale
-Progetto Ingegneria del Software A.A. 2024/2025
+Progetto relativo al corso di Ingegneria del Software, A.A. 2024/2025
+
+
