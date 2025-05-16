@@ -54,4 +54,77 @@ public class Libro {
         valPers = b.valPers;
         statLett = b.statLett;
     }
+
+    public String getTitolo() {
+        return titolo;
+    }
+
+    public String getAutore() {
+        return autore;
+    }
+
+    public String getISBN() {
+        return ISBN;
+    }
+
+    public Genere_Libri getGenLib() {
+        return genLib;
+    }
+
+    public Valutazione_Personale getValPers() {
+        return valPers;
+    }
+
+    public Stato_Lettura getStatLett() {
+        return statLett;
+    }
+
+    public void setTitolo(String titolo) {
+        this.titolo = titolo;
+    }
+
+    public void setAutore(String autore) {
+        this.autore = autore;
+    }
+
+    public void setISBN(String ISBN) {
+        this.ISBN = ISBN;
+    }
+
+    public void setGenLib(Genere_Libri genLib) {
+        this.genLib = genLib;
+    }
+
+    public void setValPers(Valutazione_Personale valPers) {
+        this.valPers = valPers;
+    }
+
+    public void setStatLett(Stato_Lettura statLett) {
+        this.statLett = statLett;
+    }
+
+    @Override
+    public String toString() {
+        return "Libro{" +
+                "titolo='" + titolo + '\'' +
+                ", autore='" + autore + '\'' +
+                ", ISBN='" + ISBN + '\'' +
+                ", genere=" + genLib +
+                ", valutazione=" + valPers +
+                ", stato lettura=" + statLett +
+                '}';
+    }
+
+    public static void main(String[] args) {
+        Libro b = new Libro.Builder("1984","Orwell","1311452")
+                .setGenereLibri(Genere_Libri.AVVENTURA_AZIONE)
+                .setValutazionePersonale(Valutazione_Personale.STELLE_4)
+                .setStatoLettura(Stato_Lettura.DA_LEGGERE).build();
+
+        Libro b2 = new Libro.Builder("1984","Orwell","1311452").build();
+
+
+        System.out.println(b.toString());
+        System.out.println(b2.toString());
+    }
 }
