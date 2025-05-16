@@ -1,4 +1,4 @@
-package backend;
+package main.java.backend;
 
 public enum Genere_Libri {
     BIOGRAFIA_AUTOBIOGRAFIA,

@@ -1,8 +1,8 @@
-package backend;
+package main.java.backend;
 
 import java.util.List;
 
-public class Libreria implements LibreriaIF{
+public class Libreria implements LibreriaIF {
 
     @Override
     public void aggiungiLibro(Libro l) {
