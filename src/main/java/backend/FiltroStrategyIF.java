@@ -1,5 +1,6 @@
 package backend;
+import java.util.List;
 
 public interface FiltroStrategyIF {
-    boolean filtra (Libro l);
+    List<Libro> filtra (List<Libro> libri);
 }
