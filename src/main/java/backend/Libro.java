@@ -1,5 +1,7 @@
 package backend;
 
+import java.util.Objects;
+
 public class Libro {
     private String titolo;
     private String autore;
@@ -8,7 +10,7 @@ public class Libro {
     private Valutazione_Personale valPers;
     private Stato_Lettura statLett;
 
-
+    //Definizione del Builder come inner class
     public static class Builder{
         //Parametri obbligatori
         private String titolo;
@@ -21,6 +23,9 @@ public class Libro {
         private Valutazione_Personale valPers;
 
         public Builder (String titolo, String autore, String ISBN){
+            if (!checkISBN(ISBN)){
+                throw new IllegalArgumentException("Formato ISBN non valido");
+            }
             this.titolo = titolo;
             this.autore = autore;
             this.ISBN = ISBN;
@@ -44,6 +49,14 @@ public class Libro {
         public Libro build(){
             return new Libro(this);
         }
+
+        private boolean checkISBN (String isbn){
+            if (isbn == null || isbn.length()!=13){
+                return false;
+            }
+            //TODO
+            return false;
+        }
     }
 
     private Libro (Builder b){
@@ -55,6 +68,7 @@ public class Libro {
         statLett = b.statLett;
     }
 
+    //Getter e setter
     public String getTitolo() {
         return titolo;
     }
@@ -115,16 +129,34 @@ public class Libro {
                 '}';
     }
 
+    @Override
+    public boolean equals(Object o) {
+        if (!(o instanceof Libro libro)) return false;
+        return Objects.equals(ISBN, libro.ISBN);
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hashCode(ISBN);
+    }
+
+
     public static void main(String[] args) {
         Libro b = new Libro.Builder("1984","Orwell","1311452")
                 .setGenereLibri(Genere_Libri.AVVENTURA_AZIONE)
                 .setValutazionePersonale(Valutazione_Personale.STELLE_4)
                 .setStatoLettura(Stato_Lettura.DA_LEGGERE).build();
 
+        Libro bb = new Libro.Builder("1984","Orwell","1311452")
+                .setGenereLibri(Genere_Libri.AVVENTURA_AZIONE)
+                .setValutazionePersonale(Valutazione_Personale.STELLE_4)
+                .setStatoLettura(Stato_Lettura.DA_LEGGERE).build();
         Libro b2 = new Libro.Builder("1984","Orwell","1311452").build();
 
-
         System.out.println(b.toString());
-        System.out.println(b2.toString());
+        System.out.println(bb.toString());
+        System.out.println(b.toString());
+
+        System.out.println(b.equals(bb));
     }
 }
