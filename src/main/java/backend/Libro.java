@@ -151,16 +151,16 @@ public class Libro {
 
 
     public static void main(String[] args) {
-        Libro b = new Libro.Builder("1984","Orwell","1311452")
+        Libro b = new Libro.Builder("1984","Orwell","9788838656545")
                 .setGenereLibri(Genere_Libri.AVVENTURA_AZIONE)
                 .setValutazionePersonale(Valutazione_Personale.STELLE_4)
                 .setStatoLettura(Stato_Lettura.DA_LEGGERE).build();
 
-        Libro bb = new Libro.Builder("1984","Orwell","1311452")
+        Libro bb = new Libro.Builder("1984","Orwell","9798712606078")
                 .setGenereLibri(Genere_Libri.AVVENTURA_AZIONE)
                 .setValutazionePersonale(Valutazione_Personale.STELLE_4)
                 .setStatoLettura(Stato_Lettura.DA_LEGGERE).build();
-        Libro b2 = new Libro.Builder("1984","Orwell","1311452").build();
+        Libro b2 = new Libro.Builder("1984","Orwell","9788848323215").build();
 
         System.out.println(b.toString());
         System.out.println(bb.toString());

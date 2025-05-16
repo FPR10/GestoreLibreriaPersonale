@@ -13,9 +13,9 @@ public interface LibreriaIF {
     Libro ricercaPerAutore (String autore);
 
     //Metodi per filtraggio
-    List <Libro> filtraLibri(FiltroStrategy filtro);
+    List <Libro> filtraLibri(FiltroStrategyIF filtro);
 
     //Metodi per ordinamento
-    List <Libro> ordinaLibri (OrdinamentoStrategy ordinamento);
+    List <Libro> ordinaLibri (OrdinamentoStrategyIF ordinamento);
 
 }
