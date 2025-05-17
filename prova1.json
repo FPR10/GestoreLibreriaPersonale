@@ -1,0 +1,26 @@
+[
+  {
+    "titolo": "Ferrari",
+    "autore": "Enzo",
+    "ISBN": "9788838656545",
+    "genLib": "BIOGRAFIA_AUTOBIOGRAFIA",
+    "valPers": "STELLE_5",
+    "statLett": "IN_LETTURA"
+  },
+  {
+    "titolo": "1984",
+    "autore": "Orwell",
+    "ISBN": "9788838656545",
+    "genLib": "AVVENTURA_AZIONE",
+    "valPers": "STELLE_4",
+    "statLett": "DA_LEGGERE"
+  },
+  {
+    "titolo": "Divina Commedia",
+    "autore": "Alighieri",
+    "ISBN": "9788838656545",
+    "genLib": "BIOGRAFIA_AUTOBIOGRAFIA",
+    "valPers": "STELLA_1",
+    "statLett": "LETTO"
+  }
+]
