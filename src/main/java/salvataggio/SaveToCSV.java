@@ -4,11 +4,10 @@ import main.java.backend.libro.Libro;
 
 import java.io.FileWriter;
 import java.io.IOException;
+import java.util.Formatter;
 import java.util.List;
 
 public class SaveToCSV implements SaveFileStrategyIF{
-
-    private static final String titoloCSV = "Titolo, Autore, ISBN, Genere, Valutazione, Stato lettura";
 
     @Override
     public void salva(List<Libro> libreria, String filePath) {
