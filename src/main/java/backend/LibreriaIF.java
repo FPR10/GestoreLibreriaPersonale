@@ -6,7 +6,7 @@ import main.java.backend.ordinamento.OrdinamentoStrategyIF;
 
 import java.util.List;
 
-public interface LibreriaIF {
+public interface LibreriaIF extends Iterable<Libro> {
     //Metodi base
     void aggiungiLibro (Libro l);
     void rimuoviLibro (Libro l);
