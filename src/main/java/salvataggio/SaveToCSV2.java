@@ -14,14 +14,16 @@ public class SaveToCSV2 implements SaveFileStrategyIF{
     public void salva(List<Libro> libreria, String filePath) {
         try(FileWriter fw = new FileWriter(filePath)){
             Formatter ft = new Formatter(fw);
-            fw.append(titoloCSV).append("\n");
+            ft.format("%-30s%-30s%-30s%-0s%-20s%-20s%n",
+                    "Titolo", "Autore", "ISBN", "Genere", "Valutazione", "Stato lettura");
             for (Libro l : libreria){
-                fw.append(l.getTitolo()).append(",");
-                fw.append(l.getAutore()).append(",");
-                fw.append(l.getISBN()).append(",");
-                fw.append(l.getGenLib().toString()).append(",");
-                fw.append(l.getValPers().toString()).append(",");
-                fw.append(l.getStatLett().toString()).append("\n");
+                ft.format("%20s", l.getTitolo());
+                ft.format("%20s",l.getAutore());
+                ft.format("%20s",l.getISBN() );
+                ft.format("%20s",l.getGenLib().toString());
+                ft.format("%20s", l.getValPers().toString());
+                ft.format("%20s%n", l.getStatLett().toString());
+
             }
         } catch (IOException e) {
             throw new RuntimeException(e);
