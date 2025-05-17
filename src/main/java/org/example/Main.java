@@ -1,5 +1,7 @@
 package main.java.org.example;
 
+import main.java.backend.filtro.FiltroStatoLettura;
+import main.java.backend.filtro.FiltroStrategyIF;
 import main.java.backend.libro.Genere_Libri;
 import main.java.backend.libro.Libro;
 import main.java.backend.libro.Stato_Lettura;
@@ -42,18 +44,22 @@ public class Main {
         SaveToJson stj = new SaveToJson();
         stc.salva(libreria,"prova2.csv");
         stj.salva(libreria, "prova1.json");
+
+
+
     }
 }
 
-//Prove vecchie
+
 /*
+Prove vecchie:
 FiltroStrategyIF fs = new FiltroStatoLettura(Stato_Lettura.IN_LETTURA);
 List<Libro> ret = fs.filtra(libreria);
         for(Libro elem : ret){
         System.out.println(elem);
         }
 
-                System.out.println("Inizio");
+   System.out.println("Inizio");
         Collections.sort(libreria, Comparator.comparing(Libro::getAutore));
         for (Libro elem: libreria){
         System.out.println(elem);
