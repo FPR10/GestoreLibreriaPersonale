@@ -12,7 +12,7 @@ https://github.com/FPR10/GestoreLibreriaPersonale.git
 
 ## Esecuzione codice
 
-1. Scarica il file [GestoreLibreriaPersonale.jar](nomeCartella)
+1. Scarica il file GestoreLibreriaPersonale.jar - nomecartella
 2. Esegui: java -jar GestoreLibreriaPersonale.jar
 
 ## Screenshot
