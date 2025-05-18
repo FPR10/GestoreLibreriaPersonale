@@ -8,6 +8,14 @@ public class RicercaPerAutore implements RicercaStrategyIF{
 
     @Override
     public List<Libro> ricerca(List<Libro> libri) {
-        return List.of();
+        List<Libro>ret = new ArrayList<>();
+        if (libri.isEmpty()){
+            System.err.print("La libreria è vuota !");
+        }
+        for (Libro elem : libri){
+            if (elem.getAutore().equalsIgnoreCase(autore)){
+                ret.add(elem);
+            }
+        }
     }
 }
