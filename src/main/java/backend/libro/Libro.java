@@ -15,23 +15,28 @@ public class Libro {
     public static class Builder{
         //Parametri obbligatori
         private String titolo;
-        private String autoreNome;
         private String autoreCognome;
         private String ISBN;
 
         //Opzionali
+        private String autoreNome;
         private Genere_Libri genLib;
         private Stato_Lettura statLett;
         private Valutazione_Personale valPers;
 
-        public Builder (String titolo, String autoreNome,String autoreCognome, String ISBN){
+        public Builder (String titolo,String autoreCognome, String ISBN){
             //if (!checkISBN(ISBN)){
             //    throw new IllegalArgumentException("Formato ISBN non valido");
             //}
             this.titolo = titolo;
-            this.autoreNome = autoreNome;
+            //this.autoreNome = autoreNome;
             this.autoreCognome = autoreCognome;
             this.ISBN = ISBN;
+        }
+
+        public Builder setAutoreNome (String an){
+            autoreNome=an;
+            return this;
         }
 
         public Builder setGenereLibri (Genere_Libri gl){
@@ -95,7 +100,10 @@ public class Libro {
     }
 
     public String getAutore(){
-        return autoreNome + " " + autoreCognome;
+        if (autoreNome != null){
+            return autoreNome + " " + autoreCognome;
+        }
+        return autoreCognome;
     }
 
     public String getISBN() {
