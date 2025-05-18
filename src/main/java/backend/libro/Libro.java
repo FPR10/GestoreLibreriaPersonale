@@ -4,7 +4,8 @@ import java.util.Objects;
 
 public class Libro {
     private String titolo;
-    private String autore;
+    private String autoreNome;
+    private String autoreCognome;
     private String ISBN;
     private Genere_Libri genLib;
     private Valutazione_Personale valPers;
@@ -14,7 +15,8 @@ public class Libro {
     public static class Builder{
         //Parametri obbligatori
         private String titolo;
-        private String autore;
+        private String autoreNome;
+        private String autoreCognome;
         private String ISBN;
 
         //Opzionali
@@ -22,12 +24,13 @@ public class Libro {
         private Stato_Lettura statLett;
         private Valutazione_Personale valPers;
 
-        public Builder (String titolo, String autore, String ISBN){
-            if (!checkISBN(ISBN)){
-                throw new IllegalArgumentException("Formato ISBN non valido");
-            }
+        public Builder (String titolo, String autoreNome,String autoreCognome, String ISBN){
+            //if (!checkISBN(ISBN)){
+            //    throw new IllegalArgumentException("Formato ISBN non valido");
+            //}
             this.titolo = titolo;
-            this.autore = autore;
+            this.autoreNome = autoreNome;
+            this.autoreCognome = autoreCognome;
             this.ISBN = ISBN;
         }
 
@@ -70,7 +73,8 @@ public class Libro {
 
     private Libro (Builder b){
         titolo = b.titolo;
-        autore = b.autore;
+        autoreNome = b.autoreNome;
+        autoreCognome = b.autoreCognome;
         ISBN = b.ISBN;
         genLib = b.genLib;
         valPers = b.valPers;
@@ -82,8 +86,16 @@ public class Libro {
         return titolo;
     }
 
-    public String getAutore() {
-        return autore;
+    public String getNomeAutore() {
+        return autoreNome;
+    }
+
+    public String getCognomeAutore() {
+        return autoreCognome;
+    }
+
+    public String getAutore(){
+        return autoreNome + " " + autoreCognome;
     }
 
     public String getISBN() {
@@ -106,8 +118,12 @@ public class Libro {
         this.titolo = titolo;
     }
 
-    public void setAutore(String autore) {
-        this.autore = autore;
+    public void setAutoreNome(String nomeAutore) {
+        this.autoreNome = nomeAutore;
+    }
+
+    public void setAutoreCognome(String cognomeAutore) {
+        this.autoreNome = cognomeAutore;
     }
 
     public void setISBN(String ISBN) {
@@ -128,15 +144,18 @@ public class Libro {
 
     @Override
     public String toString() {
-        return "Libro{" +
-                "titolo='" + titolo + '\'' +
-                ", autore='" + autore + '\'' +
-                ", ISBN='" + ISBN + '\'' +
-                ", genere=" + genLib +
-                ", valutazione=" + valPers +
-                ", stato lettura=" + statLett +
-                '}';
+        StringBuilder sb = new StringBuilder();
+        sb.append("Libro{");
+        sb.append("titolo='").append(titolo).append('\'');
+        sb.append(", autore='").append(autoreNome).append(" ").append(autoreCognome).append('\'');
+        sb.append(", ISBN='").append(ISBN).append('\'');
+        sb.append(", genere=").append(genLib);
+        sb.append(", val. personale=").append(valPers);
+        sb.append(", stato lettura=").append(statLett);
+        sb.append('}');
+        return sb.toString();
     }
+
 
     @Override
     public boolean equals(Object o) {
@@ -150,22 +169,4 @@ public class Libro {
     }
 
 
-    public static void main(String[] args) {
-        Libro b = new Libro.Builder("1984","Orwell","9788838656545")
-                .setGenereLibri(Genere_Libri.AVVENTURA_AZIONE)
-                .setValutazionePersonale(Valutazione_Personale.STELLE_4)
-                .setStatoLettura(Stato_Lettura.DA_LEGGERE).build();
-
-        Libro bb = new Libro.Builder("1984","Orwell","9798712606078")
-                .setGenereLibri(Genere_Libri.AVVENTURA_AZIONE)
-                .setValutazionePersonale(Valutazione_Personale.STELLE_4)
-                .setStatoLettura(Stato_Lettura.DA_LEGGERE).build();
-        Libro b2 = new Libro.Builder("1984","Orwell","9788848323215").build();
-
-        System.out.println(b.toString());
-        System.out.println(bb.toString());
-        System.out.println(b.toString());
-
-        System.out.println(b.equals(bb));
-    }
 }
