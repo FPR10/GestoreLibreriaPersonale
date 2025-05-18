@@ -27,8 +27,5 @@ public class RicercaPerAutore implements RicercaStrategyIF{
         return ret;
     }
 
-    private String cleanString (String autore){
-        //rimuove caratteri speciali, punteggiature e spazi a inizio e fine della parola
-        return autore.toLowerCase().replaceAll("[^a-z0-9àèéòùì ]", "").trim();
-    }
+
 }
