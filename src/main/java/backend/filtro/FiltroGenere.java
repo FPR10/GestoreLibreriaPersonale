@@ -8,7 +8,7 @@ import java.util.List;
 
 public class FiltroGenere implements FiltroStrategyIF {
 
-    private static Genere_Libri genere;
+    private final Genere_Libri genere;
 
     public FiltroGenere(Genere_Libri genere){
         this.genere = genere;

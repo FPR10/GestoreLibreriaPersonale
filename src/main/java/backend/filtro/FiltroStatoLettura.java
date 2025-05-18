@@ -8,7 +8,7 @@ import java.util.List;
 
 public class FiltroStatoLettura implements FiltroStrategyIF {
 
-    private static Stato_Lettura sl;
+    private final Stato_Lettura sl;
 
     public FiltroStatoLettura (Stato_Lettura sl){
         this.sl = sl;
