@@ -4,7 +4,9 @@ import main.java.backend.libro.Libro;
 
 import java.util.Iterator;
 
-public class Libreria implements LibreriaIF {
+public enum LibreriaSingleton implements LibreriaIF{
+    ;
+
     @Override
     public void aggiungiLibro(Libro l) {
 
