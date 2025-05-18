@@ -6,4 +6,9 @@ import java.util.List;
 
 public interface RicercaStrategyIF {
     List<Libro> ricerca (List<Libro>libri);
+
+    default String cleanString (String autore){
+        //rimuove caratteri speciali, punteggiature e spazi a inizio e fine della parola
+        return autore.toLowerCase().replaceAll("[^a-z0-9àèéòùì ]", "").trim();
+    }
 }
