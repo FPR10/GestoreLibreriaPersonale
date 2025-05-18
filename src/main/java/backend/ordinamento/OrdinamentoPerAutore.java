@@ -7,10 +7,9 @@ import java.util.List;
 
 public class OrdinamentoPerAutore implements OrdinamentoStrategyIF {
 
-
     @Override
     public List<Libro> ordina(List<Libro> libri) {
-        libri.sort(Comparator.comparing(Libro::getAutore));
+        libri.sort(Comparator.comparing(Libro::getCognomeAutore));
         return libri;
     }
 }
