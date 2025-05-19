@@ -2,25 +2,34 @@ package main.java.frontend;
 
 import javax.swing.*;
 import java.awt.*;
+import java.awt.event.FocusEvent;
+import java.awt.event.FocusListener;
 import java.io.File;
 import java.util.Objects;
 
-public class GUI extends JFrame {
+public class GUI extends JFrame{
 
     private JTable tabella;
 
     public GUI() {
+        /*
+        INIZIALIZZAZIONE
+         */
         setTitle("Gestore Libreria Personale");
         setSize(900, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        setLayout(null);
+        setLayout(new BorderLayout());
         setLocationRelativeTo(null); //finestra centrata su schermo
 
+
+        /*
+        PANNELLI
+         */
 
         // Pannello bottoni
         JPanel pannelloBottoni = new JPanel();
         pannelloBottoni.setLayout(null);
-        pannelloBottoni.setBounds(0, 0, 300, 600);
+        pannelloBottoni.setBounds(0, 0, 1000, 600);
         add(pannelloBottoni);
 
         // Pannello di stato in basso
@@ -32,6 +41,11 @@ public class GUI extends JFrame {
         JLabel statusLabel = new JLabel("Totale libri: 0");
         pannelloStato.add(statusLabel, BorderLayout.WEST);
         add(pannelloStato,BorderLayout.SOUTH);
+
+        //Pannello bottoni salvataggio
+        JPanel pannelloSalvataggio = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 0));
+        pannelloSalvataggio.setOpaque(false); // trasparente
+        pannelloStato.add(pannelloSalvataggio, BorderLayout.EAST);
 
 
         /*
@@ -60,7 +74,7 @@ public class GUI extends JFrame {
         bottoneElimina.setBounds(50, 130, 150, 30);
         pannelloBottoni.add(bottoneElimina);
 
-        
+
         // RadioButton
         JRadioButton r1 = new JRadioButton("Per autore");
         r1.setFocusPainted(false);
@@ -115,7 +129,21 @@ public class GUI extends JFrame {
         pannelloBottoni.add(bottoneRicerca);
 
 
+        // Bottone salvataggio JSON
+        JButton bottoneSalvaJSON = new JButton("\uD83D\uDCBE" + " JSON");
+        bottoneSalvaJSON.setFocusPainted(false);
+        pannelloSalvataggio.add(bottoneSalvaJSON);
+
+
+        //Bottone salvataggio CSV
+        JButton bottoneSalvaCSV = new JButton("\uD83D\uDCBE" + " CSV");
+        bottoneSalvaCSV.setFocusPainted(false);
+        pannelloSalvataggio.add(bottoneSalvaCSV);
+
     }
+
+
+
 
     public static void main(String[] args) {
         // Esegui l'interfaccia grafica sul thread dell'EDT
