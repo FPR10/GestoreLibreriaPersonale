@@ -91,8 +91,9 @@ public class GUI extends JFrame{
         // Pannello bottoni
         JPanel pannelloBottoni = new JPanel();
         pannelloBottoni.setLayout(null);
-        pannelloBottoni.setBounds(0, 0, 1000, 600);
-        add(pannelloBottoni);
+        pannelloBottoni.setPreferredSize(new Dimension(900, 160)); // Altezza fissa
+        add(pannelloBottoni, BorderLayout.NORTH);
+
 
         // Pannello di stato in basso
         JPanel pannelloStato = new JPanel();
