@@ -83,6 +83,11 @@ public class GUI extends JFrame{
         PANNELLI
          */
 
+        //Pannello scrollabile della tabella
+        JScrollPane scrollPane = new JScrollPane(tabella);
+        scrollPane.setBorder((BorderFactory.createEmptyBorder(35,0,0,0))); //agisce su altezza header tabella
+        add(scrollPane, BorderLayout.CENTER);
+
         // Pannello bottoni
         JPanel pannelloBottoni = new JPanel();
         pannelloBottoni.setLayout(null);
