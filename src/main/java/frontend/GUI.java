@@ -23,6 +23,20 @@ public class GUI extends JFrame {
         pannelloBottoni.setBounds(0, 0, 300, 600);
         add(pannelloBottoni);
 
+        // Pannello di stato in basso
+        JPanel pannelloStato = new JPanel();
+        pannelloStato.setLayout(new BorderLayout());
+        pannelloStato.setBounds(0, 540, 900, 40);
+        pannelloStato.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
+        pannelloStato.setBackground(Color.LIGHT_GRAY);
+        JLabel statusLabel = new JLabel("Totale libri: 0");
+        pannelloStato.add(statusLabel, BorderLayout.WEST);
+        add(pannelloStato,BorderLayout.SOUTH);
+
+
+        /*
+        BOTTONI
+         */
 
         // Bottone aggiunta libro
         JButton bottoneAggiungi = new JButton("+ Aggiungi libro");
