@@ -1,5 +1,6 @@
 package main.java.backend.salvataggio;
 
+import main.java.backend.LibreriaSingleton;
 import main.java.backend.libro.Libro;
 
 import java.io.FileWriter;
@@ -11,7 +12,7 @@ public class SaveToCSV implements SaveFileStrategyIF{
     private static final String titoloCSV = "Titolo, Autore, ISBN, Genere, Valutazione, Stato lettura";
 
     @Override
-    public void salva(List<Libro> libreria, String filePath) {
+    public void salva(LibreriaSingleton libreria, String filePath) {
         try(FileWriter fw = new FileWriter(filePath)){
             for (Libro l : libreria){
                 fw.append(l.getTitolo()).append(",");
