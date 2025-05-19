@@ -1,5 +1,6 @@
 package main.java.backend.filtro;
 
+import main.java.backend.LibreriaSingleton;
 import main.java.backend.libro.Libro;
 import main.java.backend.libro.Stato_Lettura;
 
@@ -15,11 +16,11 @@ public class FiltroStatoLettura implements FiltroStrategyIF {
     }
 
     @Override
-    public List<Libro> filtra(List<Libro> libri) {
+    public List<Libro> filtra(LibreriaSingleton l) {
         List<Libro> ret = new ArrayList<>();
-        for (Libro l : libri){
-            if (l.getStatLett().equals(sl))
-                ret.add(l);
+        for (Libro lib : l.getLibreria()){
+            if (lib.getStatLett().equals(sl))
+                ret.add(lib);
         }
         return ret;
     }

@@ -1,5 +1,6 @@
 package main.java.backend.filtro;
 
+import main.java.backend.LibreriaSingleton;
 import main.java.backend.libro.Genere_Libri;
 import main.java.backend.libro.Libro;
 
@@ -15,12 +16,14 @@ public class FiltroGenere implements FiltroStrategyIF {
     }
 
     @Override
-    public List<Libro> filtra(List<Libro> libri) {
+    public List<Libro> filtra(LibreriaSingleton l) {
         List<Libro> ret = new ArrayList<>();
-        for (Libro l : libri){
-            if (l.getGenLib().equals(genere))
-                ret.add(l);
+        for (Libro lib : l.getLibreria()){
+            if (lib.getGenLib().equals(genere))
+                ret.add(lib);
         }
         return ret;
     }
+
+
 }
