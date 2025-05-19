@@ -33,6 +33,12 @@ public enum LibreriaSingleton implements LibreriaIF{
     }
 
     @Override
+    public List<Libro> getLibreria() {
+        return new ArrayList<>(libreria);
+    }
+
+
+    @Override
     public Iterator<Libro> iterator() {
         return libreria.iterator();
     }
