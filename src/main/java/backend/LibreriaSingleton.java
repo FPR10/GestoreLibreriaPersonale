@@ -43,20 +43,4 @@ public enum LibreriaSingleton implements LibreriaIF{
         return libreria.iterator();
     }
 
-
-
-
-    public void prova(){
-        System.out.println("Ok");
-    }
-
-
-    //Come chiamare il Singleton
-    public static void main(String[] args) {
-        LibreriaSingleton ls = LibreriaSingleton.INSTANCE;
-        ls.prova();
-        LibreriaSingleton ls2 = LibreriaSingleton.INSTANCE;
-        ls2.prova();
-        System.out.println(ls==ls2); //true perchè fanno riferimento allo stesso oggetto in memoria
-    }
 }
