@@ -1,5 +1,6 @@
 package main.java.backend;
 import main.java.backend.libro.Libro;
+import java.util.List;
 
 public interface LibreriaIF extends Iterable<Libro> {
 
