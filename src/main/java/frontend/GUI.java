@@ -23,6 +23,63 @@ public class GUI extends JFrame{
 
 
         /*
+        INIZIALIZZAZIONE E MODIFICA TABELLA
+         */
+
+        //Impedisco di modificare direttamente le celle della tabella
+        modelloTabella = new DefaultTableModel() {
+            @Override
+            public boolean isCellEditable(int righe, int colonne) {
+                return false;
+            }
+        };
+
+        //Parametri essenziali della visualizzazione
+        modelloTabella.setColumnIdentifiers(new String[]{"Titolo", "Autore", "ISBN","Genere", "Stato lettura"});
+        modelloTabella.addRow(new String[]{"aa","bb","cc","dd","ee"});
+        tabella = new JTable(modelloTabella);
+
+
+        // Personalizzazione tabella
+        tabella.setShowGrid(false);
+        tabella.setRowHeight(28);
+        tabella.setIntercellSpacing(new Dimension(0, 0));
+        tabella.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
+        tabella.setSelectionBackground(Color.BLACK);
+        tabella.setSelectionForeground(Color.WHITE);
+        tabella.setFont(new Font("Segoe UI", Font.PLAIN, 14));
+        tabella.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
+        tabella.getTableHeader().setBackground(Color.LIGHT_GRAY);
+        tabella.getTableHeader().setBorder(BorderFactory.createEmptyBorder(30, 0, 0, 0)); // Aggiungi padding superiore
+
+
+        //Sfondo righe alternato in base alla riga
+        tabella.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
+            @Override
+            public Component getTableCellRendererComponent(JTable table, Object value,
+                                                           boolean isSelected, boolean hasFocus, int row, int column) {
+                Component comp = super.getTableCellRendererComponent(table, value,
+                        isSelected, false, row, column);
+
+                if (!isSelected) {
+                    if (row % 2 == 0) {
+                        comp.setBackground(Color.WHITE); // Righe pari: bianco
+                    } else {
+                        comp.setBackground(Color.lightGray); // Righe dispari: grigio chiarissimo
+                    }
+                }
+
+                setBorder(new EmptyBorder(0, 10, 0, 0)); // Padding nelle celle
+                return comp;
+            }
+        });
+
+
+
+
+
+
+        /*
         PANNELLI
          */
 
