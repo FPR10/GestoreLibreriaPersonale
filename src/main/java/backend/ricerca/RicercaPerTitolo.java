@@ -1,4 +1,5 @@
 package main.java.backend.ricerca;
+import main.java.backend.LibreriaSingleton;
 import main.java.backend.libro.Libro;
 import java.util.ArrayList;
 import java.util.List;
@@ -12,9 +13,9 @@ public class RicercaPerTitolo implements RicercaStrategyIF{
     }
 
     @Override
-    public List<Libro> ricerca(List<Libro> libri) {
+    public List<Libro> ricerca(LibreriaSingleton libri) {
         List<Libro> ret = new ArrayList<>();
-         if (libri.isEmpty()){
+         if (libri.getLibreria().isEmpty()){
              System.err.print("Libreria vuota !");
              return ret;
          }
