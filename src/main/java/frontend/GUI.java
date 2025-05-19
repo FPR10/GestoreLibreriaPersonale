@@ -123,6 +123,7 @@ public class GUI extends JFrame{
 
 
         // Bottone modifica libro
+        // \uD83D\uDD8A\uFE0F -> carattere della matita
         JButton bottoneModifica = new JButton("\uD83D\uDD8A\uFE0F" + " "+ "Modifica");
         bottoneModifica.setBackground(Color.orange);
         bottoneModifica.setFocusPainted(false);
