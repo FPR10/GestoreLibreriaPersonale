@@ -33,6 +33,11 @@ public enum LibreriaSingleton implements LibreriaIF{
     }
 
     @Override
+    public boolean isEmpty() {
+        return libreria.isEmpty();
+    }
+
+    @Override
     public List<Libro> getLibreria() {
         return new ArrayList<>(libreria);
     }
