@@ -12,6 +12,7 @@ public class GUI extends JFrame{
 
     private JTable tabella;
     private DefaultTableModel modelloTabella;
+    private LibreriaSingleton libreria = LibreriaSingleton.INSTANCE;
 
     public GUI() {
 
