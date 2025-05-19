@@ -45,6 +45,53 @@ public class GUI extends JFrame {
         bottoneElimina.setFocusPainted(false);
         bottoneElimina.setBounds(50, 130, 150, 30);
         pannelloBottoni.add(bottoneElimina);
+
+        
+        // RadioButton
+        JRadioButton r1 = new JRadioButton("Per autore");
+        r1.setFocusPainted(false);
+        r1.setBounds(500, 50, 100, 20);
+        pannelloBottoni.add(r1);
+
+        JRadioButton r2 = new JRadioButton("Per titolo");
+        r2.setFocusPainted(false);
+        r2.setBounds(600, 50, 100, 20);
+        pannelloBottoni.add(r2);
+
+        JRadioButton r3 = new JRadioButton("Per ISBN");
+        r3.setFocusPainted(false);
+        r3.setBounds(700, 50, 100, 20);
+        pannelloBottoni.add(r3);
+
+        ButtonGroup gruppo = new ButtonGroup();
+        gruppo.add(r1);
+        gruppo.add(r2);
+        gruppo.add(r3);
+
+
+        // Barra di ricerca
+        JTextField barraRicerca = new JTextField("Cerca libro");
+        barraRicerca.setBounds(500, 85, 300, 25);
+        barraRicerca.setForeground(java.awt.Color.GRAY);
+        pannelloBottoni.add(barraRicerca);
+
+        barraRicerca.addFocusListener(new FocusListener() {
+            @Override
+            public void focusGained(FocusEvent e) {
+                if (barraRicerca.getText().equals("Cerca libro")) {
+                    barraRicerca.setText("");
+                    barraRicerca.setForeground(java.awt.Color.BLACK);
+                }
+            }
+
+            @Override
+            public void focusLost(FocusEvent e) {
+                if (barraRicerca.getText().isEmpty()) {
+                    barraRicerca.setText("Cerca libro");
+                    barraRicerca.setForeground(java.awt.Color.GRAY);
+                }
+            }
+        });
     }
 
     public static void main(String[] args) {
