@@ -16,7 +16,7 @@ public class GUI extends JFrame{
         INIZIALIZZAZIONE
          */
         setTitle("Gestore Libreria Personale");
-        setSize(900, 600);
+        setSize(1200, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         setLocationRelativeTo(null); //finestra centrata su schermo
