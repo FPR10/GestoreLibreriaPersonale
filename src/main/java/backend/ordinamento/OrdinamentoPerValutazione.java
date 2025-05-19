@@ -1,5 +1,6 @@
 package main.java.backend.ordinamento;
 
+import main.java.backend.LibreriaSingleton;
 import main.java.backend.libro.Libro;
 
 import java.util.Comparator;
@@ -7,8 +8,9 @@ import java.util.List;
 
 public class OrdinamentoPerValutazione implements OrdinamentoStrategyIF {
     @Override
-    public List<Libro> ordina(List<Libro> libri) {
-        libri.sort(Comparator.comparing(Libro::getValPers).reversed());
-        return libri;
+    public List<Libro> ordina(LibreriaSingleton libri) {
+        List<Libro>copia = libri.getLibreria();
+        copia.sort(Comparator.comparing(Libro::getValPers).reversed());
+        return copia;
     }
 }
