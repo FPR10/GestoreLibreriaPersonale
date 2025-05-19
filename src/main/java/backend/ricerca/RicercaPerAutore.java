@@ -16,7 +16,7 @@ public class RicercaPerAutore implements RicercaStrategyIF{
     @Override
     public List<Libro> ricerca(LibreriaSingleton libri) {
         List<Libro>ret = new ArrayList<>();
-        if (libri.getLibreria().isEmpty()){
+        if (libri.isEmpty()){
             System.err.print("La libreria è vuota !");
         }
         for (Libro elem : libri){

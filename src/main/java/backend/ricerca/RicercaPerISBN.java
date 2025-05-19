@@ -15,7 +15,7 @@ public class RicercaPerISBN implements RicercaStrategyIF{
     @Override
     public List <Libro> ricerca(LibreriaSingleton libri) {
         List<Libro> ret = new ArrayList<>();
-        if (libri.getLibreria().isEmpty()){
+        if (libri.isEmpty()){
             System.err.print("Libreria vuota !");
             return ret;
         }
