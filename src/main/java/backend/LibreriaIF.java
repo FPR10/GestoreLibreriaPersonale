@@ -7,5 +7,6 @@ public interface LibreriaIF extends Iterable<Libro> {
     void aggiungiLibro (Libro l);
     void rimuoviLibro (Libro l);
     void modificaLibro (Libro l);
+    List<Libro> getLibreria();
 
 }
