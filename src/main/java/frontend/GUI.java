@@ -92,6 +92,15 @@ public class GUI extends JFrame {
                 }
             }
         });
+
+
+        // Bottone modifica libro
+        JButton bottoneRicerca = new JButton("\uD83D\uDD0D");
+        bottoneRicerca.setFocusPainted(false);
+        bottoneRicerca.setBounds(820, 85, 50, 25);
+        pannelloBottoni.add(bottoneRicerca);
+
+
     }
 
     public static void main(String[] args) {
