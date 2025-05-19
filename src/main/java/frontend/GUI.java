@@ -96,11 +96,10 @@ public class GUI extends JFrame{
 
 
         // Pannello di stato in basso
-        JPanel pannelloStato = new JPanel();
-        pannelloStato.setLayout(new BorderLayout());
-        pannelloStato.setBounds(0, 540, 900, 40);
-        pannelloStato.setBorder(BorderFactory.createEmptyBorder(10, 20, 10, 20));
-        pannelloStato.setBackground(Color.LIGHT_GRAY);
+        JPanel pannelloStato = new JPanel(new BorderLayout());
+        pannelloStato.setPreferredSize(new Dimension(900,40));
+        pannelloStato.setBorder(BorderFactory.createEmptyBorder(5, 20, 5, 20));
+        pannelloStato.setBackground(Color.white);
         JLabel statusLabel = new JLabel("Totale libri: 0");
         pannelloStato.add(statusLabel, BorderLayout.WEST);
         add(pannelloStato,BorderLayout.SOUTH);
