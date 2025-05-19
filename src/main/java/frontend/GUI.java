@@ -1,19 +1,22 @@
 package main.java.frontend;
-
 import javax.swing.*;
+import javax.swing.border.EmptyBorder;
+import javax.swing.table.DefaultTableCellRenderer;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
-import java.io.File;
-import java.util.Objects;
+
 
 public class GUI extends JFrame{
 
     private JTable tabella;
+    private DefaultTableModel modelloTabella;
 
     public GUI() {
+
         /*
-        INIZIALIZZAZIONE
+        INIZIALIZZAZIONE FINESTRA
          */
         setTitle("Gestore Libreria Personale");
         setSize(1200, 600);
@@ -77,8 +80,6 @@ public class GUI extends JFrame{
 
 
 
-
-
         /*
         PANNELLI
          */
@@ -91,7 +92,7 @@ public class GUI extends JFrame{
         // Pannello bottoni
         JPanel pannelloBottoni = new JPanel();
         pannelloBottoni.setLayout(null);
-        pannelloBottoni.setPreferredSize(new Dimension(900, 160)); // Altezza fissa
+        pannelloBottoni.setPreferredSize(new Dimension(900, 160));
         add(pannelloBottoni, BorderLayout.NORTH);
 
 
@@ -103,6 +104,7 @@ public class GUI extends JFrame{
         JLabel statusLabel = new JLabel("Totale libri: 0");
         pannelloStato.add(statusLabel, BorderLayout.WEST);
         add(pannelloStato,BorderLayout.SOUTH);
+
 
         //Pannello bottoni salvataggio
         JPanel pannelloSalvataggio = new JPanel(new FlowLayout(FlowLayout.RIGHT, 5, 0));
@@ -130,7 +132,7 @@ public class GUI extends JFrame{
         bottoneModifica.setBounds(50, 90, 150, 30);
         pannelloBottoni.add(bottoneModifica);
 
-        // Bottone modifica libro
+        // Bottone elimina libro
         JButton bottoneElimina = new JButton("Elimina");
         bottoneElimina.setBackground(Color.red);
         bottoneElimina.setFocusPainted(false);
@@ -138,7 +140,7 @@ public class GUI extends JFrame{
         pannelloBottoni.add(bottoneElimina);
 
 
-        // RadioButton
+        // Bottoni di corredo alla ricerca
         JRadioButton r1 = new JRadioButton("Per autore");
         r1.setFocusPainted(false);
         r1.setBounds(500, 50, 100, 20);
@@ -166,6 +168,7 @@ public class GUI extends JFrame{
         barraRicerca.setForeground(java.awt.Color.GRAY);
         pannelloBottoni.add(barraRicerca);
 
+        //Listener per far sparire la scritta 'Cerca libro'
         barraRicerca.addFocusListener(new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
@@ -185,7 +188,7 @@ public class GUI extends JFrame{
         });
 
 
-        // Bottone modifica libro
+        // Bottone ricerca libro
         JButton bottoneRicerca = new JButton("\uD83D\uDD0D");
         bottoneRicerca.setFocusPainted(false);
         bottoneRicerca.setBounds(820, 85, 50, 25);
@@ -209,7 +212,6 @@ public class GUI extends JFrame{
 
 
     public static void main(String[] args) {
-        // Esegui l'interfaccia grafica sul thread dell'EDT
         SwingUtilities.invokeLater(() -> {
             GUI frame = new GUI();
             frame.setVisible(true);
