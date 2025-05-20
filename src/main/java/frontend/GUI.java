@@ -176,7 +176,7 @@ public class GUI extends JFrame{
 
         JRadioButton r2 = new JRadioButton("Per titolo");
         r2.setFocusPainted(false);
-        r2.setBounds(600, 50, 100, 20);
+        r2.setBounds(800, 50, 100, 20);
         pannelloBottoni.add(r2);
 
         JRadioButton r3 = new JRadioButton("Per ISBN");
