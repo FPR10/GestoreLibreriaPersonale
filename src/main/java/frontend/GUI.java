@@ -153,6 +153,11 @@ public class GUI extends JFrame{
         bottoneAggiungi.setBounds(50, 50, 150, 30);
         pannelloBottoni.add(bottoneAggiungi);
 
+        bottoneAggiungi.addActionListener(e -> {
+            new FinestraParametriLibro();  // Apre la nuova finestra
+        });
+
+
 
         // Bottone modifica libro
         // \uD83D\uDD8A\uFE0F -> carattere della matita
