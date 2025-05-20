@@ -192,7 +192,7 @@ public class GUI extends JFrame{
 
         // Barra di ricerca
         JTextField barraRicerca = new JTextField("Cerca libro");
-        barraRicerca.setBounds(500, 85, 300, 25);
+        barraRicerca.setBounds(700, 85, 300, 25);
         barraRicerca.setForeground(java.awt.Color.GRAY);
         pannelloBottoni.add(barraRicerca);
         
