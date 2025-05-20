@@ -181,7 +181,7 @@ public class GUI extends JFrame{
 
         JRadioButton r3 = new JRadioButton("Per ISBN");
         r3.setFocusPainted(false);
-        r3.setBounds(700, 50, 100, 20);
+        r3.setBounds(900, 50, 100, 20);
         pannelloBottoni.add(r3);
 
         ButtonGroup gruppo = new ButtonGroup();
