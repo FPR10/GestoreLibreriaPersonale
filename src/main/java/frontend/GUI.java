@@ -195,6 +195,12 @@ public class GUI extends JFrame{
         barraRicerca.setBounds(500, 85, 300, 25);
         barraRicerca.setForeground(java.awt.Color.GRAY);
         pannelloBottoni.add(barraRicerca);
+        
+        // Bottone ricerca libro
+        JButton bottoneRicerca = new JButton("\uD83D\uDD0D");
+        bottoneRicerca.setFocusPainted(false);
+        bottoneRicerca.setBounds(1025, 85, 50, 25);
+        pannelloBottoni.add(bottoneRicerca);
 
         //Listener per far sparire la scritta 'Cerca libro'
         barraRicerca.addFocusListener(new FocusListener() {
