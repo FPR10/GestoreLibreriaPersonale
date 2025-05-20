@@ -171,7 +171,7 @@ public class GUI extends JFrame{
         // Bottoni di corredo alla ricerca
         JRadioButton r1 = new JRadioButton("Per autore");
         r1.setFocusPainted(false);
-        r1.setBounds(500, 50, 100, 20);
+        r1.setBounds(700, 50, 100, 20);
         pannelloBottoni.add(r1);
 
         JRadioButton r2 = new JRadioButton("Per titolo");
