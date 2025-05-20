@@ -240,6 +240,21 @@ public class GUI extends JFrame{
         bottoneSalvaCSV.setFocusPainted(false);
         pannelloSalvataggio.add(bottoneSalvaCSV);
 
+        
+        // Menu a tendina per filtrare
+        String[] opzioniFiltro = {"Nessun filtro", "Filtra per genere", "Filtra per stato lettura"};
+        JComboBox<String> comboFiltro = new JComboBox<>(opzioniFiltro);
+        comboFiltro.setBounds(500, 145, 300, 25);
+        pannelloBottoni.add(comboFiltro);
+
+        // Menu a tendina per filtrare
+        String[] opzioniOrdinamento = {"Nessun filtro", "Filtra per genere", "Filtra per stato lettura"};
+        JComboBox<String> comboOrdinametno = new JComboBox<>(opzioniFiltro);
+        comboOrdinametno.setBounds(900, 145, 300, 25);
+        pannelloBottoni.add(comboOrdinametno);
+
+
+
     }
 
 
