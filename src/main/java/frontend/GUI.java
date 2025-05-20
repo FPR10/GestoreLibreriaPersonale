@@ -1,4 +1,5 @@
 package main.java.frontend;
+
 import main.java.backend.LibreriaIF;
 import main.java.backend.LibreriaSingleton;
 import javax.swing.*;
@@ -161,14 +162,15 @@ public class GUI extends JFrame{
 
         // Bottone modifica libro
         // \uD83D\uDD8A\uFE0F -> carattere della matita
-        JButton bottoneModifica = new JButton("\uD83D\uDD8A\uFE0F" + " "+ "Modifica");
+        JButton bottoneModifica = new JButton("\uD83D\uDD8A\uFE0F" + " "+ "Modifica libro");
         bottoneModifica.setBackground(Color.orange);
         bottoneModifica.setFocusPainted(false);
         bottoneModifica.setBounds(50, 90, 150, 30);
         pannelloBottoni.add(bottoneModifica);
 
+
         // Bottone elimina libro
-        JButton bottoneElimina = new JButton("Elimina");
+        JButton bottoneElimina = new JButton("Elimina libro");
         bottoneElimina.setBackground(Color.red);
         bottoneElimina.setFocusPainted(false);
         bottoneElimina.setBounds(50, 130, 150, 30);
@@ -178,17 +180,17 @@ public class GUI extends JFrame{
         // Bottoni di corredo alla ricerca
         JRadioButton r1 = new JRadioButton("Per autore");
         r1.setFocusPainted(false);
-        r1.setBounds(700, 50, 100, 20);
+        r1.setBounds(400, 50, 100, 20);
         pannelloBottoni.add(r1);
 
         JRadioButton r2 = new JRadioButton("Per titolo");
         r2.setFocusPainted(false);
-        r2.setBounds(800, 50, 100, 20);
+        r2.setBounds(500, 50, 100, 20);
         pannelloBottoni.add(r2);
 
         JRadioButton r3 = new JRadioButton("Per ISBN");
         r3.setFocusPainted(false);
-        r3.setBounds(900, 50, 100, 20);
+        r3.setBounds(600, 50, 100, 20);
         pannelloBottoni.add(r3);
 
         ButtonGroup gruppo = new ButtonGroup();
@@ -198,14 +200,14 @@ public class GUI extends JFrame{
 
         // Barra di ricerca
         JTextField barraRicerca = new JTextField("Cerca libro");
-        barraRicerca.setBounds(700, 85, 300, 25);
+        barraRicerca.setBounds(400, 85, 300, 25);
         barraRicerca.setForeground(java.awt.Color.GRAY);
         pannelloBottoni.add(barraRicerca);
 
         // Bottone ricerca libro
         JButton bottoneRicerca = new JButton("\uD83D\uDD0D");
         bottoneRicerca.setFocusPainted(false);
-        bottoneRicerca.setBounds(1025, 85, 50, 25);
+        bottoneRicerca.setBounds(725, 85, 50, 25);
         pannelloBottoni.add(bottoneRicerca);
 
         //Listener per far sparire la scritta 'Cerca libro'
@@ -241,9 +243,9 @@ public class GUI extends JFrame{
 
 
         // Menu a tendina per filtrare
-        String[] opzioniFiltro = {"Mostra tutti", "Filtra per genere", "Filtra per stato lettura"};
+        String[] opzioniFiltro = {"Nessun filtro", "Filtra per genere", "Filtra per stato lettura"};
         JComboBox<String> comboFiltro = new JComboBox<>(opzioniFiltro);
-        comboFiltro.setBounds(500, 145, 300, 25);
+        comboFiltro.setBounds(820, 50, 300, 25);
         pannelloBottoni.add(comboFiltro);
 
         // Menu a tendina per filtrare
