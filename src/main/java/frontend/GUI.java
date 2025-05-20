@@ -1,4 +1,6 @@
 package main.java.frontend;
+import main.java.backend.LibreriaIF;
+import main.java.backend.LibreriaSingleton;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -6,6 +8,8 @@ import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.FocusEvent;
 import java.awt.event.FocusListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 
 public class GUI extends JFrame{
@@ -13,8 +17,10 @@ public class GUI extends JFrame{
     private JTable tabella;
     private DefaultTableModel modelloTabella;
     private LibreriaSingleton libreria = LibreriaSingleton.INSTANCE;
+    private static boolean selezioneCheck = false;
 
     public GUI() {
+
 
         /*
         INIZIALIZZAZIONE FINESTRA
@@ -49,7 +55,6 @@ public class GUI extends JFrame{
         tabella.setRowHeight(28);
         tabella.setIntercellSpacing(new Dimension(0, 0));
         tabella.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
-        tabella.setSelectionBackground(Color.BLACK);
         tabella.setSelectionForeground(Color.WHITE);
         tabella.setFont(new Font("Segoe UI", Font.PLAIN, 14));
         tabella.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
@@ -61,7 +66,6 @@ public class GUI extends JFrame{
         //Indice ultima riga selezionata
         int [] ultimaRigaSelezionata = {-1};
 
-        // Aggiungi un MouseListener per gestire il toggle
         tabella.addMouseListener(new java.awt.event.MouseAdapter() {
             @Override
             public void mouseClicked(java.awt.event.MouseEvent e) {
@@ -80,8 +84,6 @@ public class GUI extends JFrame{
                 }
             }
         });
-
-
 
 
         //Sfondo righe alternato in base alla riga
@@ -120,7 +122,7 @@ public class GUI extends JFrame{
         // Pannello bottoni
         JPanel pannelloBottoni = new JPanel();
         pannelloBottoni.setLayout(null);
-        pannelloBottoni.setPreferredSize(new Dimension(900, 160));
+        pannelloBottoni.setPreferredSize(new Dimension(900, 190));
         add(pannelloBottoni, BorderLayout.NORTH);
 
 
@@ -189,13 +191,12 @@ public class GUI extends JFrame{
         gruppo.add(r2);
         gruppo.add(r3);
 
-
         // Barra di ricerca
         JTextField barraRicerca = new JTextField("Cerca libro");
         barraRicerca.setBounds(700, 85, 300, 25);
         barraRicerca.setForeground(java.awt.Color.GRAY);
         pannelloBottoni.add(barraRicerca);
-        
+
         // Bottone ricerca libro
         JButton bottoneRicerca = new JButton("\uD83D\uDD0D");
         bottoneRicerca.setFocusPainted(false);
@@ -222,13 +223,6 @@ public class GUI extends JFrame{
         });
 
 
-        // Bottone ricerca libro
-        JButton bottoneRicerca = new JButton("\uD83D\uDD0D");
-        bottoneRicerca.setFocusPainted(false);
-        bottoneRicerca.setBounds(820, 85, 50, 25);
-        pannelloBottoni.add(bottoneRicerca);
-
-
         // Bottone salvataggio JSON
         JButton bottoneSalvaJSON = new JButton("\uD83D\uDCBE" + " JSON");
         bottoneSalvaJSON.setFocusPainted(false);
@@ -240,9 +234,9 @@ public class GUI extends JFrame{
         bottoneSalvaCSV.setFocusPainted(false);
         pannelloSalvataggio.add(bottoneSalvaCSV);
 
-        
+
         // Menu a tendina per filtrare
-        String[] opzioniFiltro = {"Nessun filtro", "Filtra per genere", "Filtra per stato lettura"};
+        String[] opzioniFiltro = {"Mostra tutti", "Filtra per genere", "Filtra per stato lettura"};
         JComboBox<String> comboFiltro = new JComboBox<>(opzioniFiltro);
         comboFiltro.setBounds(500, 145, 300, 25);
         pannelloBottoni.add(comboFiltro);
@@ -257,14 +251,10 @@ public class GUI extends JFrame{
 
     }
 
-
-
-
     public static void main(String[] args) {
         SwingUtilities.invokeLater(() -> {
             GUI frame = new GUI();
             frame.setVisible(true);
         });
     }
-
 }
