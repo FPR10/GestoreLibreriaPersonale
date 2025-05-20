@@ -55,6 +55,33 @@ public class GUI extends JFrame{
         tabella.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
         tabella.getTableHeader().setBackground(Color.LIGHT_GRAY);
         tabella.getTableHeader().setBorder(BorderFactory.createEmptyBorder(30, 0, 0, 0)); // Aggiungi padding superiore
+        // Colore della riga selezionata
+        tabella.setSelectionBackground(Color.BLACK);
+
+        //Indice ultima riga selezionata
+        int [] ultimaRigaSelezionata = {-1};
+
+        // Aggiungi un MouseListener per gestire il toggle
+        tabella.addMouseListener(new java.awt.event.MouseAdapter() {
+            @Override
+            public void mouseClicked(java.awt.event.MouseEvent e) {
+                int riga = tabella.rowAtPoint(e.getPoint());
+
+                if (riga == -1) return; // clic fuori dalla tabella
+
+                // Se clicco sulla stessa riga già selezionata → deseleziona
+                if (tabella.isRowSelected(riga) && ultimaRigaSelezionata[0] == riga) {
+                    tabella.clearSelection();
+                    ultimaRigaSelezionata[0] = -1;
+                } else {
+                    // Se clicco su una nuova riga → seleziona quella
+                    tabella.setRowSelectionInterval(riga, riga);
+                    ultimaRigaSelezionata[0] = riga;
+                }
+            }
+        });
+
+
 
 
         //Sfondo righe alternato in base alla riga
