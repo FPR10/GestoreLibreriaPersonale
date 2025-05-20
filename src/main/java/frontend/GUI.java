@@ -248,10 +248,10 @@ public class GUI extends JFrame{
         pannelloBottoni.add(comboFiltro);
 
         // Menu a tendina per filtrare
-        String[] opzioniOrdinamento = {"Nessun filtro", "Filtra per genere", "Filtra per stato lettura"};
-        JComboBox<String> comboOrdinametno = new JComboBox<>(opzioniFiltro);
-        comboOrdinametno.setBounds(900, 145, 300, 25);
-        pannelloBottoni.add(comboOrdinametno);
+        String[] opzioniOrdinamento = {"Ordina per autore", "Ordina per titolo", "Ordina per valutazione"};
+        JComboBox<String> comboOrdinamento = new JComboBox<>(opzioniOrdinamento);
+        comboOrdinamento.setBounds(820, 145, 300, 25);
+        pannelloBottoni.add(comboOrdinamento);
 
 
 
