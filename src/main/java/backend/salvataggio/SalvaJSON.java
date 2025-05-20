@@ -12,7 +12,7 @@ public class SalvaJSON implements SalvaFileStrategyIF {
     public void salva(LibreriaSingleton libreria, String filePath) {
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try (FileWriter writer = new FileWriter(filePath)) {
-            gson.toJson(libreria, writer);
+            gson.toJson(libreria.getLibreria(), writer);
         } catch (IOException e) {
             System.err.println("Errore durante l'esportazione: " + e.getMessage());
         }
