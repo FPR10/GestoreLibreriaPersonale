@@ -2,13 +2,11 @@ package main.java.backend.salvataggio;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import main.java.backend.LibreriaSingleton;
-import main.java.backend.libro.Libro;
 
-import java.util.List;
 import java.io.FileWriter;
 import java.io.IOException;
 
-public class SaveToJson implements SaveFileStrategyIF{
+public class SalvaJSON implements SalvaFileStrategyIF {
 
     @Override
     public void salva(LibreriaSingleton libreria, String filePath) {

@@ -5,9 +5,8 @@ import main.java.backend.libro.Libro;
 
 import java.io.FileWriter;
 import java.io.IOException;
-import java.util.List;
 
-public class SaveToCSV implements SaveFileStrategyIF{
+public class SalvaCSV implements SalvaFileStrategyIF {
 
     private static final String titoloCSV = "Titolo, Autore, ISBN, Genere, Valutazione, Stato lettura";
 
