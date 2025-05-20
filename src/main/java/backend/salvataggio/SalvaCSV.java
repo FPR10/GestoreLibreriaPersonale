@@ -13,7 +13,7 @@ public class SalvaCSV implements SalvaFileStrategyIF {
     @Override
     public void salva(LibreriaSingleton libreria, String filePath) {
         try(FileWriter fw = new FileWriter(filePath)){
-            for (Libro l : libreria){
+            for (Libro l : libreria.getLibreria()){
                 fw.append(l.getTitolo()).append(",");
                 fw.append(l.getAutore()).append(",");
                 fw.append(l.getISBN()).append(",");
