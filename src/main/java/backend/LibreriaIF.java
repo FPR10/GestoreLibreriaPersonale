@@ -10,5 +10,7 @@ public interface LibreriaIF extends Iterable<Libro> {
     void modificaLibro (Libro l);
     boolean isEmpty();
     List<Libro> getLibreria();
+    void stampaLibreria();
+    boolean contains(Libro l);
 
 }
