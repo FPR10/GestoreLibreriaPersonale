@@ -1,7 +1,8 @@
-package main.java.frontend;
+package main.java;
 
 import main.java.backend.LibreriaSingleton;
 import main.java.controller.Controller;
+import main.java.frontend.GUI;
 
 import javax.swing.*;
 
