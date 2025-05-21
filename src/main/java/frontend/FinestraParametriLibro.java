@@ -11,7 +11,7 @@ import java.awt.event.FocusEvent;
 
 public class FinestraParametriLibro extends JFrame {
 
-    private static String segnapostoTitolo = "Obbligatorio";
+    private static final String segnapostoTitolo = "Obbligatorio";
     private JTextField campoTitolo;
     private JTextField campoAutoreNome;
     private JTextField campoAutoreCognome;
