@@ -4,7 +4,6 @@ import main.java.backend.libro.Genere_Libri;
 import main.java.backend.libro.Libro;
 import main.java.backend.libro.Stato_Lettura;
 import main.java.controller.Controller;
-import main.java.backend.LibreriaSingleton;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
@@ -262,7 +261,7 @@ public class GUI extends JFrame{
 
     public void setController(Controller controller) {
           //Istanzia FinestraParametriLibro per la comparsa del modulo aggiuntivo per i parametri libro
-          bottoneAggiungi.addActionListener(e-> new FinestraParametriLibro(controller));
+          bottoneAggiungi.addActionListener(e-> new FinestraParametriLibro(controller, modelloTabella));
 
           //Ripristino colore riga selezioanta
           tabella.addMouseListener(Controller.ripristinaSelezione(tabella,ultimaRigaSelezionata));
