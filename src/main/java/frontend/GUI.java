@@ -106,8 +106,6 @@ public class GUI extends JFrame{
         });
 
 
-
-
         /*
         PANNELLI
          */
@@ -150,11 +148,6 @@ public class GUI extends JFrame{
         bottoneAggiungi.setFocusPainted(false);
         bottoneAggiungi.setBounds(50, 50, 150, 30);
         pannelloBottoni.add(bottoneAggiungi);
-
-        bottoneAggiungi.addActionListener(e -> {
-            new FinestraParametriLibro();  // Apre la nuova finestra
-        });
-
 
 
         // Bottone modifica libro
@@ -207,25 +200,6 @@ public class GUI extends JFrame{
         bottoneRicerca.setBounds(725, 85, 50, 25);
         pannelloBottoni.add(bottoneRicerca);
 
-        //Listener per far sparire la scritta 'Cerca libro'
-        barraRicerca.addFocusListener(new FocusListener() {
-            @Override
-            public void focusGained(FocusEvent e) {
-                if (barraRicerca.getText().equals("Cerca libro")) {
-                    barraRicerca.setText("");
-                    barraRicerca.setForeground(java.awt.Color.BLACK);
-                }
-            }
-
-            @Override
-            public void focusLost(FocusEvent e) {
-                if (barraRicerca.getText().isEmpty()) {
-                    barraRicerca.setText("Cerca libro");
-                    barraRicerca.setForeground(java.awt.Color.GRAY);
-                }
-            }
-        });
-
 
         // Bottone salvataggio JSON
         bottoneSalvaJSON = new JButton("\uD83D\uDCBE" + " JSON");
@@ -256,7 +230,11 @@ public class GUI extends JFrame{
     }
 
     public void setController(Controller controller) {
-        bottoneAggiungi.addActionListener(e -> new FinestraParametriLibro());
+          bottoneAggiungi.addActionListener(e -> new FinestraParametriLibro());
+          tabella.addMouseListener(Controller.ripristinaSelezione(tabella,ultimaRigaSelezionata));
+
+          //Listener per far sparire 'Cerca libro'
+          barraRicerca.addFocusListener(Controller.gestisciFocus(barraRicerca));
 //        bottoneModifica.addActionListener(e -> controller.modificaLibro(getLibroSelezionato()));
 //        bottoneElimina.addActionListener(e -> controller.eliminaLibro(getLibroSelezionato()));
 //        bottoneRicerca.addActionListener(e -> controller.ricercaLibro(barraRicerca.getText(), getFiltroRicerca()));
@@ -264,7 +242,6 @@ public class GUI extends JFrame{
 //        bottoneSalvaCSV.addActionListener(e -> controller.salvaSuCSV());
 //        comboFiltro.addActionListener(e -> controller.applicaFiltro((String) comboFiltro.getSelectedItem()));
 //        comboOrdinamento.addActionListener(e -> controller.ordina((String) comboOrdinamento.getSelectedItem()));
-          tabella.addMouseListener(Controller.ripristinaSelezione(tabella,ultimaRigaSelezionata));
 
     }
 
