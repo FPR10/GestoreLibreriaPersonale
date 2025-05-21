@@ -1,6 +1,8 @@
 package main.java.controller;
 
 import main.java.backend.LibreriaSingleton;
+import main.java.backend.filtro.FiltroFactory;
+import main.java.backend.filtro.FiltroFactoryIF;
 import main.java.backend.filtro.FiltroStrategyIF;
 import main.java.backend.libro.Genere_Libri;
 import main.java.backend.libro.Libro;
@@ -14,6 +16,7 @@ import main.java.frontend.GUI;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.*;
+import java.util.List;
 import java.util.Map;
 
 
@@ -154,9 +157,16 @@ public class Controller {
 
     }
 
+
     public static void applicaFiltro(String tipoFiltro){
+        FiltroFactoryIF filtroFac = new FiltroFactory();
+        FiltroStrategyIF fs = filtroFac.creaFiltro(tipoFiltro);
+        List <Libro> ret = fs.filtra(libreria);
+
 
     }
+
+
 
     public static void applicaOrdinamento(String tipoOrdinamento){
 
