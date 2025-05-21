@@ -265,6 +265,8 @@ public class GUI extends JFrame{
 
     public void setController(Controller controller) {
           bottoneAggiungi.addActionListener(e-> new FinestraParametriLibro(controller));
+
+          //Ripristino colore riga selezioanta
           tabella.addMouseListener(Controller.ripristinaSelezione(tabella,ultimaRigaSelezionata));
 
           //Listener per far sparire 'Cerca libro'
