@@ -229,6 +229,40 @@ public class GUI extends JFrame{
 
     }
 
+    public Libro getLibroSelezionato() {
+        int rigaSelezionata = tabella.getSelectedRow();
+        if (rigaSelezionata == -1) {
+            // nessuna riga selezionata
+            return null;
+        }
+
+        // Prendo i dati da ogni colonna
+        String titolo = (String) modelloTabella.getValueAt(rigaSelezionata, 0);
+        String autore = (String) modelloTabella.getValueAt(rigaSelezionata, 1);
+        String isbn = (String) modelloTabella.getValueAt(rigaSelezionata, 2);
+        String genere = (String) modelloTabella.getValueAt(rigaSelezionata, 3);
+        String stato = (String) modelloTabella.getValueAt(rigaSelezionata, 4);
+        String cleanedStato = stato.replace(" ", "_");
+
+        return new Libro.Builder(titolo,autore,isbn)
+                .setGenereLibri(Genere_Libri.valueOf(genere))
+                .setStatoLettura(Stato_Lettura.valueOf(cleanedStato))
+                .build();
+    }
+
+    private String getFiltroRicerca() {
+        ButtonModel bottoneSel = gruppo.getSelection();
+        String tipoRicerca = bottoneSel.getActionCommand();
+        return switch (tipoRicerca) {
+            case "titolo" -> "titolo";
+            case "isbn" -> "isbn";
+            default -> "autore";
+        };
+
+
+    }
+
+
     public void setController(Controller controller) {
           bottoneAggiungi.addActionListener(e-> new FinestraParametriLibro(controller));
           tabella.addMouseListener(Controller.ripristinaSelezione(tabella,ultimaRigaSelezionata));
