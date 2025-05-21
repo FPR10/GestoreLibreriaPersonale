@@ -1,15 +1,18 @@
 package main.java.controller;
 
 import main.java.backend.LibreriaSingleton;
+import main.java.backend.libro.Genere_Libri;
 import main.java.backend.libro.Libro;
+import main.java.backend.libro.Stato_Lettura;
 import main.java.frontend.FinestraParametriLibro;
 import main.java.frontend.GUI;
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.event.*;
 
 
 public class Controller {
-    private final LibreriaSingleton libreria;
+    private static LibreriaSingleton libreria;
     private final GUI grafica;
 
     public Controller(LibreriaSingleton impl, GUI grafica) {
@@ -72,14 +75,16 @@ public class Controller {
       Riceve i campi del form di compilazione del Libro, crea un libro in LibreriaSingleton e lo aggiunge alla tabella GUI.
       Notifica visivamente se l'operazione è andata o meno a buon fine.
      */
-    public static void SalvaLibro(JTextField campoTitolo, JTextField campoAutoreNome, JTextField campoAutoreCognome, JTextField campoIsbn,
-                                  JComboBox<String> campoGenere, JComboBox<String> campoStato, String segnapostoTitolo, FinestraParametriLibro finestra) {
+    public static void SalvaLibro(JTextField campoTitolo, JTextField campoAutoreNome, JTextField campoAutoreCognome,
+                                  JTextField campoIsbn, JComboBox<String> campoGenere, JComboBox<String> campoStato,
+                                  String segnapostoTitolo, FinestraParametriLibro finestra, DefaultTableModel modelloTabella) {
         String titolo = campoTitolo.getText();
         String autoreNome = campoAutoreNome.getText();
         String autoreCognome = campoAutoreCognome.getText();
         String isbn = campoIsbn.getText();
         String genere = (String) campoGenere.getSelectedItem();
         String stato = (String) campoStato.getSelectedItem();
+        String cleanedStato = stato.replace(" ", "_");
 
         if (titolo.isEmpty() || autoreCognome.isEmpty() || isbn.isEmpty() ||
                 titolo.equals(segnapostoTitolo) || autoreCognome.equals(segnapostoTitolo) || isbn.equals(segnapostoTitolo)) {
@@ -90,6 +95,19 @@ public class Controller {
             return;
         }
         JOptionPane.showMessageDialog(null, "Libro salvato!", "Operazione avvenuta con successo", JOptionPane.INFORMATION_MESSAGE);
+
+        Libro toAdd = new Libro.Builder(titolo,autoreCognome, isbn)
+                .setAutoreNome(autoreNome)
+                .setGenereLibri(Genere_Libri.valueOf(genere))
+                .setStatoLettura(Stato_Lettura.valueOf(cleanedStato))
+                .build();
+
+        //Aggiunta al backend
+        libreria.aggiungiLibro(toAdd);
+
+        //Aggiunta al frontend
+        modelloTabella.addRow(new String[]{titolo,autoreCognome+" "+autoreNome,isbn,genere,stato});
+
         finestra.dispose();  //chisura automatica finestra se il libro è stato salvato
     }
 
