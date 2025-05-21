@@ -268,14 +268,22 @@ public class GUI extends JFrame{
           tabella.addMouseListener(Controller.ripristinaSelezione(tabella,ultimaRigaSelezionata));
 
           //Listener per far sparire 'Cerca libro'
-          barraRicerca.addFocusListener(Controller.gestisciFocus(barraRicerca));
-//        bottoneModifica.addActionListener(e -> controller.modificaLibro(getLibroSelezionato()));
-//        bottoneElimina.addActionListener(e -> controller.eliminaLibro(getLibroSelezionato()));
-//        bottoneRicerca.addActionListener(e -> controller.ricercaLibro(barraRicerca.getText(), getFiltroRicerca()));
-//        bottoneSalvaJSON.addActionListener(e -> controller.salvaSuJSON());
-//        bottoneSalvaCSV.addActionListener(e -> controller.salvaSuCSV());
-//        comboFiltro.addActionListener(e -> controller.applicaFiltro((String) comboFiltro.getSelectedItem()));
-//        comboOrdinamento.addActionListener(e -> controller.ordina((String) comboOrdinamento.getSelectedItem()));
+          barraRicerca.addFocusListener(Controller.gestisciFocus(barraRicerca, "Cerca libro", ""));
+
+          bottoneModifica.addActionListener(e -> Controller.modificaLibro(getLibroSelezionato()));
+
+          bottoneElimina.addActionListener(e -> Controller.eliminaLibro(getLibroSelezionato()));
+
+          bottoneSalvaJSON.addActionListener(e -> Controller.salvaJSON());
+
+          bottoneSalvaCSV.addActionListener(e -> Controller.salvaCSV());
+
+          comboFiltro.addActionListener(e -> Controller.applicaFiltro((String) comboFiltro.getSelectedItem()));
+
+          comboOrdinamento.addActionListener(e -> Controller.applicaOrdinamento((String) comboOrdinamento.getSelectedItem()));
+
+           bottoneRicerca.addActionListener(e -> Controller.ricerca(barraRicerca.getText(), getFiltroRicerca()));
+
 
     }
 
