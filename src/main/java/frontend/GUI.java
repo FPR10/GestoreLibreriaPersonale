@@ -9,7 +9,8 @@ import javax.swing.border.EmptyBorder;
 import javax.swing.table.DefaultTableCellRenderer;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
-
+import java.util.AbstractMap;
+import java.util.Map;
 
 
 public class GUI extends JFrame{
