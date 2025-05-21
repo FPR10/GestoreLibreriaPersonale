@@ -4,6 +4,7 @@ import main.java.backend.LibreriaSingleton;
 import main.java.controller.Controller;
 
 import javax.swing.*;
+import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
@@ -19,7 +20,14 @@ public class FinestraParametriLibro extends JFrame {
     private JComboBox<String> comboStato;
     private JButton salva;
 
-    public FinestraParametriLibro(Controller c) {
+    private Controller c;
+    private DefaultTableModel modelloTabella;
+
+    public FinestraParametriLibro(Controller c, DefaultTableModel modelloTabella) {
+
+        this.c = c;
+        this.modelloTabella = modelloTabella;
+
 
         setTitle("Aggiungi un nuovo libro");
         setSize(450, 400);
@@ -123,7 +131,8 @@ public class FinestraParametriLibro extends JFrame {
 
 
     private void setController(Controller c){
-           salva.addActionListener(e -> Controller.SalvaLibro(campoTitolo, campoAutoreNome, campoAutoreCognome,campoISBN, comboGenere, comboStato,segnapostoTitolo,this ));
+           salva.addActionListener(e -> Controller.SalvaLibro(campoTitolo, campoAutoreNome, campoAutoreCognome,
+                   campoISBN, comboGenere, comboStato,segnapostoTitolo,this , modelloTabella));
     }
 
 }
