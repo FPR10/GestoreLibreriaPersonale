@@ -20,6 +20,23 @@ public class GUI extends JFrame{
     private LibreriaSingleton libreria = LibreriaSingleton.INSTANCE;
     private static boolean selezioneCheck = false;
 
+    private JButton bottoneAggiungi;
+    private JButton bottoneModifica;
+    private JButton bottoneElimina;
+    private JButton bottoneRicerca;
+    private JButton bottoneSalvaJSON;
+    private JButton bottoneSalvaCSV;
+    private JComboBox<String> comboFiltro;
+    private JComboBox<String>comboOrdinamento;
+    private JTextField barraRicerca;
+    private JRadioButton r1;
+    private JRadioButton r2;
+    private JRadioButton r3;
+    private ButtonGroup gruppo;
+  
+
+
+
     public GUI() {
 
 
