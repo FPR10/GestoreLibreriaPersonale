@@ -14,6 +14,7 @@ public enum LibreriaSingleton implements LibreriaIF{
 
     List<Libro> libreria = new ArrayList<>();
 
+
     @Override
     public void aggiungiLibro(Libro l) {
         if(!libreria.contains(l))
@@ -42,11 +43,23 @@ public enum LibreriaSingleton implements LibreriaIF{
         return new ArrayList<>(libreria);
     }
 
+    @Override
+    public void stampaLibreria() {
+        for (Libro elem : this)
+            System.out.println(elem.toString());
+    }
+
+    @Override
+    public boolean contains(Libro l) {
+        return libreria.contains(l);
+    }
+
 
     @Override
     public Iterator<Libro> iterator() {
         return libreria.iterator();
     }
+
 
 
 }
