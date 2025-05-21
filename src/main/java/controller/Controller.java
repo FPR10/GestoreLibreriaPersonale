@@ -131,6 +131,9 @@ public class Controller {
     }
 
     public static void salvaCSV(){
+        SalvaFileStrategyIF sf = new SalvaJSON();
+        sf.salva(libreria, "salvataggio.json");
+        JOptionPane.showMessageDialog(null, "Libro salvato in JSON!", "Operazione avvenuta con successo", JOptionPane.INFORMATION_MESSAGE);
 
     }
 
