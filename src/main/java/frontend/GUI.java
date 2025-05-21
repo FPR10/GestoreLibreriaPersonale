@@ -258,8 +258,10 @@ public class GUI extends JFrame{
             case "isbn" -> "isbn";
             default -> "autore";
         };
+    }
 
-
+    public DefaultTableModel getModelloTabella(){
+        return modelloTabella;
     }
 
     public void setContatore(int cont) {
@@ -287,7 +289,7 @@ public class GUI extends JFrame{
 
           bottoneSalvaCSV.addActionListener(e -> Controller.salvaCSV());
 
-          comboFiltro.addActionListener(e -> Controller.applicaFiltro((String) comboFiltro.getSelectedItem()));
+          comboFiltro.addActionListener(e -> Controller.applicaFiltro((String) comboFiltro.getSelectedItem(), modelloTabella));
 
           comboOrdinamento.addActionListener(e -> Controller.applicaOrdinamento((String) comboOrdinamento.getSelectedItem()));
 
