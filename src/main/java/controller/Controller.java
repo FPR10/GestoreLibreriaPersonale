@@ -1,6 +1,7 @@
 package main.java.controller;
 
 import main.java.backend.LibreriaSingleton;
+import main.java.backend.filtro.FiltroStrategyIF;
 import main.java.backend.libro.Genere_Libri;
 import main.java.backend.libro.Libro;
 import main.java.backend.libro.Stato_Lettura;
@@ -14,15 +15,16 @@ import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.event.*;
 import java.util.Map;
-import java.util.Set;
+
 
 
 public class Controller {
     private static LibreriaSingleton libreria;
+    private static GUI grafica;
 
-
-    public Controller(LibreriaSingleton impl, GUI grafica) {
+    public Controller(LibreriaSingleton impl, GUI front) {
         libreria = impl;
+        grafica = front;
         grafica.setController(this);
     }
 
@@ -122,7 +124,7 @@ public class Controller {
         modelloTabella.addRow(new String[]{titolo,autoreCognome+" "+autoreNome,isbn,genere,stato});
 
         JOptionPane.showMessageDialog(null, "Libro salvato!", "Operazione avvenuta con successo", JOptionPane.INFORMATION_MESSAGE);
-
+        grafica.setContatore(modelloTabella.getRowCount());
         finestra.dispose();  //chisura automatica finestra se il libro è stato salvato
     }
 
@@ -135,6 +137,7 @@ public class Controller {
     public static void eliminaLibro(Map.Entry<Integer,Libro> toDelete, DefaultTableModel modelloTabella){
         libreria.rimuoviLibro(toDelete.getValue());
         modelloTabella.removeRow(toDelete.getKey());
+        grafica.setContatore(modelloTabella.getRowCount());
     }
 
 
@@ -164,10 +167,5 @@ public class Controller {
 
     }
 
-        /*
-        modelloTabella.addRow(new String[]{"aa","bb","cc","dd","ee"});
-        modelloTabella.addRow(new String[]{"aa","bb","cc","dd","ee"});
-        modelloTabella.addRow(new String[]{"aa","bb","cc","dd","ee"});
-        modelloTabella.addRow(new String[]{"aa","bb","cc","dd","ee"});
-         */
+
 }
