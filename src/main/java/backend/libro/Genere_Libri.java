@@ -1,15 +1,16 @@
 package main.java.backend.libro;
 
 public enum Genere_Libri {
-    BIOGRAFIA_AUTOBIOGRAFIA,
-    ROMANZO_STORICO,
+    BIOGRAFIA,
+    AUTOBIOGRAFIA,
+    ROMANZO,
     GIALLO,
     THRILLER,
-    AVVENTURA_AZIONE,
+    AVVENTURA,
+    AZIONE,
     FANTASCIENZA,
     DISTOPIA,
     FANTASY,
     HORROR,
-    ROMANDO_FORMAZIONE,
     ROSA;
 }
