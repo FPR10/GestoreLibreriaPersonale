@@ -1,5 +1,8 @@
 package main.java.frontend;
 
+import main.java.backend.libro.Genere_Libri;
+import main.java.backend.libro.Libro;
+import main.java.backend.libro.Stato_Lettura;
 import main.java.controller.Controller;
 import main.java.backend.LibreriaSingleton;
 import javax.swing.*;
@@ -16,23 +19,22 @@ public class GUI extends JFrame{
 
     private JTable tabella;
     private DefaultTableModel modelloTabella;
-    private LibreriaSingleton libreria = LibreriaSingleton.INSTANCE;
-    private static boolean selezioneCheck = false;
 
-    private JButton bottoneAggiungi;
-    private JButton bottoneModifica;
-    private JButton bottoneElimina;
-    private JButton bottoneRicerca;
-    private JButton bottoneSalvaJSON;
-    private JButton bottoneSalvaCSV;
-    private JComboBox<String> comboFiltro;
-    private JComboBox<String>comboOrdinamento;
-    private JTextField barraRicerca;
-    private JRadioButton r1;
-    private JRadioButton r2;
-    private JRadioButton r3;
+    private final JButton bottoneAggiungi;
+    private final JButton bottoneModifica;
+    private final JButton bottoneElimina;
+    private final JButton bottoneRicerca;
+    private final JButton bottoneSalvaJSON;
+    private final JButton bottoneSalvaCSV;
+    private final JComboBox<String> comboFiltro;
+    private final JComboBox<String>comboOrdinamento;
+    private final JTextField barraRicerca;
+    private  JRadioButton r1;
+    private  JRadioButton r2;
+    private  JRadioButton r3;
     private ButtonGroup gruppo;
     private int [] ultimaRigaSelezionata = {-1};
+
 
 
     public GUI() {
@@ -59,12 +61,8 @@ public class GUI extends JFrame{
             }
         };
 
-        //Parametri essenziali della visualizzazione
+        //Parametri header tabella
         modelloTabella.setColumnIdentifiers(new String[]{"Titolo", "Autore", "ISBN","Genere", "Stato lettura"});
-        modelloTabella.addRow(new String[]{"aa","bb","cc","dd","ee"});
-        modelloTabella.addRow(new String[]{"aa","bb","cc","dd","ee"});
-        modelloTabella.addRow(new String[]{"aa","bb","cc","dd","ee"});
-        modelloTabella.addRow(new String[]{"aa","bb","cc","dd","ee"});
         tabella = new JTable(modelloTabella);
 
 
@@ -78,10 +76,9 @@ public class GUI extends JFrame{
         tabella.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
         tabella.getTableHeader().setBackground(Color.LIGHT_GRAY);
         tabella.getTableHeader().setBorder(BorderFactory.createEmptyBorder(30, 0, 0, 0)); // Aggiungi padding superiore
+
         // Colore della riga selezionata
         tabella.setSelectionBackground(Color.BLACK);
-
-
 
 
         //Sfondo righe alternato in base alla riga
@@ -169,16 +166,19 @@ public class GUI extends JFrame{
 
         // Bottoni di corredo alla ricerca
         r1 = new JRadioButton("Per autore");
+        r1.setActionCommand("autore");
         r1.setFocusPainted(false);
         r1.setBounds(400, 50, 100, 20);
         pannelloBottoni.add(r1);
 
         r2 = new JRadioButton("Per titolo");
+        r2.setActionCommand("titolo");
         r2.setFocusPainted(false);
         r2.setBounds(500, 50, 100, 20);
         pannelloBottoni.add(r2);
 
         r3 = new JRadioButton("Per ISBN");
+        r3.setActionCommand("isbn");
         r3.setFocusPainted(false);
         r3.setBounds(600, 50, 100, 20);
         pannelloBottoni.add(r3);
@@ -225,8 +225,6 @@ public class GUI extends JFrame{
         comboOrdinamento.setBounds(820, 145, 300, 25);
         pannelloBottoni.add(comboOrdinamento);
 
-
-
     }
 
     public Libro getLibroSelezionato() {
@@ -249,6 +247,7 @@ public class GUI extends JFrame{
                 .setStatoLettura(Stato_Lettura.valueOf(cleanedStato))
                 .build();
     }
+
 
     private String getFiltroRicerca() {
         ButtonModel bottoneSel = gruppo.getSelection();
