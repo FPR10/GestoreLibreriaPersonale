@@ -288,18 +288,4 @@ public class GUI extends JFrame{
 
 
     }
-
-
-
-
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            GUI frame = new GUI();
-            LibreriaSingleton libreria = LibreriaSingleton.INSTANCE;
-            Controller controller = new Controller(libreria, frame);
-            frame.setVisible(true);
-        });
-    }
-
-
 }
