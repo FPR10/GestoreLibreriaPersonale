@@ -230,7 +230,7 @@ public class GUI extends JFrame{
     }
 
     public void setController(Controller controller) {
-          bottoneAggiungi.addActionListener(e -> new FinestraParametriLibro());
+          bottoneAggiungi.addActionListener(e-> new FinestraParametriLibro(controller));
           tabella.addMouseListener(Controller.ripristinaSelezione(tabella,ultimaRigaSelezionata));
 
           //Listener per far sparire 'Cerca libro'
