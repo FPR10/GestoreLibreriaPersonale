@@ -12,7 +12,7 @@ public class Controller {
     private final GUI grafica;
 
     public Controller(LibreriaSingleton impl, GUI grafica) {
-        this.impl = impl;
+        this.libreria = impl;
         this.grafica = grafica;
         grafica.setController(this);
     }
