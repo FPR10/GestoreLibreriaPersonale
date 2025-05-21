@@ -1,5 +1,8 @@
 package main.java.frontend;
 
+import main.java.backend.LibreriaSingleton;
+import main.java.controller.Controller;
+
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.FocusAdapter;
@@ -8,8 +11,15 @@ import java.awt.event.FocusEvent;
 public class FinestraParametriLibro extends JFrame {
 
     private static String segnapostoTitolo = "Obbligatorio";
+    private JTextField campoTitolo;
+    private JTextField campoAutoreNome;
+    private JTextField campoAutoreCognome;
+    private JTextField campoISBN;
+    private JComboBox<String> comboGenere;
+    private JComboBox<String> comboStato;
+    private JButton salva;
 
-    public FinestraParametriLibro() {
+    public FinestraParametriLibro(Controller c) {
 
         setTitle("Aggiungi un nuovo libro");
         setSize(450, 400);
@@ -19,68 +29,43 @@ public class FinestraParametriLibro extends JFrame {
         // Parametri libro
         JLabel labelTitolo = new JLabel("Titolo:");
         labelTitolo.setBounds(30, 30, 110, 25);
-        JTextField campoTitolo = new JTextField();
+        campoTitolo = new JTextField();
         campoTitolo.setBounds(140, 30, 210, 25);
         labelTitolo.setForeground(Color.RED);
 
         JLabel labelAutoreNome = new JLabel("Nome autore:");
         labelAutoreNome.setBounds(30, 70, 110, 25);
-        JTextField campoAutoreNome = new JTextField();
+        campoAutoreNome = new JTextField();
         campoAutoreNome.setBounds(140, 70, 210, 25);
 
         JLabel labelAutoreCognome = new JLabel("Cognome autore:");
         labelAutoreCognome.setBounds(30, 110, 110, 25);
-        JTextField campoAutoreCognome = new JTextField();
+        campoAutoreCognome = new JTextField();
         campoAutoreCognome.setBounds(140, 110, 210, 25);
         labelAutoreCognome.setForeground(Color.RED);
 
         JLabel labelISBN = new JLabel("ISBN:");
         labelISBN.setBounds(30, 150, 150, 25);
-        JTextField campoISBN = new JTextField();
+        campoISBN = new JTextField();
         campoISBN.setBounds(140, 150, 150, 25);
         labelISBN.setForeground(Color.RED);
 
         JLabel labelGenere = new JLabel("Genere:");
         labelGenere.setBounds(30, 190, 100, 25);
-        String[]opzioniGenere = {"BIOGRAFIA/AUTOBIOGRAFIA", "GIALLO", "THRILLER", "AVVENTURA/AZIONE", "FANTASCIENZA",
-        "DISTOPIA", "FANTASY", "HORROR", "ROMANZO DI FORMAZIONE", "ROSA"};
-        JComboBox<String> comboGenere = new JComboBox<>(opzioniGenere);
+        String[]opzioniGenere = {"BIOGRAFIA","AUTOBIOGRAFIA", "ROMANZO","GIALLO", "THRILLER", "AVVENTURA","AZIONE", "FANTASCIENZA",
+        "DISTOPIA", "FANTASY", "HORROR", "ROSA"};
+        comboGenere = new JComboBox<>(opzioniGenere);
         comboGenere.setBounds(140, 190, 200, 25);
 
         JLabel labelStato = new JLabel("Stato lettura:");
         labelStato.setBounds(30, 230, 100, 25);
         String[] opzioniStato = {"DA LEGGERE", "IN LETTURA", "LETTO"};
-        JComboBox<String> comboStato = new JComboBox<>(opzioniStato);
+        comboStato = new JComboBox<>(opzioniStato);
         comboStato.setBounds(140, 230, 200, 25);
 
 
-        JButton salva = new JButton("Salva");
+        salva = new JButton("Salva");
         salva.setBounds(140, 300, 100, 30);
-        salva.addActionListener(e -> {
-            String titolo = campoTitolo.getText();
-            String autoreNome = campoAutoreNome.getText();
-            String autoreCognome = campoAutoreCognome.getText();
-            String isbn = campoISBN.getText();
-            String genere = (String) comboGenere.getSelectedItem();
-            String stato = (String) comboStato.getSelectedItem();
-
-            if (titolo.isEmpty() || autoreCognome.isEmpty() || isbn.isEmpty() ||
-                 titolo.equals(segnapostoTitolo)|| autoreCognome.equals(segnapostoTitolo)|| isbn.equals(segnapostoTitolo)) {
-                JOptionPane.showMessageDialog(this,
-                        "Compila tutti i campi obbligatori!",
-                        "Campi mancanti",
-                        JOptionPane.WARNING_MESSAGE);
-                return; //blocco creazione
-            }
-
-
-
-            JOptionPane.showMessageDialog(this, "Libro salvato!", "Operazione avvenuta con successo",JOptionPane.INFORMATION_MESSAGE);
-
-
-            // Chiudi la finestra
-            dispose();
-        });
 
         // Aggiungi tutto al frame
         add(labelTitolo);
@@ -108,6 +93,9 @@ public class FinestraParametriLibro extends JFrame {
         aggiungiSegnapostoObbligatorio(campoISBN, segnapostoTitolo);
 
         setVisible(true);
+
+        setController(c);
+
     }
 
     public void aggiungiSegnapostoObbligatorio(JTextField campo, String testoSegnaposto) {
@@ -134,11 +122,9 @@ public class FinestraParametriLibro extends JFrame {
     }
 
 
-    public static void main(String[] args) {
-        SwingUtilities.invokeLater(() -> {
-            FinestraParametriLibro frame = new FinestraParametriLibro();
-            frame.setVisible(true);
-        });
+    private void setController(Controller c){
+           salva.addActionListener(e -> Controller.SalvaLibro(campoTitolo, campoAutoreNome, campoAutoreCognome,campoISBN, comboGenere, comboStato,segnapostoTitolo,this ));
     }
+
 }
 
