@@ -8,6 +8,12 @@ import main.java.backend.libro.Genere_Libri;
 import main.java.backend.libro.Libro;
 import main.java.backend.libro.Stato_Lettura;
 import main.java.backend.libro.Valutazione_Personale;
+import main.java.backend.ordinamento.OrdinamentoFactory;
+import main.java.backend.ordinamento.OrdinamentoFactoryIF;
+import main.java.backend.ordinamento.OrdinamentoStrategyIF;
+import main.java.backend.ricerca.RicercaFactory;
+import main.java.backend.ricerca.RicercaFactoryIF;
+import main.java.backend.ricerca.RicercaStrategyIF;
 import main.java.backend.salvataggio.SalvaCSV;
 import main.java.backend.salvataggio.SalvaFileStrategyIF;
 import main.java.backend.salvataggio.SalvaJSON;
@@ -15,10 +21,13 @@ import main.java.frontend.FinestraParametriLibro;
 import main.java.frontend.GUI;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
+import javax.swing.table.TableModel;
+import javax.swing.table.TableRowSorter;
 import java.awt.event.*;
 import java.util.List;
 import java.util.Map;
-
+import java.util.Set;
+import java.util.stream.Collectors;
 
 
 public class Controller {
@@ -183,18 +192,26 @@ public class Controller {
         FiltroStrategyIF fs = filtroFac.creaFiltro(tipoFiltro);
         List <Libro> ret = fs.filtra(libreria);
 
+        aggiornaTabellaGUI(ret);
 
     }
 
 
-
     public static void applicaOrdinamento(String tipoOrdinamento){
+        OrdinamentoFactoryIF ordFac = new OrdinamentoFactory();
+        OrdinamentoStrategyIF ordStr = ordFac.creaOrdinamento(tipoOrdinamento);
+        List<Libro> ret = ordStr.ordina(libreria);
 
+        aggiornaTabellaGUI(ret);
     }
 
 
     public static void ricerca (String testoDaRicercare, String tipoRicerca){
+        RicercaFactoryIF ricFac = new RicercaFactory();
+        RicercaStrategyIF ricStr = ricFac.ricerca(testoDaRicercare,tipoRicerca);
+        List<Libro>ret = ricStr.ricerca(libreria);
 
+        aggiornaTabellaGUI(ret);
     }
 
 
