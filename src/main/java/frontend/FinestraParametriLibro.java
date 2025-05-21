@@ -11,8 +11,6 @@ public class FinestraParametriLibro extends JFrame {
 
     public FinestraParametriLibro() {
 
-
-
         setTitle("Aggiungi un nuovo libro");
         setSize(450, 400);
         setLocationRelativeTo(null);
