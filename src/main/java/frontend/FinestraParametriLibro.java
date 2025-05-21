@@ -18,6 +18,7 @@ public class FinestraParametriLibro extends JFrame {
     private JTextField campoISBN;
     private JComboBox<String> comboGenere;
     private JComboBox<String> comboStato;
+    private JComboBox<String> comboValutazione;
     private JButton salva;
 
     private Controller c;
@@ -30,7 +31,7 @@ public class FinestraParametriLibro extends JFrame {
 
 
         setTitle("Aggiungi un nuovo libro");
-        setSize(450, 400);
+        setSize(450, 450);
         setLocationRelativeTo(null);
         setLayout(null);
 
@@ -79,7 +80,7 @@ public class FinestraParametriLibro extends JFrame {
 
 
         salva = new JButton("Salva");
-        salva.setBounds(140, 300, 100, 30);
+        salva.setBounds(175, 360, 100, 30);
 
         // Aggiungi tutto al frame
         add(labelTitolo);
@@ -99,6 +100,10 @@ public class FinestraParametriLibro extends JFrame {
 
         add(labelStato);
         add(comboStato);
+
+        add(labelValutazione);
+        add(comboValutazione);
+
         add(salva);
 
 
@@ -138,7 +143,7 @@ public class FinestraParametriLibro extends JFrame {
 
     private void setController(Controller c){
            salva.addActionListener(e -> Controller.SalvaLibro(campoTitolo, campoAutoreNome, campoAutoreCognome,
-                   campoISBN, comboGenere, comboStato,segnapostoTitolo,this , modelloTabella));
+                   campoISBN, comboGenere, comboStato,comboValutazione,segnapostoTitolo,this , modelloTabella));
     }
 
 }

@@ -32,6 +32,8 @@ public class GUI extends JFrame{
     private  JRadioButton r3;
     private ButtonGroup gruppo;
     private int [] ultimaRigaSelezionata = {-1};
+    private static int contElementi = 0;
+    private JLabel statusLabel;
 
 
 
@@ -122,7 +124,7 @@ public class GUI extends JFrame{
         pannelloStato.setPreferredSize(new Dimension(900,40));
         pannelloStato.setBorder(BorderFactory.createEmptyBorder(5, 20, 5, 20));
         pannelloStato.setBackground(Color.white);
-        JLabel statusLabel = new JLabel("Totale libri: 0");
+        statusLabel = new JLabel("Totale libri:" + " " +contElementi);
         pannelloStato.add(statusLabel, BorderLayout.WEST);
         add(pannelloStato,BorderLayout.SOUTH);
 
@@ -225,14 +227,12 @@ public class GUI extends JFrame{
 
     }
 
-    public Libro getLibroSelezionato() {
+    public Map.Entry<Integer, Libro> getLibroSelezionato() {
         int rigaSelezionata = tabella.getSelectedRow();
         if (rigaSelezionata == -1) {
-            // nessuna riga selezionata
             return null;
         }
 
-        // Prendo i dati da ogni colonna
         String titolo = (String) modelloTabella.getValueAt(rigaSelezionata, 0);
         String autore = (String) modelloTabella.getValueAt(rigaSelezionata, 1);
         String isbn = (String) modelloTabella.getValueAt(rigaSelezionata, 2);
@@ -240,11 +240,14 @@ public class GUI extends JFrame{
         String stato = (String) modelloTabella.getValueAt(rigaSelezionata, 4);
         String cleanedStato = stato.replace(" ", "_");
 
-        return new Libro.Builder(titolo,autore,isbn)
+        Libro libro = new Libro.Builder(titolo, autore, isbn)
                 .setGenereLibri(Genere_Libri.valueOf(genere))
                 .setStatoLettura(Stato_Lettura.valueOf(cleanedStato))
                 .build();
+
+        return new AbstractMap.SimpleEntry<>(rigaSelezionata, libro);
     }
+
 
 
     private String getFiltroRicerca() {
@@ -259,6 +262,12 @@ public class GUI extends JFrame{
 
     }
 
+    public void setContatore(int cont) {
+        contElementi = cont;
+        statusLabel.setText("Totale libri: " + cont);
+    }
+
+
 
     public void setController(Controller controller) {
           //Istanzia FinestraParametriLibro per la comparsa del modulo aggiuntivo per i parametri libro
@@ -270,9 +279,9 @@ public class GUI extends JFrame{
           //Listener per far sparire 'Cerca libro'
           barraRicerca.addFocusListener(Controller.gestisciFocus(barraRicerca, "Cerca libro", ""));
 
-          bottoneModifica.addActionListener(e -> Controller.modificaLibro(getLibroSelezionato()));
+          bottoneModifica.addActionListener(e -> Controller.modificaLibro(getLibroSelezionato().getValue()));
 
-          bottoneElimina.addActionListener(e -> Controller.eliminaLibro(getLibroSelezionato()));
+          bottoneElimina.addActionListener(e -> Controller.eliminaLibro(getLibroSelezionato(),modelloTabella));
 
           bottoneSalvaJSON.addActionListener(e -> Controller.salvaJSON());
 
