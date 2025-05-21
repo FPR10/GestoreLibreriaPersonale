@@ -118,6 +118,9 @@ public class Controller {
 
     public static void eliminaLibro(Libro l){
 
+    public static void eliminaLibro(Map.Entry<Integer,Libro> toDelete, DefaultTableModel modelloTabella){
+        libreria.rimuoviLibro(toDelete.getValue());
+        modelloTabella.removeRow(toDelete.getKey());
     }
 
 
