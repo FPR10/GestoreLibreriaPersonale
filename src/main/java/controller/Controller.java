@@ -3,11 +3,8 @@ package main.java.controller;
 import main.java.backend.LibreriaSingleton;
 import main.java.frontend.FinestraParametriLibro;
 import main.java.frontend.GUI;
-
 import javax.swing.*;
 import java.awt.event.*;
-
-
 
 
 public class Controller {
@@ -20,6 +17,9 @@ public class Controller {
         grafica.setController(this);
     }
 
+    /*
+    Consente di ripristinare il colore originale di una riga della tabella selezionata
+     */
     public static MouseAdapter ripristinaSelezione(JTable tabella, int[] ultimaRigaSelezionata) {
         return new MouseAdapter() {
             @Override
@@ -41,13 +41,15 @@ public class Controller {
         };
     }
 
-
-    public static FocusListener gestisciFocus(JTextField campo){
+    /*
+      Fa scomparire labelVecchia quando l'utente preme sul campo
+     */
+    public static FocusListener gestisciFocus(JTextField campo, String labelVecchia, String labelNuova){
         return new FocusListener() {
             @Override
             public void focusGained(FocusEvent e) {
-                if (campo.getText().equals("Cerca libro")) {
-                    campo.setText("");
+                if (campo.getText().equals(labelVecchia)) {
+                    campo.setText(labelNuova);
                     campo.setForeground(java.awt.Color.BLACK);
                 }
             }
@@ -55,13 +57,17 @@ public class Controller {
             @Override
             public void focusLost(FocusEvent e) {
                 if (campo.getText().isEmpty()) {
-                    campo.setText("Cerca libro");
+                    campo.setText(labelVecchia);
                     campo.setForeground(java.awt.Color.GRAY);
                 }
             }
         };
     }
 
+    /*
+      Riceve i campi del form di compilazione del Libro, crea un libro in LibreriaSingleton e lo aggiunge alla tabella GUI.
+      Notifica visivamente se l'operazione è andata o meno a buon fine.
+     */
     public static void SalvaLibro(JTextField campoTitolo, JTextField campoAutoreNome, JTextField campoAutoreCognome, JTextField campoIsbn,
                                   JComboBox<String> campoGenere, JComboBox<String> campoStato, String segnapostoTitolo, FinestraParametriLibro finestra){
             String titolo = campoTitolo.getText();
@@ -82,7 +88,7 @@ public class Controller {
                 return;
             }
         JOptionPane.showMessageDialog(null,"Libro salvato!","Operazione avvenuta con successo",JOptionPane.INFORMATION_MESSAGE);
-        finestra.dispose();
+        finestra.dispose();  //chisura automatica finestra se il libro è stato salvato
         }
 
 
