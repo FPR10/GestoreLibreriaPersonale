@@ -9,11 +9,11 @@ public class FiltroFactory implements FiltroFactoryIF{
     public FiltroStrategyIF creaFiltro(String tipoFiltro) {
            switch (tipoFiltro){
                case "Filtra stato lettura" : {
-                   Stato_Lettura stato = Stato_Lettura.valueOf(clearString(tipoFiltro));
+                   Stato_Lettura stato = Stato_Lettura.valueOf(FiltroFactoryIF.clearString(tipoFiltro));
                    return new FiltroStatoLettura(stato);
                }
                case "Filtra per genere":{
-                   Genere_Libri genere = Genere_Libri.valueOf(clearString(tipoFiltro));
+                   Genere_Libri genere = Genere_Libri.valueOf(FiltroFactoryIF.clearString(tipoFiltro));
                    return new FiltroGenere(genere);
                }
                default: return new NessunFiltro();
