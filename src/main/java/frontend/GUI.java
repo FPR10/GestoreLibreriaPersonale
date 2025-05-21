@@ -264,6 +264,7 @@ public class GUI extends JFrame{
 
 
     public void setController(Controller controller) {
+          //Istanzia FinestraParametriLibro per la comparsa del modulo aggiuntivo per i parametri libro
           bottoneAggiungi.addActionListener(e-> new FinestraParametriLibro(controller));
 
           //Ripristino colore riga selezioanta
