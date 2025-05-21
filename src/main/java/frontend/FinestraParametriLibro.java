@@ -71,6 +71,12 @@ public class FinestraParametriLibro extends JFrame {
         comboStato = new JComboBox<>(opzioniStato);
         comboStato.setBounds(140, 230, 200, 25);
 
+        JLabel labelValutazione = new JLabel("Valutazione:");
+        labelValutazione.setBounds(30, 270, 100, 25);
+        String[] opzioniValutazione = {"UNA STELLA", "DUE STELLE", "TRE STELLE", "QUATTRO STELLE", "CINQUE STELLE"};
+        comboValutazione = new JComboBox<>(opzioniValutazione);
+        comboValutazione.setBounds(140, 270, 200, 25);
+
 
         salva = new JButton("Salva");
         salva.setBounds(140, 300, 100, 30);
