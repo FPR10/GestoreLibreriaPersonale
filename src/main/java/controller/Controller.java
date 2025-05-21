@@ -158,7 +158,27 @@ public class Controller {
     }
 
 
-    public static void applicaFiltro(String tipoFiltro){
+    private static void aggiornaTabellaGUI(List<Libro>libri){
+        DefaultTableModel modelloTabella = grafica.getModelloTabella();
+
+        // Cancella tutte le righe esistenti
+        modelloTabella.setRowCount(0);
+
+        // Aggiungi le nuove righe con i libri filtrati
+        for (Libro libro : libri) {
+            Object[] riga = {
+                    libro.getTitolo(),
+                    libro.getAutore(),
+                    libro.getISBN(),
+                    libro.getGenLib().toString(),
+                    libro.getStatLett().toString().replace("_", " ")
+            };
+            modelloTabella.addRow(riga);
+        }
+    }
+
+
+    public static void applicaFiltro(String tipoFiltro, DefaultTableModel modelloTabella){
         FiltroFactoryIF filtroFac = new FiltroFactory();
         FiltroStrategyIF fs = filtroFac.creaFiltro(tipoFiltro);
         List <Libro> ret = fs.filtra(libreria);
