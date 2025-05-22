@@ -143,7 +143,7 @@ public class GUI extends JFrame{
         bottoneAggiungi = new JButton("+ Aggiungi libro");
         bottoneAggiungi.setBackground(Color.green);
         bottoneAggiungi.setFocusPainted(false);
-        bottoneAggiungi.setBounds(50, 50, 150, 30);
+        bottoneAggiungi.setBounds(150, 50, 150, 30);
         pannelloBottoni.add(bottoneAggiungi);
 
 
@@ -152,7 +152,7 @@ public class GUI extends JFrame{
         bottoneModifica = new JButton("\uD83D\uDD8A\uFE0F" + " "+ "Modifica libro");
         bottoneModifica.setBackground(Color.orange);
         bottoneModifica.setFocusPainted(false);
-        bottoneModifica.setBounds(50, 90, 150, 30);
+        bottoneModifica.setBounds(150, 90, 150, 30);
         pannelloBottoni.add(bottoneModifica);
 
 
@@ -160,7 +160,7 @@ public class GUI extends JFrame{
         bottoneElimina = new JButton("Elimina libro");
         bottoneElimina.setBackground(Color.red);
         bottoneElimina.setFocusPainted(false);
-        bottoneElimina.setBounds(50, 130, 150, 30);
+        bottoneElimina.setBounds(150, 130, 150, 30);
         pannelloBottoni.add(bottoneElimina);
 
 
@@ -168,19 +168,19 @@ public class GUI extends JFrame{
         r1 = new JRadioButton("Per autore");
         r1.setActionCommand("autore");
         r1.setFocusPainted(false);
-        r1.setBounds(400, 50, 100, 20);
+        r1.setBounds(500, 50, 100, 20);
         pannelloBottoni.add(r1);
 
         r2 = new JRadioButton("Per titolo");
         r2.setActionCommand("titolo");
         r2.setFocusPainted(false);
-        r2.setBounds(500, 50, 100, 20);
+        r2.setBounds(600, 50, 100, 20);
         pannelloBottoni.add(r2);
 
         r3 = new JRadioButton("Per ISBN");
         r3.setActionCommand("isbn");
         r3.setFocusPainted(false);
-        r3.setBounds(600, 50, 100, 20);
+        r3.setBounds(700, 50, 100, 20);
         pannelloBottoni.add(r3);
 
         gruppo = new ButtonGroup();
@@ -190,14 +190,14 @@ public class GUI extends JFrame{
 
         // Barra di ricerca
         barraRicerca = new JTextField("Cerca libro");
-        barraRicerca.setBounds(400, 85, 300, 25);
+        barraRicerca.setBounds(500, 85, 300, 25);
         barraRicerca.setForeground(java.awt.Color.GRAY);
         pannelloBottoni.add(barraRicerca);
 
         // Bottone ricerca libro
         bottoneRicerca = new JButton("\uD83D\uDD0D");
         bottoneRicerca.setFocusPainted(false);
-        bottoneRicerca.setBounds(725, 85, 50, 25);
+        bottoneRicerca.setBounds(825, 85, 50, 25);
         pannelloBottoni.add(bottoneRicerca);
 
 
@@ -216,14 +216,15 @@ public class GUI extends JFrame{
         // Menu a tendina per filtrare
         String[] opzioniFiltro = {"Nessun filtro", "Filtra per genere", "Filtra per stato lettura"};
         comboFiltro = new JComboBox<>(opzioniFiltro);
-        comboFiltro.setBounds(820, 50, 300, 25);
+        comboFiltro.setBounds(1100, 50, 150, 25);
         pannelloBottoni.add(comboFiltro);
 
         // Menu a tendina per filtrare
         String[] opzioniOrdinamento = {"Ordina per autore", "Ordina per titolo", "Ordina per valutazione"};
         comboOrdinamento = new JComboBox<>(opzioniOrdinamento);
-        comboOrdinamento.setBounds(820, 145, 300, 25);
+        comboOrdinamento.setBounds(1100, 140, 150, 25);
         pannelloBottoni.add(comboOrdinamento);
+
 
     }
 
