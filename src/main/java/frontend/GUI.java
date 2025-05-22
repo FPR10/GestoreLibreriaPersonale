@@ -43,7 +43,7 @@ public class GUI extends JFrame{
         INIZIALIZZAZIONE FINESTRA
          */
         setTitle("Gestore Libreria Personale");
-        setSize(1200, 600);
+        setSize(1400, 600);
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLayout(new BorderLayout());
         setLocationRelativeTo(null); //finestra centrata su schermo
@@ -62,7 +62,7 @@ public class GUI extends JFrame{
         };
 
         //Parametri header tabella
-        modelloTabella.setColumnIdentifiers(new String[]{"Titolo", "Autore", "ISBN","Genere", "Stato lettura"});
+        modelloTabella.setColumnIdentifiers(new String[]{"Titolo", "Autore", "ISBN","Genere", "Stato lettura", "Valutazione"});
         tabella = new JTable(modelloTabella);
 
 
