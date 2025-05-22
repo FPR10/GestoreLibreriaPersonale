@@ -133,7 +133,7 @@ public class Controller {
 
         //Aggiunta al backend
         libreria.aggiungiLibro(toAdd);
-        modelloTabella.addRow(new String[]{titolo,autoreCognome+" "+autoreNome,isbn,genere,stato});
+        modelloTabella.addRow(new String[]{titolo,autoreCognome+" "+autoreNome,isbn,genere,stato, valutazione});
 
         JOptionPane.showMessageDialog(null, "Libro salvato!", "Operazione avvenuta con successo", JOptionPane.INFORMATION_MESSAGE);
         grafica.setContatore(modelloTabella.getRowCount());
@@ -215,4 +215,8 @@ public class Controller {
     }
 
 
+
+    public static void ripristinaVista() {
+        aggiornaTabellaGUI(libreria.getLibreria());
+    }
 }
