@@ -27,6 +27,7 @@ public class GUI extends JFrame{
     private final JComboBox<String> comboFiltro;
     private final JComboBox<String>comboOrdinamento;
     private final JTextField barraRicerca;
+    private final JButton bottoneRipristina;
     private  JRadioButton r1;
     private  JRadioButton r2;
     private  JRadioButton r3;
@@ -222,8 +223,14 @@ public class GUI extends JFrame{
         // Menu a tendina per filtrare
         String[] opzioniOrdinamento = {"Ordina per autore", "Ordina per titolo", "Ordina per valutazione"};
         comboOrdinamento = new JComboBox<>(opzioniOrdinamento);
-        comboOrdinamento.setBounds(1100, 140, 150, 25);
+        comboOrdinamento.setBounds(1100, 100, 150, 25);
         pannelloBottoni.add(comboOrdinamento);
+
+
+        bottoneRipristina = new JButton("\uD83D\uDD04" + "Ripristina vista");
+        bottoneRipristina.setFocusPainted(false);
+        bottoneRipristina.setBounds(1100, 150, 150, 25);
+        pannelloBottoni.add(bottoneRipristina);
 
 
     }
@@ -255,9 +262,9 @@ public class GUI extends JFrame{
         ButtonModel bottoneSel = gruppo.getSelection();
         String tipoRicerca = bottoneSel.getActionCommand();
         return switch (tipoRicerca) {
-            case "titolo" -> "titolo";
-            case "isbn" -> "isbn";
-            default -> "autore";
+            case "titolo" -> "Per titolo";
+            case "isbn" -> "Per isbn";
+            default -> "Per autore";
         };
     }
 
@@ -294,8 +301,8 @@ public class GUI extends JFrame{
 
           comboOrdinamento.addActionListener(e -> Controller.applicaOrdinamento((String) comboOrdinamento.getSelectedItem()));
 
-           bottoneRicerca.addActionListener(e -> Controller.ricerca(barraRicerca.getText(), getFiltroRicerca()));
+          bottoneRicerca.addActionListener(e -> Controller.ricerca(barraRicerca.getText(), getFiltroRicerca()));
 
-
+          bottoneRipristina.addActionListener(e -> Controller.ripristinaVista());
     }
 }
