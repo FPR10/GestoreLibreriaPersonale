@@ -1,6 +1,7 @@
 package main.java.backend.libro;
 
 public enum Genere_Libri {
+    NON_SELEZIONATO,
     BIOGRAFIA,
     AUTOBIOGRAFIA,
     ROMANZO,

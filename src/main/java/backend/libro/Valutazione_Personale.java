@@ -6,6 +6,7 @@ public enum Valutazione_Personale {
      - bassa se è STELLA_1
      - alta se STELLA_5
      */
+    NON_SELEZIONATO,
     UNA_STELLA,
     DUE_STELLE,
     TRE_STELLE,
