@@ -1,12 +1,15 @@
 package main.java.frontend;
-
-
+import main.java.backend.libro.Libro;
+import main.java.backend.ricerca.RicercaPerISBN;
+import main.java.backend.ricerca.RicercaStrategyIF;
 import main.java.controller.Controller;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;
 import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
+
+import static main.java.controller.Controller.ricerca;
 
 public class FinestraParametriLibro extends JFrame {
 
@@ -19,10 +22,15 @@ public class FinestraParametriLibro extends JFrame {
     private JComboBox<String> comboStato;
     private JComboBox<String> comboValutazione;
     private JButton salva;
+    private Libro libroDaModificare;
 
     private Controller c;
     private DefaultTableModel modelloTabella;
 
+
+    /*
+    Costruttore per aggiungere un libro
+     */
     public FinestraParametriLibro(Controller c, DefaultTableModel modelloTabella) {
 
         this.c = c;
@@ -113,8 +121,41 @@ public class FinestraParametriLibro extends JFrame {
         setVisible(true);
 
         setController(c);
-
     }
+
+    /*
+    Costruttore per modificare un libro
+     */
+    public FinestraParametriLibro(Controller c, DefaultTableModel modelloTabella, String isbnLibro) {
+        this(c, modelloTabella);
+
+        Libro libro = Controller.getLibroFromISBN(isbnLibro);
+        this.libroDaModificare = libro;
+
+
+        setTitle("Modifica libro");
+        salva.setText("Modifica");
+
+        // I campi vengono precompilati con quelli già inseriti dall'utente
+        campoTitolo.setText(libro.getTitolo());
+        campoTitolo.setForeground(Color.BLACK);
+
+        campoAutoreNome.setText(libro.getNomeAutore());
+        campoAutoreNome.setForeground(Color.black);
+        campoAutoreCognome.setText(libro.getCognomeAutore());
+        campoAutoreCognome.setForeground(Color.BLACK);
+
+        campoISBN.setText(libro.getISBN());
+        campoISBN.setForeground(Color.BLACK);
+
+        comboGenere.setSelectedItem(libro.getGenLib().name().replace("_"," "));
+        comboStato.setSelectedItem(libro.getStatLett().name().replace("_"," "));
+        comboValutazione.setSelectedItem(libro.getValPers().name().replace("_"," "));
+
+        // Imposta il controller con comportamento di modifica
+        setControllerPerModifica(c);
+    }
+
 
     public void aggiungiSegnapostoObbligatorio(JTextField campo, String testoSegnaposto) {
         campo.setForeground(Color.GRAY);
@@ -144,6 +185,12 @@ public class FinestraParametriLibro extends JFrame {
            salva.addActionListener(e -> Controller.SalvaLibro(campoTitolo, campoAutoreNome, campoAutoreCognome,
                    campoISBN, comboGenere, comboStato,comboValutazione,segnapostoTitolo,this , modelloTabella));
     }
+
+    private void setControllerPerModifica(Controller c){
+        salva.addActionListener(e -> Controller.ModificaLibro(libroDaModificare, campoTitolo, campoAutoreNome,
+                campoAutoreCognome, campoISBN, comboGenere, comboStato, comboValutazione, segnapostoTitolo, this, modelloTabella));
+    }
+
 
 }
 
