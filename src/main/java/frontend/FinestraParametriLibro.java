@@ -11,6 +11,7 @@ import java.util.Map;
 
 public class FinestraParametriLibro extends JFrame {
 
+    //Bottoni e textfield dei campi di compilazione
     private static final String segnapostoTitolo = "Obbligatorio";
     private JTextField campoTitolo;
     private JTextField campoAutoreNome;
@@ -20,6 +21,8 @@ public class FinestraParametriLibro extends JFrame {
     private JComboBox<String> comboStato;
     private JComboBox<String> comboValutazione;
     private JButton salva;
+
+    //Per supportare la modifica
     private Libro libroDaModificare;
     private int rigaLibroDaModifica;
 
@@ -124,40 +127,6 @@ public class FinestraParametriLibro extends JFrame {
         }
     }
 
-
-    /*
-    Costruttore per modificare un libro
-     */
-//    public FinestraParametriLibro(Controller c, DefaultTableModel modelloTabella, Map.Entry<Integer, String> toMod) {
-//        this(c, modelloTabella);
-//
-//        Libro libro = Controller.getLibroFromISBN(toMod.getValue()); //isbn
-//        this.libroDaModificare = libro;
-//        this.rigaLibroDaModifica = toMod.getKey();
-//
-//
-//        setTitle("Modifica libro");
-//        salva.setText("Modifica");
-//
-//        // Campi precompilati con le informazioni già inserite
-//        campoTitolo.setText(libro.getTitolo());
-//        campoTitolo.setForeground(Color.BLACK);
-//
-//        campoAutoreNome.setText(libro.getNomeAutore());
-//        campoAutoreNome.setForeground(Color.black);
-//        campoAutoreCognome.setText(libro.getCognomeAutore());
-//        campoAutoreCognome.setForeground(Color.BLACK);
-//
-//        campoISBN.setText(libro.getISBN());
-//        campoISBN.setForeground(Color.BLACK);
-//
-//        comboGenere.setSelectedItem(libro.getGenLib().name().replace("_"," "));
-//        comboStato.setSelectedItem(libro.getStatLett().name().replace("_"," "));
-//        comboValutazione.setSelectedItem(libro.getValPers().name().replace("_"," "));
-//
-//        // Imposto il controller con comportamento di modifica
-//        setControllerModifica(c);
-//    }
 
     public FinestraParametriLibro(Controller c, DefaultTableModel modelloTabella, Map.Entry<Integer, String> toMod) {
         this.c = c;
