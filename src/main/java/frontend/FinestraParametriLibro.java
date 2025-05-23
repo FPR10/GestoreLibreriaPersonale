@@ -61,20 +61,20 @@ public class FinestraParametriLibro extends JFrame {
 
         JLabel labelGenere = new JLabel("Genere:");
         labelGenere.setBounds(30, 190, 100, 25);
-        String[]opzioniGenere = {"BIOGRAFIA","AUTOBIOGRAFIA", "ROMANZO","GIALLO", "THRILLER", "AVVENTURA","AZIONE", "FANTASCIENZA",
+        String[]opzioniGenere = {"NON SELEZIONATO","BIOGRAFIA","AUTOBIOGRAFIA", "ROMANZO","GIALLO", "THRILLER", "AVVENTURA","AZIONE", "FANTASCIENZA",
         "DISTOPIA", "FANTASY", "HORROR", "ROSA"};
         comboGenere = new JComboBox<>(opzioniGenere);
         comboGenere.setBounds(140, 190, 200, 25);
 
         JLabel labelStato = new JLabel("Stato lettura:");
         labelStato.setBounds(30, 230, 100, 25);
-        String[] opzioniStato = {"DA LEGGERE", "IN LETTURA", "LETTO"};
+        String[] opzioniStato = {"NON SELEZIONATO","DA LEGGERE", "IN LETTURA", "LETTO"};
         comboStato = new JComboBox<>(opzioniStato);
         comboStato.setBounds(140, 230, 200, 25);
 
         JLabel labelValutazione = new JLabel("Valutazione:");
         labelValutazione.setBounds(30, 270, 100, 25);
-        String[] opzioniValutazione = {"UNA STELLA", "DUE STELLE", "TRE STELLE", "QUATTRO STELLE", "CINQUE STELLE"};
+        String[] opzioniValutazione = {"NON SELEZIONATO","UNA STELLA", "DUE STELLE", "TRE STELLE", "QUATTRO STELLE", "CINQUE STELLE"};
         comboValutazione = new JComboBox<>(opzioniValutazione);
         comboValutazione.setBounds(140, 270, 200, 25);
 

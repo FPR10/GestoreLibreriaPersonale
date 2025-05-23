@@ -27,7 +27,8 @@ public class GUI extends JFrame{
     private final JComboBox<String> comboFiltro;
     private final JComboBox<String>comboOrdinamento;
     private final JTextField barraRicerca;
-    private final JButton bottoneRipristina;
+    private final JButton bottoneRipristinaVista;
+    private final JButton bottoneRipristinoFile;
     private  JRadioButton r1;
     private  JRadioButton r2;
     private  JRadioButton r3;
@@ -202,6 +203,13 @@ public class GUI extends JFrame{
         pannelloBottoni.add(bottoneRicerca);
 
 
+        //Bottone ripristino file
+        bottoneRipristinoFile = new JButton("Carica libreria");
+        bottoneRipristinoFile.setFocusPainted(false);
+        pannelloSalvataggio.add(bottoneRipristinoFile);
+
+
+
         // Bottone salvataggio JSON
         bottoneSalvaJSON = new JButton("\uD83D\uDCBE" + " JSON");
         bottoneSalvaJSON.setFocusPainted(false);
@@ -212,6 +220,8 @@ public class GUI extends JFrame{
         bottoneSalvaCSV = new JButton("\uD83D\uDCBE" + " CSV");
         bottoneSalvaCSV.setFocusPainted(false);
         pannelloSalvataggio.add(bottoneSalvaCSV);
+
+
 
 
         // Menu a tendina per filtrare
@@ -227,10 +237,10 @@ public class GUI extends JFrame{
         pannelloBottoni.add(comboOrdinamento);
 
 
-        bottoneRipristina = new JButton("\uD83D\uDD04" + "Ripristina vista");
-        bottoneRipristina.setFocusPainted(false);
-        bottoneRipristina.setBounds(1100, 150, 150, 25);
-        pannelloBottoni.add(bottoneRipristina);
+        bottoneRipristinaVista = new JButton("\uD83D\uDD04" + "Ripristina vista");
+        bottoneRipristinaVista.setFocusPainted(false);
+        bottoneRipristinaVista.setBounds(1100, 150, 150, 25);
+        pannelloBottoni.add(bottoneRipristinaVista);
 
 
     }
@@ -303,6 +313,8 @@ public class GUI extends JFrame{
 
           bottoneRicerca.addActionListener(e -> Controller.ricerca(barraRicerca.getText(), getFiltroRicerca()));
 
-          bottoneRipristina.addActionListener(e -> Controller.ripristinaVista());
+          bottoneRipristinaVista.addActionListener(e -> Controller.ripristinaVista());
+
+          bottoneRipristinoFile.addActionListener(e -> Controller.caricaLibreriaDaFile());
     }
 }
