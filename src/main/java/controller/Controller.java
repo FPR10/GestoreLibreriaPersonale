@@ -14,20 +14,17 @@ import main.java.backend.ordinamento.OrdinamentoStrategyIF;
 import main.java.backend.ricerca.RicercaFactory;
 import main.java.backend.ricerca.RicercaFactoryIF;
 import main.java.backend.ricerca.RicercaStrategyIF;
-import main.java.backend.salvataggio.SalvaCSV;
-import main.java.backend.salvataggio.SalvaFileStrategyIF;
-import main.java.backend.salvataggio.SalvaJSON;
+import main.java.backend.salvataggio.*;
 import main.java.frontend.FinestraParametriLibro;
 import main.java.frontend.GUI;
 import javax.swing.*;
+import javax.swing.filechooser.FileNameExtensionFilter;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableModel;
-import javax.swing.table.TableRowSorter;
 import java.awt.event.*;
+import java.io.File;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
-import java.util.stream.Collectors;
+import org.apache.commons.io.FilenameUtils;
 
 
 public class Controller {
@@ -104,9 +101,7 @@ public class Controller {
         String isbn = campoIsbn.getText();
         String genere = (String) campoGenere.getSelectedItem();
         String stato = (String) campoStato.getSelectedItem();
-        String cleanedStato = stato.replace(" ", "_");
         String valutazione = (String) campoValutazione.getSelectedItem();
-        String cleanedValutazione = valutazione.replace(" ", "_");
 
         if (titolo.isEmpty() || autoreCognome.isEmpty() || isbn.isEmpty() ||
                 titolo.equals(segnapostoTitolo) || autoreCognome.equals(segnapostoTitolo) || isbn.equals(segnapostoTitolo)) {
@@ -119,9 +114,9 @@ public class Controller {
 
         Libro toAdd = new Libro.Builder(titolo,autoreCognome, isbn)
                 .setAutoreNome(autoreNome)
-                .setGenereLibri(Genere_Libri.valueOf(genere))
-                .setStatoLettura(Stato_Lettura.valueOf(cleanedStato))
-                .setValutazionePersonale(Valutazione_Personale.valueOf(cleanedValutazione))
+                .setGenereLibri(Genere_Libri.valueOf(cleanString(genere)))
+                .setStatoLettura(Stato_Lettura.valueOf(cleanString(stato)))
+                .setValutazionePersonale(Valutazione_Personale.valueOf(cleanString(valutazione)))
                 .build();
 
 
@@ -154,13 +149,13 @@ public class Controller {
 
 
     public static void salvaJSON(){
-        SalvaFileStrategyIF sf = new SalvaJSON();
+        SalvaRipristinaStrategyIF sf = new SalvaJSON();
         sf.salva(libreria, "salvataggio.json");
         JOptionPane.showMessageDialog(null, "Libreria salvata in JSON!", "Operazione avvenuta con successo", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public static void salvaCSV(){
-        SalvaFileStrategyIF sf = new SalvaCSV();
+        SalvaRipristinaStrategyIF sf = new SalvaCSV();
         sf.salva(libreria, "salvataggio.csv");
         JOptionPane.showMessageDialog(null, "Libreria salvata in CSV!", "Operazione avvenuta con successo", JOptionPane.INFORMATION_MESSAGE);
 
@@ -238,8 +233,12 @@ public class Controller {
              SalvaRipristinaStrategyIF srs = srf.scelta(pathFile);
              srs.ripristina(libreria,nomeFile+"."+estensioneFile);
              aggiornaTabellaGUI(libreria.getLibreria());
+             JOptionPane.showMessageDialog(null, "Libreria importata da file !",
+                     "Operazione avvenuta con successo", JOptionPane.INFORMATION_MESSAGE);
          }
-
+         else{
+             JOptionPane.showMessageDialog(null, "Errore nell'importazione", "Errore", JOptionPane.WARNING_MESSAGE);
+         }
 
 
      }
@@ -248,4 +247,10 @@ public class Controller {
     public static void ripristinaVista() {
         aggiornaTabellaGUI(libreria.getLibreria());
     }
+
+    private static String cleanString(String oldString){
+        return oldString.replace(" ", "_");
+    }
+
+
 }
