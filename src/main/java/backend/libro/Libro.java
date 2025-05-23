@@ -82,8 +82,8 @@ public class Libro {
         autoreCognome = b.autoreCognome;
         ISBN = b.ISBN;
         genLib = b.genLib;
-        valPers = b.valPers;
         statLett = b.statLett;
+        valPers = b.valPers;
     }
 
     //Getter e setter
@@ -131,7 +131,7 @@ public class Libro {
     }
 
     public void setAutoreCognome(String cognomeAutore) {
-        this.autoreNome = cognomeAutore;
+        this.autoreCognome = cognomeAutore;
     }
 
     public void setISBN(String ISBN) {
@@ -158,8 +158,8 @@ public class Libro {
         sb.append(", autore='").append(autoreNome).append(" ").append(autoreCognome).append('\'');
         sb.append(", ISBN='").append(ISBN).append('\'');
         sb.append(", genere=").append(genLib);
-        sb.append(", val. personale=").append(valPers);
         sb.append(", stato lettura=").append(statLett);
+        sb.append(", val. personale=").append(valPers);
         sb.append('}');
         return sb.toString();
     }

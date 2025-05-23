@@ -13,5 +13,6 @@ public enum Genere_Libri {
     DISTOPIA,
     FANTASY,
     HORROR,
+    SCIENTIFICO,
     ROSA;
 }
