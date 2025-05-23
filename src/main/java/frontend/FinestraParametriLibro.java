@@ -1,8 +1,7 @@
 package main.java.frontend;
 
-import main.java.backend.LibreriaSingleton;
-import main.java.controller.Controller;
 
+import main.java.controller.Controller;
 import javax.swing.*;
 import javax.swing.table.DefaultTableModel;
 import java.awt.*;

@@ -1,8 +1,5 @@
 package main.java.frontend;
 
-import main.java.backend.libro.Genere_Libri;
-import main.java.backend.libro.Libro;
-import main.java.backend.libro.Stato_Lettura;
 import main.java.controller.Controller;
 import javax.swing.*;
 import javax.swing.border.EmptyBorder;
@@ -39,6 +36,7 @@ public class GUI extends JFrame{
 
 
 
+
     public GUI() {
 
         /*
@@ -64,7 +62,7 @@ public class GUI extends JFrame{
         };
 
         //Parametri header tabella
-        modelloTabella.setColumnIdentifiers(new String[]{"Titolo", "Autore", "ISBN","Genere", "Stato lettura", "Valutazione"});
+        modelloTabella.setColumnIdentifiers(new String[]{"Titolo", "Autore", "ISBN","Genere", "Valutazione", "Stato lettura"});
         tabella = new JTable(modelloTabella);
 
 
@@ -193,7 +191,7 @@ public class GUI extends JFrame{
         // Barra di ricerca
         barraRicerca = new JTextField("Cerca libro");
         barraRicerca.setBounds(500, 85, 300, 25);
-        barraRicerca.setForeground(java.awt.Color.GRAY);
+        barraRicerca.setForeground(Color.GRAY);
         pannelloBottoni.add(barraRicerca);
 
         // Bottone ricerca libro
@@ -222,16 +220,15 @@ public class GUI extends JFrame{
         pannelloSalvataggio.add(bottoneSalvaCSV);
 
 
-
-
         // Menu a tendina per filtrare
         String[] opzioniFiltro = {"Nessun filtro", "Filtra per genere", "Filtra per stato lettura"};
         comboFiltro = new JComboBox<>(opzioniFiltro);
         comboFiltro.setBounds(1100, 50, 150, 25);
         pannelloBottoni.add(comboFiltro);
 
+        //TODO
         // Menu a tendina per filtrare
-        String[] opzioniOrdinamento = {"Ordina per autore", "Ordina per titolo", "Ordina per valutazione"};
+        String[] opzioniOrdinamento = {"Ordina per autore", "Ordina per titolo", "Ordina per valutazione"}; //TODO AGGIUNGERE NESSUN ORDINAMENTO
         comboOrdinamento = new JComboBox<>(opzioniOrdinamento);
         comboOrdinamento.setBounds(1100, 100, 150, 25);
         pannelloBottoni.add(comboOrdinamento);
@@ -245,25 +242,11 @@ public class GUI extends JFrame{
 
     }
 
-    public Map.Entry<Integer, Libro> getLibroSelezionato() {
+    //Restituisce l'isbn (identificativo) del libro selezionato
+    public Map.Entry<Integer,String> getLibroSelezionato() {
         int rigaSelezionata = tabella.getSelectedRow();
-        if (rigaSelezionata == -1) {
-            return null;
-        }
-
-        String titolo = (String) modelloTabella.getValueAt(rigaSelezionata, 0);
-        String autore = (String) modelloTabella.getValueAt(rigaSelezionata, 1);
         String isbn = (String) modelloTabella.getValueAt(rigaSelezionata, 2);
-        String genere = (String) modelloTabella.getValueAt(rigaSelezionata, 3);
-        String stato = (String) modelloTabella.getValueAt(rigaSelezionata, 4);
-        String cleanedStato = stato.replace(" ", "_");
-
-        Libro libro = new Libro.Builder(titolo, autore, isbn)
-                .setGenereLibri(Genere_Libri.valueOf(genere))
-                .setStatoLettura(Stato_Lettura.valueOf(cleanedStato))
-                .build();
-
-        return new AbstractMap.SimpleEntry<>(rigaSelezionata, libro);
+        return new AbstractMap.SimpleEntry<>(rigaSelezionata, isbn);
     }
 
 
@@ -293,15 +276,15 @@ public class GUI extends JFrame{
           //Istanzia FinestraParametriLibro per la comparsa del modulo aggiuntivo per i parametri libro
           bottoneAggiungi.addActionListener(e-> new FinestraParametriLibro(controller, modelloTabella));
 
+          bottoneModifica.addActionListener(e -> new FinestraParametriLibro(controller,modelloTabella,getLibroSelezionato().getValue()));
+
           //Ripristino colore riga selezioanta
           tabella.addMouseListener(Controller.ripristinaSelezione(tabella,ultimaRigaSelezionata));
 
           //Listener per far sparire 'Cerca libro'
           barraRicerca.addFocusListener(Controller.gestisciFocus(barraRicerca, "Cerca libro", ""));
 
-          bottoneModifica.addActionListener(e -> Controller.modificaLibro(getLibroSelezionato().getValue()));
-
-          bottoneElimina.addActionListener(e -> Controller.eliminaLibro(getLibroSelezionato(),modelloTabella));
+          bottoneElimina.addActionListener(e -> Controller.eliminaLibro(controller, getLibroSelezionato(),modelloTabella));
 
           bottoneSalvaJSON.addActionListener(e -> Controller.salvaJSON());
 
@@ -315,6 +298,6 @@ public class GUI extends JFrame{
 
           bottoneRipristinaVista.addActionListener(e -> Controller.ripristinaVista());
 
-          bottoneRipristinoFile.addActionListener(e -> Controller.caricaLibreriaDaFile());
+          bottoneRipristinoFile.addActionListener(e -> Controller.caricaLibreriaDaFile(modelloTabella));
     }
 }
