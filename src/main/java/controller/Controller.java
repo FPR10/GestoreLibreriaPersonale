@@ -108,7 +108,7 @@ public class Controller {
         Libro toAdd = creaLibroDaForm(campoTitolo,campoAutoreNome,campoAutoreCognome,campoIsbn,campoGenere,campoStato,campoValutazione);
 
         //Mancato inserimento di tutti i campi obbligatori
-        if (!campiObbligatoriOk(toAdd.getTitolo(),toAdd.getISBN(),toAdd.getCognomeAutore(),segnapostoTitolo)){
+        if (campiObbligatoriOk(toAdd.getTitolo(),toAdd.getISBN(),toAdd.getCognomeAutore(),segnapostoTitolo)){
             JOptionPane.showMessageDialog(null, "Compila tutti i campi obbligatori!", "Campi mancanti", JOptionPane.WARNING_MESSAGE);
             return;
         }
@@ -312,8 +312,8 @@ public class Controller {
     }
 
     //modelloTabella.addRow(new String[]{titolo,autoreCognome+" "+autoreNome,isbn,genere, valutazione, stato});
-    private static String[] aggiungiLibroGUI(DefaultTableModel modelloTabella, Libro l){
-        return new String[]{
+    private static void aggiungiLibroGUI(DefaultTableModel modelloTabella, Libro l){
+        String[] rigaTabella = new String[]{
                 l.getTitolo(),
                 l.getAutore(),
                 l.getISBN(),
@@ -321,6 +321,8 @@ public class Controller {
                 l.getValPers().toString().replace("_", " "),
                 l.getStatLett().toString().replace("_", " ")
         };
+
+        modelloTabella.addRow(rigaTabella);
     }
 
 

@@ -242,15 +242,14 @@ public class GUI extends JFrame{
 
     }
 
-    //Restituisce l'isbn (identificativo) del libro selezionato
+    //Restituisce l'isbn del libro selezionato
     public Map.Entry<Integer,String> getLibroSelezionato() {
         int rigaSelezionata = tabella.getSelectedRow();
         String isbn = (String) modelloTabella.getValueAt(rigaSelezionata, 2);
         return new AbstractMap.SimpleEntry<>(rigaSelezionata, isbn);
     }
 
-
-
+    //Restituisce la funzionalità di ricerca scelta
     private String getFiltroRicerca() {
         ButtonModel bottoneSel = gruppo.getSelection();
         String tipoRicerca = bottoneSel.getActionCommand();
@@ -265,13 +264,13 @@ public class GUI extends JFrame{
         return modelloTabella;
     }
 
+    //Consente di settare il contatore presente sulla status bar in basso a sinistra
     public void setContatore(int cont) {
         contElementi = cont;
         statusLabel.setText("Totale libri: " + cont);
     }
 
-
-
+    //Action listener che richiamo i metodi di Gginsc/FinestraParametriLibro
     public void setController(Controller controller) {
 
           bottoneAggiungi.addActionListener(e-> new FinestraParametriLibro(controller, modelloTabella));

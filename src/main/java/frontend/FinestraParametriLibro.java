@@ -43,6 +43,7 @@ public class FinestraParametriLibro extends JFrame {
         setLocationRelativeTo(null);
         setLayout(null);
 
+
         // Parametri libro
         JLabel labelTitolo = new JLabel("Titolo:");
         labelTitolo.setBounds(30, 30, 110, 25);
@@ -141,6 +142,7 @@ public class FinestraParametriLibro extends JFrame {
         setLocationRelativeTo(null);
         setLayout(null);
 
+
         // Parametri libro
         JLabel labelTitolo = new JLabel("Titolo:");
         labelTitolo.setBounds(30, 30, 110, 25);
@@ -187,6 +189,7 @@ public class FinestraParametriLibro extends JFrame {
         salva = new JButton("Modifica");
         salva.setBounds(175, 360, 100, 30);
 
+
         // Aggiunta delle label al frame
         add(labelTitolo);
         add(campoTitolo);
@@ -203,6 +206,7 @@ public class FinestraParametriLibro extends JFrame {
         add(labelValutazione);
         add(comboValutazione);
         add(salva);
+
 
         // Campi precompilati con le informazioni già inserite
         campoTitolo.setText(libro.getTitolo());
@@ -227,6 +231,7 @@ public class FinestraParametriLibro extends JFrame {
     }
 
 
+   //Comparsa e scomparsa del segnaposto in base al focus
     public void aggiungiSegnapostoObbligatorio(JTextField campo, String testoSegnaposto) {
         campo.setForeground(Color.GRAY);
         campo.setText(testoSegnaposto);
@@ -251,13 +256,14 @@ public class FinestraParametriLibro extends JFrame {
     }
 
 
-    //Controller per l'aggiunta del libro
+    //Gginsc per l'aggiunta del libro
     private void setControllerAggiunta(Controller c){
            salva.addActionListener(e -> Controller.SalvaLibro(campoTitolo, campoAutoreNome, campoAutoreCognome,
                    campoISBN, comboGenere, comboStato,comboValutazione,segnapostoTitolo,this , modelloTabella));
     }
 
-    //Controller per la modifica del libro
+
+    //Gginsc per la modifica del libro
     private void setControllerModifica(Controller c){
         salva.addActionListener(e -> Controller.ModificaLibro(libroDaModificare, rigaLibroDaModifica, campoTitolo, campoAutoreNome,
                 campoAutoreCognome, campoISBN, comboGenere, comboStato, comboValutazione, this, modelloTabella));
