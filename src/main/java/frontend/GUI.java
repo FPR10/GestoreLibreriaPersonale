@@ -273,10 +273,12 @@ public class GUI extends JFrame{
 
 
     public void setController(Controller controller) {
-          //Istanzia FinestraParametriLibro per la comparsa del modulo aggiuntivo per i parametri libro
+
           bottoneAggiungi.addActionListener(e-> new FinestraParametriLibro(controller, modelloTabella));
 
-          bottoneModifica.addActionListener(e -> new FinestraParametriLibro(controller,modelloTabella,getLibroSelezionato().getValue()));
+          bottoneModifica.addActionListener(e -> new FinestraParametriLibro(controller,modelloTabella,getLibroSelezionato()));
+
+          bottoneElimina.addActionListener(e -> Controller.eliminaLibro(controller, getLibroSelezionato(),modelloTabella));
 
           //Ripristino colore riga selezioanta
           tabella.addMouseListener(Controller.ripristinaSelezione(tabella,ultimaRigaSelezionata));
@@ -284,7 +286,6 @@ public class GUI extends JFrame{
           //Listener per far sparire 'Cerca libro'
           barraRicerca.addFocusListener(Controller.gestisciFocus(barraRicerca, "Cerca libro", ""));
 
-          bottoneElimina.addActionListener(e -> Controller.eliminaLibro(controller, getLibroSelezionato(),modelloTabella));
 
           bottoneSalvaJSON.addActionListener(e -> Controller.salvaJSON());
 
