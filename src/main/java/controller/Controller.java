@@ -31,6 +31,11 @@ public class Controller {
     private static LibreriaSingleton libreria;
     private static GUI grafica;
 
+    private static final String cartellaDownload = System.getProperty("user.home") + File.separator + "Downloads";
+    private static final String successoOperazione = "Operazione avvenuta con successo !";
+    private static final String fallimentoOperazione = "Errore !";
+
+
     public Controller(LibreriaSingleton impl, GUI front) {
         libreria = impl;
         grafica = front;
@@ -39,8 +44,10 @@ public class Controller {
 
 
     /*
-    Consente di ripristinare il colore originale di una riga della tabella selezionata
+       Gestione degli ActionListener
      */
+
+    //Consente di ripristinare il colore originale di una riga della tabella selezionata
     public static MouseAdapter ripristinaSelezione(JTable tabella, int[] ultimaRigaSelezionata) {
         return new MouseAdapter() {
             @Override
@@ -63,9 +70,8 @@ public class Controller {
     }
 
 
-    /*
-      Fa scomparire labelVecchia quando l'utente preme sul campo
-     */
+
+    //  Fa scomparire labelVecchia quando l'utente preme sul campo
     public static FocusListener gestisciFocus(JTextField campo, String labelVecchia, String labelNuova){
         return new FocusListener() {
             @Override
@@ -88,100 +94,133 @@ public class Controller {
 
 
     /*
-      Riceve i campi del form di compilazione del Libro, crea un libro in LibreriaSingleton e lo aggiunge alla tabella GUI.
-      Notifica visivamente se l'operazione è andata o meno a buon fine.
+        Gestione delle operazioni di AGGIUNTA, MODIFICA ed ELIMINAZIONE di un libro
      */
+
+      //Riceve i campi del form di compilazione del Libro. Crea un libro in LibreriaSingleton e lo aggiunge alla tabella GUI.
+      //Notifica visivamente se l'operazione è andata o meno a buon fine.
     public static void SalvaLibro(JTextField campoTitolo, JTextField campoAutoreNome, JTextField campoAutoreCognome,
                                   JTextField campoIsbn, JComboBox<String> campoGenere, JComboBox<String> campoStato,
                                   JComboBox<String> campoValutazione,String segnapostoTitolo,
                                   FinestraParametriLibro finestra, DefaultTableModel modelloTabella) {
-        String titolo = campoTitolo.getText();
-        String autoreNome = campoAutoreNome.getText();
-        String autoreCognome = campoAutoreCognome.getText();
-        String isbn = campoIsbn.getText();
-        String genere = (String) campoGenere.getSelectedItem();
-        String stato = (String) campoStato.getSelectedItem();
-        String valutazione = (String) campoValutazione.getSelectedItem();
 
-        if (titolo.isEmpty() || autoreCognome.isEmpty() || isbn.isEmpty() ||
-                titolo.equals(segnapostoTitolo) || autoreCognome.equals(segnapostoTitolo) || isbn.equals(segnapostoTitolo)) {
-            JOptionPane.showMessageDialog(null,
-                    "Compila tutti i campi obbligatori!",
-                    "Campi mancanti",
-                    JOptionPane.WARNING_MESSAGE);
+
+        Libro toAdd = creaLibroDaForm(campoTitolo,campoAutoreNome,campoAutoreCognome,campoIsbn,campoGenere,campoStato,campoValutazione);
+
+        //Mancato inserimento di tutti i campi obbligatori
+        if (!campiObbligatoriOk(toAdd.getTitolo(),toAdd.getISBN(),toAdd.getCognomeAutore(),segnapostoTitolo)){
+            JOptionPane.showMessageDialog(null, "Compila tutti i campi obbligatori!", "Campi mancanti", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        Libro toAdd = new Libro.Builder(titolo,autoreCognome, isbn)
-                .setAutoreNome(autoreNome)
-                .setGenereLibri(Genere_Libri.valueOf(cleanString(genere)))
-                .setStatoLettura(Stato_Lettura.valueOf(cleanString(stato)))
-                .setValutazionePersonale(Valutazione_Personale.valueOf(cleanString(valutazione)))
-                .build();
-
-
-        //Solleva errore e non lo aggiunge
+        //Libro già presente
         if (libreria.contains(toAdd)){
-            JOptionPane.showMessageDialog(null, "Libro già inserito !", "Errore", JOptionPane.WARNING_MESSAGE);
+            JOptionPane.showMessageDialog(null, "Libro già inserito !", fallimentoOperazione, JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        //Aggiunta al backend
+        //Aggiunta a backend e frontend
         libreria.aggiungiLibro(toAdd);
-        modelloTabella.addRow(new String[]{titolo,autoreCognome+" "+autoreNome,isbn,genere,stato, valutazione});
+        aggiungiLibroGUI(modelloTabella, toAdd);
 
-        JOptionPane.showMessageDialog(null, "Libro salvato!", "Operazione avvenuta con successo", JOptionPane.INFORMATION_MESSAGE);
+        JOptionPane.showMessageDialog(null, "Libro salvato!", successoOperazione, JOptionPane.INFORMATION_MESSAGE);
         grafica.setContatore(modelloTabella.getRowCount());
         finestra.dispose();  //chisura automatica finestra se il libro è stato salvato
     }
 
 
-    //TODO
-    public static void modificaLibro(Libro l){
+    public static void ModificaLibro(Libro libroDaModificare, int rigaLibroMod, JTextField campoTitolo, JTextField campoAutoreNome,
+                                     JTextField campoAutoreCognome, JTextField campoIsbn, JComboBox<String> campoGenere,
+                                     JComboBox<String> campoStato, JComboBox<String> campoValutazione,
+                                     FinestraParametriLibro finestra,DefaultTableModel modelloTabella) {
+
+        Libro toMod = creaLibroDaForm(campoTitolo,campoAutoreNome,campoAutoreCognome,campoIsbn,campoGenere,campoStato,campoValutazione);
+
+        libreria.rimuoviLibro(libroDaModificare);
+
+        if (libreria.contains(toMod)) {
+            libreria.aggiungiLibro(libroDaModificare);
+            JOptionPane.showMessageDialog(null, "Libro con questi dati è già presente!", "Errore", JOptionPane.WARNING_MESSAGE);
+            return;
+        }
+
+        // Se non esiste, procedi con la modifica
+        libreria.aggiungiLibro(toMod);
+
+        aggiornaLibroGUI(modelloTabella,rigaLibroMod,toMod);
+        JOptionPane.showMessageDialog(null, "Libro modificato!", "Operazione avvenuta con successo", JOptionPane.INFORMATION_MESSAGE);
+        finestra.dispose();
     }
 
 
-    public static void eliminaLibro(Map.Entry<Integer,Libro> toDelete, DefaultTableModel modelloTabella){
-        libreria.rimuoviLibro(toDelete.getValue());
+
+    public static void eliminaLibro(Controller c, Map.Entry<Integer,String> toDelete , DefaultTableModel modelloTabella){
+        Libro l = Controller.getLibroFromISBN(toDelete.getValue());
+        libreria.rimuoviLibro(l);
         modelloTabella.removeRow(toDelete.getKey());
         grafica.setContatore(modelloTabella.getRowCount());
     }
 
 
+    /*
+    Gestione di salvataggio/caricamento su/da file
+     */
+
     public static void salvaJSON(){
+        String downloadPath = cartellaDownload + File.separator + "salvataggio.json";
         SalvaRipristinaStrategyIF sf = new SalvaJSON();
-        sf.salva(libreria, "salvataggio.json");
+        sf.salva(libreria, downloadPath);
         JOptionPane.showMessageDialog(null, "Libreria salvata in JSON!", "Operazione avvenuta con successo", JOptionPane.INFORMATION_MESSAGE);
     }
 
     public static void salvaCSV(){
+        String downloadPath = cartellaDownload + File.separator + "salvataggio.csv";
         SalvaRipristinaStrategyIF sf = new SalvaCSV();
-        sf.salva(libreria, "salvataggio.csv");
+        sf.salva(libreria, downloadPath);
         JOptionPane.showMessageDialog(null, "Libreria salvata in CSV!", "Operazione avvenuta con successo", JOptionPane.INFORMATION_MESSAGE);
-
     }
 
 
-    private static void aggiornaTabellaGUI(List<Libro>libri){
-        DefaultTableModel modelloTabella = grafica.getModelloTabella();
+    public static void caricaLibreriaDaFile(DefaultTableModel modelloTabella){
+        //JFrame usato come parent del filechoser
+        JFrame frame = new JFrame();
 
-        // Cancella tutte le righe esistenti
-        modelloTabella.setRowCount(0);
+        //Inizializzazione del file choser nella cartella downloads
+        String userHome = System.getProperty("user.home");
+        File cartellaDownload = new File(userHome, "Downloads");
+        JFileChooser fileChooser = new JFileChooser(cartellaDownload);
 
-        // Aggiungi le nuove righe con i libri filtrati
-        for (Libro libro : libri) {
-            Object[] riga = {
-                    libro.getTitolo(),
-                    libro.getAutore(),
-                    libro.getISBN(),
-                    libro.getGenLib().toString(),
-                    libro.getStatLett().toString().replace("_", " ")
-            };
-            modelloTabella.addRow(riga);
+        //Scelta delle estensioni accettate
+        FileNameExtensionFilter filtroEstensione = new FileNameExtensionFilter("file json e csv", "csv", "json");
+        fileChooser. setFileFilter(filtroEstensione);
+
+
+        int ret = fileChooser.showOpenDialog(frame);
+        if(ret == JFileChooser.APPROVE_OPTION) {
+            File fileSelezionato = fileChooser.getSelectedFile();
+            String pathFile = fileSelezionato.getAbsolutePath();
+
+            String nomeFile= FilenameUtils.getBaseName(pathFile);
+            String estensioneFile = FilenameUtils.getExtension(pathFile);
+
+            SalvaRipristinaFactoryIF srf = new SalvaRipristinaFactory();
+            SalvaRipristinaStrategyIF srs = srf.scelta(pathFile);
+            srs.ripristina(libreria,pathFile);
+            aggiornaTabellaGUI(libreria.getLibreria());
+            grafica.setContatore(modelloTabella.getRowCount());
+            JOptionPane.showMessageDialog(null, "Libreria importata da file !",
+                    "Operazione avvenuta con successo", JOptionPane.INFORMATION_MESSAGE);
+        }
+        else{
+            JOptionPane.showMessageDialog(null, "Errore nell'importazione", "Errore", JOptionPane.WARNING_MESSAGE);
         }
     }
 
 
+
+    /*
+    Gestione di filtro, ordinamento e ricerca
+     */
     public static void applicaFiltro(String tipoFiltro, DefaultTableModel modelloTabella){
         FiltroFactoryIF filtroFac = new FiltroFactory();
         FiltroStrategyIF fs = filtroFac.creaFiltro(tipoFiltro);
@@ -210,39 +249,51 @@ public class Controller {
     }
 
 
-     public static void caricaLibreriaDaFile(){
-        //JFrame usato come parent del filechoser
-         JFrame frame = new JFrame();
+    /*
+    Utils
+     */
 
-         //Scelta delle estensioni accettate
-         JFileChooser fileChooser = new JFileChooser();
-         FileNameExtensionFilter filtroEstensione = new FileNameExtensionFilter(
-                 "file json e csv", "csv", "json");
-         fileChooser. setFileFilter(filtroEstensione);
+    //Dati dati del form di compilazione (sia per aggiunta che per modifica) crea un Libro
+    private static Libro creaLibroDaForm (JTextField campoTitolo, JTextField campoAutoreNome, JTextField campoAutoreCognome, JTextField campoIsbn,
+                                          JComboBox<String> campoGenere, JComboBox<String> campoStato, JComboBox<String> campoValutazione){
+        String titolo = campoTitolo.getText();
+        String autoreNome = campoAutoreNome.getText();
+        String autoreCognome = campoAutoreCognome.getText();
+        String isbn = campoIsbn.getText();
+        String genere = (String) campoGenere.getSelectedItem();
+        String stato = (String) campoStato.getSelectedItem();
+        String valutazione = (String) campoValutazione.getSelectedItem();
 
+        Libro l = new Libro.Builder(titolo,autoreCognome, isbn)
+                .setAutoreNome(autoreNome)
+                .setGenereLibri(Genere_Libri.valueOf(cleanString(genere)))
+                .setStatoLettura(Stato_Lettura.valueOf(cleanString(stato)))
+                .setValutazionePersonale(Valutazione_Personale.valueOf(cleanString(valutazione)))
+                .build();
+        return l;
+    }
 
-         int ret = fileChooser.showOpenDialog(frame);
-         if(ret == JFileChooser.APPROVE_OPTION) {
-             File fileSelezionato = fileChooser.getSelectedFile();
-             String pathFile = fileSelezionato.getAbsolutePath();
+    private static boolean campiObbligatoriOk(String titolo, String autoreCognome, String isbn, String segnaposto){
+        return (titolo.isEmpty() || autoreCognome.isEmpty() || isbn.isEmpty() || titolo.equals(segnaposto) || autoreCognome.equals(segnaposto) || isbn.equals(segnaposto));
+    }
 
-             String nomeFile= FilenameUtils.getBaseName(pathFile);
-             String estensioneFile = FilenameUtils.getExtension(pathFile);
+    private static void aggiornaTabellaGUI(List<Libro>libri){
+        DefaultTableModel modelloTabella = grafica.getModelloTabella();
 
-             SalvaRipristinaFactoryIF srf = new SalvaRipristinaFactory();
-             SalvaRipristinaStrategyIF srs = srf.scelta(pathFile);
-             srs.ripristina(libreria,nomeFile+"."+estensioneFile);
-             aggiornaTabellaGUI(libreria.getLibreria());
-             JOptionPane.showMessageDialog(null, "Libreria importata da file !",
-                     "Operazione avvenuta con successo", JOptionPane.INFORMATION_MESSAGE);
-         }
-         else{
-             JOptionPane.showMessageDialog(null, "Errore nell'importazione", "Errore", JOptionPane.WARNING_MESSAGE);
-         }
+        modelloTabella.setRowCount(0);
 
-
-     }
-
+        for (Libro libro : libri) {
+            Object[] riga = {
+                    libro.getTitolo(),
+                    libro.getAutore(),
+                    libro.getISBN(),
+                    libro.getGenLib().toString().replace("_"," "),
+                    libro.getValPers().toString().replace("_"," "),
+                    libro.getStatLett().toString().replace("_", " ")
+            };
+            modelloTabella.addRow(riga);
+        }
+    }
 
     public static void ripristinaVista() {
         aggiornaTabellaGUI(libreria.getLibreria());
@@ -251,6 +302,37 @@ public class Controller {
     private static String cleanString(String oldString){
         return oldString.replace(" ", "_");
     }
+
+    public static Libro getLibroFromISBN (String isbn){
+        for (Libro l : libreria.getLibreria()){
+            if (l.getISBN().equals(isbn))
+                return l;
+        }
+        return null;
+    }
+
+    //modelloTabella.addRow(new String[]{titolo,autoreCognome+" "+autoreNome,isbn,genere, valutazione, stato});
+    private static String[] aggiungiLibroGUI(DefaultTableModel modelloTabella, Libro l){
+        return new String[]{
+                l.getTitolo(),
+                l.getAutore(),
+                l.getISBN(),
+                l.getGenLib().toString().replace("_"," "),
+                l.getValPers().toString().replace("_", " "),
+                l.getStatLett().toString().replace("_", " ")
+        };
+    }
+
+
+    private static void aggiornaLibroGUI(DefaultTableModel modelloTabella, int riga, Libro l) {
+        modelloTabella.setValueAt(l.getTitolo(), riga, 0);
+        modelloTabella.setValueAt(l.getAutore(), riga, 1);
+        modelloTabella.setValueAt(l.getISBN(), riga, 2);
+        modelloTabella.setValueAt(l.getGenLib().toString().replace("_"," "), riga, 3);
+        modelloTabella.setValueAt(l.getValPers().toString().replace("_"," "), riga, 4);
+        modelloTabella.setValueAt(l.getStatLett().toString().replace("_"," "), riga, 5);
+    }
+
 
 
 }
