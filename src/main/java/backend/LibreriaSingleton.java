@@ -59,7 +59,4 @@ public enum LibreriaSingleton implements LibreriaIF{
     public Iterator<Libro> iterator() {
         return libreria.iterator();
     }
-
-
-
 }
