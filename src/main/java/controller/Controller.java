@@ -215,6 +215,35 @@ public class Controller {
     }
 
 
+     public static void caricaLibreriaDaFile(){
+        //JFrame usato come parent del filechoser
+         JFrame frame = new JFrame();
+
+         //Scelta delle estensioni accettate
+         JFileChooser fileChooser = new JFileChooser();
+         FileNameExtensionFilter filtroEstensione = new FileNameExtensionFilter(
+                 "file json e csv", "csv", "json");
+         fileChooser. setFileFilter(filtroEstensione);
+
+
+         int ret = fileChooser.showOpenDialog(frame);
+         if(ret == JFileChooser.APPROVE_OPTION) {
+             File fileSelezionato = fileChooser.getSelectedFile();
+             String pathFile = fileSelezionato.getAbsolutePath();
+
+             String nomeFile= FilenameUtils.getBaseName(pathFile);
+             String estensioneFile = FilenameUtils.getExtension(pathFile);
+
+             SalvaRipristinaFactoryIF srf = new SalvaRipristinaFactory();
+             SalvaRipristinaStrategyIF srs = srf.scelta(pathFile);
+             srs.ripristina(libreria,nomeFile+"."+estensioneFile);
+             aggiornaTabellaGUI(libreria.getLibreria());
+         }
+
+
+
+     }
+
 
     public static void ripristinaVista() {
         aggiornaTabellaGUI(libreria.getLibreria());
