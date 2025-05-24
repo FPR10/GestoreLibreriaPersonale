@@ -1,4 +1,5 @@
 package main.java.frontend;
+
 import main.java.backend.libro.Libro;
 import main.java.controller.Controller;
 import javax.swing.*;
@@ -8,11 +9,14 @@ import java.awt.event.FocusAdapter;
 import java.awt.event.FocusEvent;
 import java.util.Map;
 
-
 public class FinestraParametriLibro extends JFrame {
 
-    //Bottoni e textfield dei campi di compilazione
-    private static final String segnapostoTitolo = "Obbligatorio";
+    // Costanti
+    private static final String SEGNAPOSTO_OBBLIGATORIO = "Obbligatorio";
+    private static final int LARGHEZZA_FINESTRA = 450;
+    private static final int ALTEZZA_FINESTRA = 450;
+
+    // Componenti UI
     private JTextField campoTitolo;
     private JTextField campoAutoreNome;
     private JTextField campoAutoreCognome;
@@ -22,217 +26,222 @@ public class FinestraParametriLibro extends JFrame {
     private JComboBox<String> comboValutazione;
     private JButton salva;
 
-    //Per supportare la modifica
+    // Dati per la modifica
     private Libro libroDaModificare;
     private int rigaLibroDaModifica;
 
-    private Controller c;
+    // Dipendenze
+    private Controller controller;
     private DefaultTableModel modelloTabella;
 
-
-    /*
-    Costruttore per aggiungere un libro
+    /**
+     * Costruttore per aggiungere un nuovo libro
      */
-    public FinestraParametriLibro(Controller c, DefaultTableModel modelloTabella) {
-        this.c = c;
+    public FinestraParametriLibro(Controller controller, DefaultTableModel modelloTabella) {
+        this.controller = controller;
         this.modelloTabella = modelloTabella;
 
+        inizializzaFinestra("Aggiungi un nuovo libro");
+        creaComponenti();
+        aggiungiComponenti();
+        aggiungiSegnapostiCampiObbligatori();
+        impostaControllerAggiunta();
 
-        setTitle("Aggiungi un nuovo libro");
-        setSize(450, 450);
+        setVisible(true);
+    }
+
+    /**
+     * Costruttore per modificare un libro esistente
+     */
+    public FinestraParametriLibro(Controller controller, DefaultTableModel modelloTabella,
+                                  Map.Entry<Integer, String> libroModifica) {
+        this.controller = controller;
+        this.modelloTabella = modelloTabella;
+        this.libroDaModificare = Controller.getLibroFromISBN(libroModifica.getValue());
+        this.rigaLibroDaModifica = libroModifica.getKey();
+
+        inizializzaFinestra("Modifica libro");
+        creaComponenti();
+        aggiungiComponenti();
+        precompilaCampi();
+        impostaControllerModifica();
+
+        setVisible(true);
+    }
+
+    /**
+     * Inizializza le proprietà base della finestra
+     */
+    private void inizializzaFinestra(String titolo) {
+        setTitle(titolo);
+        setSize(LARGHEZZA_FINESTRA, ALTEZZA_FINESTRA);
         setLocationRelativeTo(null);
         setLayout(null);
+    }
 
+    /**
+     * Crea tutti i componenti dell'interfaccia
+     */
+    private void creaComponenti() {
+        creaComponentiTesto();
+        creaComboBox();
+        creaPulsanteSalva();
+    }
 
-        // Parametri libro
+    /**
+     * Crea i componenti di testo (label e textfield)
+     */
+    private void creaComponentiTesto() {
+        // Titolo
         JLabel labelTitolo = new JLabel("Titolo:");
         labelTitolo.setBounds(30, 30, 110, 25);
+        labelTitolo.setForeground(Color.RED);
         campoTitolo = new JTextField();
         campoTitolo.setBounds(140, 30, 210, 25);
-        labelTitolo.setForeground(Color.RED);
 
+        // Nome autore
         JLabel labelAutoreNome = new JLabel("Nome autore:");
         labelAutoreNome.setBounds(30, 70, 110, 25);
         campoAutoreNome = new JTextField();
         campoAutoreNome.setBounds(140, 70, 210, 25);
 
+        // Cognome autore
         JLabel labelAutoreCognome = new JLabel("Cognome autore:");
         labelAutoreCognome.setBounds(30, 110, 110, 25);
+        labelAutoreCognome.setForeground(Color.RED);
         campoAutoreCognome = new JTextField();
         campoAutoreCognome.setBounds(140, 110, 210, 25);
-        labelAutoreCognome.setForeground(Color.RED);
 
+        // ISBN
         JLabel labelISBN = new JLabel("ISBN:");
         labelISBN.setBounds(30, 150, 150, 25);
+        labelISBN.setForeground(Color.RED);
         campoISBN = new JTextField();
         campoISBN.setBounds(140, 150, 150, 25);
-        labelISBN.setForeground(Color.RED);
+    }
 
+    /**
+     * Crea le ComboBox
+     */
+    private void creaComboBox() {
+        // Genere
         JLabel labelGenere = new JLabel("Genere:");
         labelGenere.setBounds(30, 190, 100, 25);
-        String[]opzioniGenere = {"NON SELEZIONATO","BIOGRAFIA","AUTOBIOGRAFIA", "ROMANZO","GIALLO", "THRILLER", "AVVENTURA","AZIONE", "FANTASCIENZA",
-        "DISTOPIA", "FANTASY", "HORROR", "ROSA","SCIENTIFICO"};
+        String[] opzioniGenere = getOpzioniGenere();
         comboGenere = new JComboBox<>(opzioniGenere);
         comboGenere.setBounds(140, 190, 200, 25);
 
+        // Stato lettura
         JLabel labelStato = new JLabel("Stato lettura:");
         labelStato.setBounds(30, 230, 100, 25);
-        String[] opzioniStato = {"NON SELEZIONATO","DA LEGGERE", "IN LETTURA", "LETTO"};
+        String[] opzioniStato = getOpzioniStato();
         comboStato = new JComboBox<>(opzioniStato);
         comboStato.setBounds(140, 230, 200, 25);
 
+        // Valutazione
         JLabel labelValutazione = new JLabel("Valutazione:");
         labelValutazione.setBounds(30, 270, 100, 25);
-        String[] opzioniValutazione = {"NON SELEZIONATO","UNA STELLA", "DUE STELLE", "TRE STELLE", "QUATTRO STELLE", "CINQUE STELLE"};
+        String[] opzioniValutazione = getOpzioniValutazione();
         comboValutazione = new JComboBox<>(opzioniValutazione);
         comboValutazione.setBounds(140, 270, 200, 25);
+    }
 
-
-        salva = new JButton("Salva");
+    /**
+     * Crea il pulsante salva
+     */
+    private void creaPulsanteSalva() {
+        String testoBottone = (libroDaModificare == null) ? "Salva" : "Modifica";
+        salva = new JButton(testoBottone);
         salva.setBounds(175, 360, 100, 30);
+    }
 
-        // Aggiunta delle label al frame
-        add(labelTitolo);
+    /**
+     * Aggiunge tutti i componenti alla finestra
+     */
+    private void aggiungiComponenti() {
+        // Campi di testo
+        add(new JLabel("Titolo:") {{ setBounds(30, 30, 110, 25); setForeground(Color.RED); }});
         add(campoTitolo);
 
-        add(labelAutoreNome);
+        add(new JLabel("Nome autore:") {{ setBounds(30, 70, 110, 25); }});
         add(campoAutoreNome);
 
-        add(labelAutoreCognome);
+        add(new JLabel("Cognome autore:") {{ setBounds(30, 110, 110, 25); setForeground(Color.RED); }});
         add(campoAutoreCognome);
 
-        add(labelISBN);
+        add(new JLabel("ISBN:") {{ setBounds(30, 150, 150, 25); setForeground(Color.RED); }});
         add(campoISBN);
 
-        add(labelGenere);
+        // ComboBox
+        add(new JLabel("Genere:") {{ setBounds(30, 190, 100, 25); }});
         add(comboGenere);
 
-        add(labelStato);
+        add(new JLabel("Stato lettura:") {{ setBounds(30, 230, 100, 25); }});
         add(comboStato);
 
-        add(labelValutazione);
+        add(new JLabel("Valutazione:") {{ setBounds(30, 270, 100, 25); }});
         add(comboValutazione);
 
+        // Pulsante
         add(salva);
+    }
 
+    /**
+     * Aggiunge i segnaposti ai campi obbligatori
+     */
+    private void aggiungiSegnapostiCampiObbligatori() {
+        aggiungiSegnapostoObbligatorio(campoTitolo, SEGNAPOSTO_OBBLIGATORIO);
+        aggiungiSegnapostoObbligatorio(campoAutoreCognome, SEGNAPOSTO_OBBLIGATORIO);
+        aggiungiSegnapostoObbligatorio(campoISBN, SEGNAPOSTO_OBBLIGATORIO);
+    }
 
-        //Aggiunta del segnaposto 'obbligatorio' per titolo, autore e isbn
-        aggiungiSegnapostoObbligatorio(campoTitolo, segnapostoTitolo);
-        aggiungiSegnapostoObbligatorio(campoAutoreCognome, segnapostoTitolo);
-        aggiungiSegnapostoObbligatorio(campoISBN, segnapostoTitolo);
+    /**
+     * Precompila i campi quando si modifica un libro
+     */
+    private void precompilaCampi() {
+        if (libroDaModificare != null) {
+            campoTitolo.setText(libroDaModificare.getTitolo());
+            campoTitolo.setForeground(Color.BLACK);
 
-        setVisible(true);
+            campoAutoreNome.setText(libroDaModificare.getNomeAutore());
+            campoAutoreNome.setForeground(Color.BLACK);
 
-        if (this.libroDaModificare == null) {
-            setControllerAggiunta(c);
+            campoAutoreCognome.setText(libroDaModificare.getCognomeAutore());
+            campoAutoreCognome.setForeground(Color.BLACK);
+
+            campoISBN.setText(libroDaModificare.getISBN());
+            campoISBN.setForeground(Color.BLACK);
+
+            comboGenere.setSelectedItem(libroDaModificare.getGenLib().name().replace("_", " "));
+            comboStato.setSelectedItem(libroDaModificare.getStatLett().name().replace("_", " "));
+            comboValutazione.setSelectedItem(libroDaModificare.getValPers().name().replace("_", " "));
         }
     }
 
-
-    public FinestraParametriLibro(Controller c, DefaultTableModel modelloTabella, Map.Entry<Integer, String> toMod) {
-        this.c = c;
-        this.modelloTabella = modelloTabella;
-
-        Libro libro = Controller.getLibroFromISBN(toMod.getValue()); //isbn
-        this.libroDaModificare = libro;
-        this.rigaLibroDaModifica = toMod.getKey();
-
-        setTitle("Modifica libro");
-        setSize(450, 450);
-        setLocationRelativeTo(null);
-        setLayout(null);
-
-
-        // Parametri libro
-        JLabel labelTitolo = new JLabel("Titolo:");
-        labelTitolo.setBounds(30, 30, 110, 25);
-        campoTitolo = new JTextField();
-        campoTitolo.setBounds(140, 30, 210, 25);
-        labelTitolo.setForeground(Color.RED);
-
-        JLabel labelAutoreNome = new JLabel("Nome autore:");
-        labelAutoreNome.setBounds(30, 70, 110, 25);
-        campoAutoreNome = new JTextField();
-        campoAutoreNome.setBounds(140, 70, 210, 25);
-
-        JLabel labelAutoreCognome = new JLabel("Cognome autore:");
-        labelAutoreCognome.setBounds(30, 110, 110, 25);
-        campoAutoreCognome = new JTextField();
-        campoAutoreCognome.setBounds(140, 110, 210, 25);
-        labelAutoreCognome.setForeground(Color.RED);
-
-        JLabel labelISBN = new JLabel("ISBN:");
-        labelISBN.setBounds(30, 150, 150, 25);
-        campoISBN = new JTextField();
-        campoISBN.setBounds(140, 150, 150, 25);
-        labelISBN.setForeground(Color.RED);
-
-        JLabel labelGenere = new JLabel("Genere:");
-        labelGenere.setBounds(30, 190, 100, 25);
-        String[]opzioniGenere = {"NON SELEZIONATO","BIOGRAFIA","AUTOBIOGRAFIA", "ROMANZO","GIALLO", "THRILLER", "AVVENTURA","AZIONE", "FANTASCIENZA",
-                "DISTOPIA", "FANTASY", "HORROR", "ROSA","SCIENTIFICO"};
-        comboGenere = new JComboBox<>(opzioniGenere);
-        comboGenere.setBounds(140, 190, 200, 25);
-
-        JLabel labelStato = new JLabel("Stato lettura:");
-        labelStato.setBounds(30, 230, 100, 25);
-        String[] opzioniStato = {"NON SELEZIONATO","DA LEGGERE", "IN LETTURA", "LETTO"};
-        comboStato = new JComboBox<>(opzioniStato);
-        comboStato.setBounds(140, 230, 200, 25);
-
-        JLabel labelValutazione = new JLabel("Valutazione:");
-        labelValutazione.setBounds(30, 270, 100, 25);
-        String[] opzioniValutazione = {"NON SELEZIONATO","UNA STELLA", "DUE STELLE", "TRE STELLE", "QUATTRO STELLE", "CINQUE STELLE"};
-        comboValutazione = new JComboBox<>(opzioniValutazione);
-        comboValutazione.setBounds(140, 270, 200, 25);
-
-        salva = new JButton("Modifica");
-        salva.setBounds(175, 360, 100, 30);
-
-
-        // Aggiunta delle label al frame
-        add(labelTitolo);
-        add(campoTitolo);
-        add(labelAutoreNome);
-        add(campoAutoreNome);
-        add(labelAutoreCognome);
-        add(campoAutoreCognome);
-        add(labelISBN);
-        add(campoISBN);
-        add(labelGenere);
-        add(comboGenere);
-        add(labelStato);
-        add(comboStato);
-        add(labelValutazione);
-        add(comboValutazione);
-        add(salva);
-
-
-        // Campi precompilati con le informazioni già inserite
-        campoTitolo.setText(libro.getTitolo());
-        campoTitolo.setForeground(Color.BLACK);
-
-        campoAutoreNome.setText(libro.getNomeAutore());
-        campoAutoreNome.setForeground(Color.BLACK);
-        campoAutoreCognome.setText(libro.getCognomeAutore());
-        campoAutoreCognome.setForeground(Color.BLACK);
-
-        campoISBN.setText(libro.getISBN());
-        campoISBN.setForeground(Color.BLACK);
-
-        comboGenere.setSelectedItem(libro.getGenLib().name().replace("_"," "));
-        comboStato.setSelectedItem(libro.getStatLett().name().replace("_"," "));
-        comboValutazione.setSelectedItem(libro.getValPers().name().replace("_"," "));
-
-        setVisible(true);
-
-        // Imposto il controller con comportamento di modifica
-        setControllerModifica(c);
+    /**
+     * Imposta il controller per l'aggiunta di un nuovo libro
+     */
+    private void impostaControllerAggiunta() {
+        salva.addActionListener(e -> Controller.SalvaLibro(
+                campoTitolo, campoAutoreNome, campoAutoreCognome,
+                campoISBN, comboGenere, comboStato, comboValutazione,
+                SEGNAPOSTO_OBBLIGATORIO, this, modelloTabella));
     }
 
+    /**
+     * Imposta il controller per la modifica di un libro
+     */
+    private void impostaControllerModifica() {
+        salva.addActionListener(e -> Controller.ModificaLibro(
+                libroDaModificare, rigaLibroDaModifica, campoTitolo, campoAutoreNome,
+                campoAutoreCognome, campoISBN, comboGenere, comboStato, comboValutazione,
+                this, modelloTabella));
+    }
 
-   //Comparsa e scomparsa del segnaposto in base al focus
-    public void aggiungiSegnapostoObbligatorio(JTextField campo, String testoSegnaposto) {
+    /**
+     * Aggiunge un segnaposto a un campo di testo
+     */
+    private void aggiungiSegnapostoObbligatorio(JTextField campo, String testoSegnaposto) {
         campo.setForeground(Color.GRAY);
         campo.setText(testoSegnaposto);
 
@@ -255,20 +264,19 @@ public class FinestraParametriLibro extends JFrame {
         });
     }
 
-
-    //Gginsc per l'aggiunta del libro
-    private void setControllerAggiunta(Controller c){
-           salva.addActionListener(e -> Controller.SalvaLibro(campoTitolo, campoAutoreNome, campoAutoreCognome,
-                   campoISBN, comboGenere, comboStato,comboValutazione,segnapostoTitolo,this , modelloTabella));
+    // Metodi per ottenere le opzioni delle ComboBox
+    private String[] getOpzioniGenere() {
+        return new String[]{"NON SELEZIONATO", "BIOGRAFIA", "AUTOBIOGRAFIA", "ROMANZO",
+                "GIALLO", "THRILLER", "AVVENTURA", "AZIONE", "FANTASCIENZA",
+                "DISTOPIA", "FANTASY", "HORROR", "ROSA", "SCIENTIFICO"};
     }
 
-
-    //Gginsc per la modifica del libro
-    private void setControllerModifica(Controller c){
-        salva.addActionListener(e -> Controller.ModificaLibro(libroDaModificare, rigaLibroDaModifica, campoTitolo, campoAutoreNome,
-                campoAutoreCognome, campoISBN, comboGenere, comboStato, comboValutazione, this, modelloTabella));
+    private String[] getOpzioniStato() {
+        return new String[]{"NON SELEZIONATO", "DA LEGGERE", "IN LETTURA", "LETTO"};
     }
 
-
+    private String[] getOpzioniValutazione() {
+        return new String[]{"NON SELEZIONATO", "UNA STELLA", "DUE STELLE", "TRE STELLE",
+                "QUATTRO STELLE", "CINQUE STELLE"};
+    }
 }
-
