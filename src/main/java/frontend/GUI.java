@@ -26,9 +26,6 @@ public class GUI extends JFrame{
     private  JPopupMenu popupGeneri;
     private  JPopupMenu popupStatoLettura;
     private JMenuItem voceStatoLettura;
-    private static String genereSelezionato;
-    private static String statoSelezionato;
-
     private final JComboBox<String>comboOrdinamento;
     private final JTextField barraRicerca;
     private final JButton bottoneRipristinaVista;
@@ -214,7 +211,6 @@ public class GUI extends JFrame{
         pannelloSalvataggio.add(bottoneRipristinoFile);
 
 
-
         // Bottone salvataggio JSON
         bottoneSalvaJSON = new JButton("\uD83D\uDCBE" + " JSON");
         bottoneSalvaJSON.setFocusPainted(false);
@@ -232,29 +228,23 @@ public class GUI extends JFrame{
         comboFiltro.setBounds(1100,50,170,25);
         pannelloBottoni.add(comboFiltro);
 
-        // Popup per generi
+        // Menù a popup per generi
         popupGeneri = new JPopupMenu();
         String[] generi = {"BIOGRAFIA", "AUTOBIOGRAFIA", "ROMANZO", "GIALLO", "THRILLER",
                 "AVVENTURA", "AZIONE", "FANTASCIENZA", "DISTOPIA", "FANTASY",
                 "HORROR", "ROSA", "SCIENTIFICO"};
         for (String g : generi) {
             voceGeneri = new JMenuItem(g);
-            voceGeneri.addActionListener(sel ->{
-                genereSelezionato = ((JMenuItem) sel.getSource()).getText();
-                //System.out.println(genereSelezionato);
-            });
+            voceGeneri.addActionListener(e->Controller.applicaFiltroGenere(((JMenuItem) e.getSource()).getText()));
             popupGeneri.add(voceGeneri);
         }
 
-        //Popup per stato lettura
+        //Menù a popup per stato lettura
         popupStatoLettura = new JPopupMenu();
         String[] statiLettura = {"LETTO", "DA LEGGERE", "NON LETTO"};
         for (String sl : statiLettura){
             voceStatoLettura = new JMenuItem(sl);
-            voceStatoLettura.addActionListener(sel->{
-                statoSelezionato=((JMenuItem) sel.getSource()).getText();
-                //System.out.println(statoSelezionato);
-            });
+            voceStatoLettura.addActionListener(e->Controller.applicaFiltroStatLett(((JMenuItem) e.getSource()).getText()));
             popupStatoLettura.add(voceStatoLettura);
         }
 
@@ -265,7 +255,7 @@ public class GUI extends JFrame{
         comboOrdinamento.setBounds(1100, 100, 170, 25);
         pannelloBottoni.add(comboOrdinamento);
 
-
+        //Bottone ripristina vista libreria
         bottoneRipristinaVista = new JButton("\uD83D\uDD04" + "Ripristina vista");
         bottoneRipristinaVista.setFocusPainted(false);
         bottoneRipristinaVista.setBounds(1100, 150, 170, 25);
@@ -274,7 +264,11 @@ public class GUI extends JFrame{
 
     }
 
-    //Restituisce l'isbn del libro selezionato
+    /*
+    Getter e setter
+     */
+
+    //Restituisce indice di riga e isbn del libro selezionato
     public Map.Entry<Integer,String> getLibroSelezionato() {
         int rigaSelezionata = tabella.getSelectedRow();
         String isbn = (String) modelloTabella.getValueAt(rigaSelezionata, 2);
@@ -315,41 +309,33 @@ public class GUI extends JFrame{
         popupStatoLettura.show(comboFiltro, comboFiltro.getWidth(),0);
     }
 
-    public String getGenereSel (){
-        return genereSelezionato;
-    }
-
-    public String getStatoSel (){
-        return statoSelezionato;
-    }
+    /*
+    Set di controller e FinestraParametriLibro per gestire gli action listener
+     */
 
 
-    //Action listener che richiamo i metodi di Gginsc/FinestraParametriLibro
     public void setController(Controller controller) {
 
+          //Gestione aggiunta libro
           bottoneAggiungi.addActionListener(e-> new FinestraParametriLibro(controller, modelloTabella));
 
+          //Gestione modifica libro
           bottoneModifica.addActionListener(e -> new FinestraParametriLibro(controller,modelloTabella,getLibroSelezionato()));
 
+          //Gestione eliminazione libro
           bottoneElimina.addActionListener(e -> Controller.eliminaLibro(controller, getLibroSelezionato(),modelloTabella));
 
           //Ripristino colore riga selezioanta
           tabella.addMouseListener(Controller.ripristinaSelezione(tabella,ultimaRigaSelezionata));
 
-          //Listener per far sparire 'Cerca libro'
+          //Comparsa e scomparsa di 'Cerca libro'
           barraRicerca.addFocusListener(Controller.gestisciFocus(barraRicerca, "Cerca libro", ""));
-
 
           bottoneSalvaJSON.addActionListener(e -> Controller.salvaJSON());
 
           bottoneSalvaCSV.addActionListener(e -> Controller.salvaCSV());
 
           comboFiltro.addActionListener(e -> Controller.applicaFiltro((String) comboFiltro.getSelectedItem(), modelloTabella));
-
-
-          voceGeneri.addActionListener(e->Controller.applicaFiltroGenere(getGenereSel()));
-
-          voceStatoLettura.addActionListener(e-> Controller.applicaFiltroStatLett(getStatoSel()));
 
           comboOrdinamento.addActionListener(e -> Controller.applicaOrdinamento((String) comboOrdinamento.getSelectedItem()));
 
