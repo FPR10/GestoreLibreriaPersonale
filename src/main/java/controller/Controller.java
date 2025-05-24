@@ -1,9 +1,7 @@
 package main.java.controller;
 
 import main.java.backend.LibreriaSingleton;
-import main.java.backend.filtro.FiltroFactory;
-import main.java.backend.filtro.FiltroFactoryIF;
-import main.java.backend.filtro.FiltroStrategyIF;
+import main.java.backend.filtro.*;
 import main.java.backend.libro.Genere_Libri;
 import main.java.backend.libro.Libro;
 import main.java.backend.libro.Stato_Lettura;
@@ -43,7 +41,7 @@ public class Controller {
     }
 
 
-    /*
+    /**
        Gestione degli ActionListener
      */
 
@@ -93,7 +91,7 @@ public class Controller {
     }
 
 
-    /*
+    /**
         Gestione delle operazioni di AGGIUNTA, MODIFICA ed ELIMINAZIONE di un libro
      */
 
@@ -162,7 +160,7 @@ public class Controller {
     }
 
 
-    /*
+    /**
     Gestione di salvataggio/caricamento su/da file
      */
 
@@ -218,16 +216,40 @@ public class Controller {
 
 
 
-    /*
-    Gestione di filtro, ordinamento e ricerca
+    /**
+    Comparsa menù in base a filtro selezionato
      */
     public static void applicaFiltro(String tipoFiltro, DefaultTableModel modelloTabella){
-        FiltroFactoryIF filtroFac = new FiltroFactory();
-        FiltroStrategyIF fs = filtroFac.creaFiltro(tipoFiltro);
-        List <Libro> ret = fs.filtra(libreria);
+        switch(tipoFiltro){
+            case "Filtra per genere": {
+                grafica.setPopupGeneri(true);
+                break;
+            }
+            case "Filtra per stato lettura":{
+                grafica.setPopupStatoLettura(true);
+                break;
+            }
+            default:
+                break;
+        }
+    }
 
+    public static void applicaFiltroGenere(String genereLibro){
+        FiltroStrategyIF fs = new FiltroGenere(Genere_Libri.valueOf(cleanString(genereLibro)));
+        List<Libro> ret = fs.filtra(libreria);
+        for (Libro elem:ret){
+            System.out.println(ret.toString());
+        }
         aggiornaTabellaGUI(ret);
+    }
 
+    public static void applicaFiltroStatLett(String statoLett){
+        FiltroStrategyIF fs = new FiltroStatoLettura(Stato_Lettura.valueOf(cleanString(statoLett)));
+        List<Libro> ret = fs.filtra(libreria);
+        for (Libro elem:ret){
+            System.out.println(ret.toString());
+        }
+        aggiornaTabellaGUI(ret);
     }
 
 

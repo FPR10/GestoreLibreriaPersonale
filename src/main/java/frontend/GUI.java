@@ -43,7 +43,7 @@ public class GUI extends JFrame{
 
     public GUI() {
 
-        /*
+        /**
         INIZIALIZZAZIONE FINESTRA
          */
         setTitle("Gestore Libreria Personale");
@@ -53,7 +53,7 @@ public class GUI extends JFrame{
         setLocationRelativeTo(null); //finestra centrata su schermo
 
 
-        /*
+        /**
         INIZIALIZZAZIONE E MODIFICA TABELLA
          */
 
@@ -107,7 +107,7 @@ public class GUI extends JFrame{
         });
 
 
-        /*
+        /**
         PANNELLI
          */
 
@@ -139,7 +139,7 @@ public class GUI extends JFrame{
         pannelloStato.add(pannelloSalvataggio, BorderLayout.EAST);
 
 
-        /*
+        /**
         BOTTONI
          */
 
@@ -264,7 +264,7 @@ public class GUI extends JFrame{
 
     }
 
-    /*
+    /**
     Getter e setter
      */
 
@@ -309,7 +309,7 @@ public class GUI extends JFrame{
         popupStatoLettura.show(comboFiltro, comboFiltro.getWidth(),0);
     }
 
-    /*
+    /**
     Set di controller e FinestraParametriLibro per gestire gli action listener
      */
 
