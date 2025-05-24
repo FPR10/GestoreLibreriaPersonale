@@ -16,12 +16,12 @@ https://github.com/FPR10/GestoreLibreriaPersonale.git
 2. Esegui: java -jar GestoreLibreriaPersonale.jar
 
 ## Screenshot
-![1.png](../../Pictures/Screenshots/1.png)
-![2.png](../../Pictures/Screenshots/2.png)
-![3.png](../../Pictures/Screenshots/3.png)
-![4.png](../../Pictures/Screenshots/4.png)
-![5..png](../../Pictures/Screenshots/5..png)
-![6..png](../../Pictures/Screenshots/6..png)
+![Schermata vuota](src/images/1.png)
+![Ripristino libreria da file](src/images/2.png)
+![Corretto ripristino da file](src/images/3.png)
+![Filtraggio](src/images/4.png)
+![Ordinamento](src/images/5.png)
+![Modifica](src/images/6.png)
 
 
 ## Info personali
