@@ -13,14 +13,15 @@ import java.io.IOException;
 
 public class SalvaCSV implements SalvaRipristinaStrategyIF {
 
-    private static final String titoloCSV = "Titolo, Autore, ISBN, Genere, Valutazione, Stato lettura";
+    private static final String titoloCSV = "Titolo, nomeAutore,cognomeAutore, ISBN, Genere, Valutazione, Stato lettura";
 
     @Override
     public void salva(LibreriaSingleton libreria, String filePath) {
         try(FileWriter fw = new FileWriter(filePath)){
             for (Libro l : libreria.getLibreria()){
                 fw.append(l.getTitolo()).append(",");
-                fw.append(l.getAutore()).append(",");
+                fw.append(l.getNomeAutore()).append(",");
+                fw.append(l.getCognomeAutore()).append(",");
                 fw.append(l.getISBN()).append(",");
                 fw.append(l.getGenLib().toString()).append(",");
                 fw.append(l.getValPers().toString()).append(",");
@@ -38,10 +39,11 @@ public class SalvaCSV implements SalvaRipristinaStrategyIF {
             while ((riga = reader.readLine()) != null) {
                 String[] campi = riga.split(",");
 
-                Libro libro = new Libro.Builder(campi[0], campi[1], campi[2])
-                        .setGenereLibri(Genere_Libri.valueOf(campi[3]))
-                        .setValutazionePersonale(Valutazione_Personale.valueOf(campi[4]))
-                        .setStatoLettura(Stato_Lettura.valueOf(campi[5]))
+                Libro libro = new Libro.Builder(campi[0], campi[2], campi[3])
+                        .setAutoreNome(campi[1])
+                        .setGenereLibri(Genere_Libri.valueOf(campi[4]))
+                        .setValutazionePersonale(Valutazione_Personale.valueOf(campi[5]))
+                        .setStatoLettura(Stato_Lettura.valueOf(campi[6]))
                         .build();
                 libreria.aggiungiLibro(libro);
             }
