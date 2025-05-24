@@ -34,31 +34,21 @@ public class SalvaCSV implements SalvaRipristinaStrategyIF {
     @Override
     public void ripristina(LibreriaSingleton libreria, String filePath) {
         try (BufferedReader reader = new BufferedReader(new FileReader(filePath))) {
-            String line;
-            boolean isFirstLine = true;
-
-            //libreria.svuota(); // se vuoi ripartire da zero
-
-            while ((line = reader.readLine()) != null) {
-                if (isFirstLine) { // salta intestazione CSV
-                    isFirstLine = false;
-                    continue;
-                }
-
-                String[] campi = line.split(",");
+            String riga;
+            while ((riga = reader.readLine()) != null) {
+                String[] campi = riga.split(",");
 
                 Libro libro = new Libro.Builder(campi[0], campi[1], campi[2])
                         .setGenereLibri(Genere_Libri.valueOf(campi[3]))
                         .setValutazionePersonale(Valutazione_Personale.valueOf(campi[4]))
                         .setStatoLettura(Stato_Lettura.valueOf(campi[5]))
                         .build();
-
                 libreria.aggiungiLibro(libro);
             }
-
         } catch (IOException | IllegalArgumentException e) {
             System.err.println("Errore durante il ripristino CSV: " + e.getMessage());
         }
     }
-    }
+
+}
 
