@@ -22,6 +22,13 @@ public class GUI extends JFrame{
     private final JButton bottoneSalvaJSON;
     private final JButton bottoneSalvaCSV;
     private final JComboBox<String> comboFiltro;
+    private  JMenuItem voceGeneri;
+    private  JPopupMenu popupGeneri;
+    private  JPopupMenu popupStatoLettura;
+    private JMenuItem voceStatoLettura;
+    private static String genereSelezionato;
+    private static String statoSelezionato;
+
     private final JComboBox<String>comboOrdinamento;
     private final JTextField barraRicerca;
     private final JButton bottoneRipristinaVista;
@@ -220,23 +227,48 @@ public class GUI extends JFrame{
         pannelloSalvataggio.add(bottoneSalvaCSV);
 
 
-        // Menu a tendina per filtrare
         String[] opzioniFiltro = {"Nessun filtro", "Filtra per genere", "Filtra per stato lettura"};
         comboFiltro = new JComboBox<>(opzioniFiltro);
-        comboFiltro.setBounds(1100, 50, 150, 25);
+        comboFiltro.setBounds(1100,50,170,25);
         pannelloBottoni.add(comboFiltro);
 
-        //TODO
-        // Menu a tendina per filtrare
-        String[] opzioniOrdinamento = {"Ordina per autore", "Ordina per titolo", "Ordina per valutazione"}; //TODO AGGIUNGERE NESSUN ORDINAMENTO
+        // Popup per generi
+        popupGeneri = new JPopupMenu();
+        String[] generi = {"BIOGRAFIA", "AUTOBIOGRAFIA", "ROMANZO", "GIALLO", "THRILLER",
+                "AVVENTURA", "AZIONE", "FANTASCIENZA", "DISTOPIA", "FANTASY",
+                "HORROR", "ROSA", "SCIENTIFICO"};
+        for (String g : generi) {
+            voceGeneri = new JMenuItem(g);
+            voceGeneri.addActionListener(sel ->{
+                genereSelezionato = ((JMenuItem) sel.getSource()).getText();
+                //System.out.println(genereSelezionato);
+            });
+            popupGeneri.add(voceGeneri);
+        }
+
+        //Popup per stato lettura
+        popupStatoLettura = new JPopupMenu();
+        String[] statiLettura = {"LETTO", "DA LEGGERE", "NON LETTO"};
+        for (String sl : statiLettura){
+            voceStatoLettura = new JMenuItem(sl);
+            voceStatoLettura.addActionListener(sel->{
+                statoSelezionato=((JMenuItem) sel.getSource()).getText();
+                //System.out.println(statoSelezionato);
+            });
+            popupStatoLettura.add(voceStatoLettura);
+        }
+
+
+        //Menù ordinamento
+        String[] opzioniOrdinamento = {"Ordine d'inserimento","Ordina per autore", "Ordina per titolo", "Ordina per valutazione"};
         comboOrdinamento = new JComboBox<>(opzioniOrdinamento);
-        comboOrdinamento.setBounds(1100, 100, 150, 25);
+        comboOrdinamento.setBounds(1100, 100, 170, 25);
         pannelloBottoni.add(comboOrdinamento);
 
 
         bottoneRipristinaVista = new JButton("\uD83D\uDD04" + "Ripristina vista");
         bottoneRipristinaVista.setFocusPainted(false);
-        bottoneRipristinaVista.setBounds(1100, 150, 150, 25);
+        bottoneRipristinaVista.setBounds(1100, 150, 170, 25);
         pannelloBottoni.add(bottoneRipristinaVista);
 
 
@@ -270,6 +302,28 @@ public class GUI extends JFrame{
         statusLabel.setText("Totale libri: " + cont);
     }
 
+
+    public void setPopupGeneri(boolean cond) {
+        popupGeneri.setVisible(cond);
+        popupStatoLettura.setVisible(!cond);
+        popupGeneri.show(comboFiltro, comboFiltro.getWidth(), 0);
+    }
+
+    public void setPopupStatoLettura(boolean cond){
+        popupStatoLettura.setVisible(cond);
+        popupGeneri.setVisible(!cond);
+        popupStatoLettura.show(comboFiltro, comboFiltro.getWidth(),0);
+    }
+
+    public String getGenereSel (){
+        return genereSelezionato;
+    }
+
+    public String getStatoSel (){
+        return statoSelezionato;
+    }
+
+
     //Action listener che richiamo i metodi di Gginsc/FinestraParametriLibro
     public void setController(Controller controller) {
 
@@ -291,6 +345,11 @@ public class GUI extends JFrame{
           bottoneSalvaCSV.addActionListener(e -> Controller.salvaCSV());
 
           comboFiltro.addActionListener(e -> Controller.applicaFiltro((String) comboFiltro.getSelectedItem(), modelloTabella));
+
+
+          voceGeneri.addActionListener(e->Controller.applicaFiltroGenere(getGenereSel()));
+
+          voceStatoLettura.addActionListener(e-> Controller.applicaFiltroStatLett(getStatoSel()));
 
           comboOrdinamento.addActionListener(e -> Controller.applicaOrdinamento((String) comboOrdinamento.getSelectedItem()));
 
