@@ -2,13 +2,15 @@
 Progetto relativo al corso di Ingegneria del Software, A.A. 2024/2025
 
 ## Descrizione
-
+Implementazione in Java per la gestione di una libreria personale. Consente all'utente di aggiungere, modificare, 
+rimuovere, cercare, ordinare e filtrare. <br>
+Supporta il salvataggio/ripristino su/da formato JSON e csv.
 
 ## Linguaggio
 - Java 21.0.1
 
 ## Clone repository
-https://github.com/FPR10/GestoreLibreriaPersonale.git
+git clone https://github.com/FPR10/GestoreLibreriaPersonale.git
 
 ## Esecuzione codice
 
@@ -27,6 +29,6 @@ https://github.com/FPR10/GestoreLibreriaPersonale.git
 ## Info personali
 - Francesco Pio Ruffo
 - Matricola: 240044
-- Email: frff1010@gmail.com/rfffnc03h10d086z@studenti.unical.it
+- Email: rfffnc03h10d086z@studenti.unical.it
 
 
