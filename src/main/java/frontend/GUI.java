@@ -235,16 +235,16 @@ public class GUI extends JFrame{
                 "HORROR", "ROSA", "SCIENTIFICO"};
         for (String g : generi) {
             voceGeneri = new JMenuItem(g);
-            voceGeneri.addActionListener(e->Controller.applicaFiltroGenere(((JMenuItem) e.getSource()).getText()));
+            voceGeneri.addActionListener(e->Controller.applicaFiltro(((JMenuItem) e.getSource()).getText(), "genere"));
             popupGeneri.add(voceGeneri);
         }
 
         //Menù a popup per stato lettura
         popupStatoLettura = new JPopupMenu();
-        String[] statiLettura = {"LETTO", "DA LEGGERE", "NON LETTO"};
+        String[] statiLettura = {"LETTO", "DA LEGGERE", "IN LETTURA"};
         for (String sl : statiLettura){
             voceStatoLettura = new JMenuItem(sl);
-            voceStatoLettura.addActionListener(e->Controller.applicaFiltroStatLett(((JMenuItem) e.getSource()).getText()));
+            voceStatoLettura.addActionListener(e->Controller.applicaFiltro(((JMenuItem) e.getSource()).getText(), "stato lettura"));
             popupStatoLettura.add(voceStatoLettura);
         }
 
