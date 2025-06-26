@@ -85,7 +85,7 @@ public class GUI extends JFrame{
         tabella.setSelectionBackground(Color.BLACK);
 
 
-        //Sfondo righe alternato in base alla riga
+        //Colore sfondo alternato per effetto tabella
         tabella.setDefaultRenderer(Object.class, new DefaultTableCellRenderer() {
             @Override
             public Component getTableCellRendererComponent(JTable table, Object value,
@@ -95,9 +95,9 @@ public class GUI extends JFrame{
 
                 if (!isSelected) {
                     if (row % 2 == 0) {
-                        comp.setBackground(Color.WHITE); // Righe pari: bianco
+                        comp.setBackground(Color.WHITE);
                     } else {
-                        comp.setBackground(Color.lightGray); // Righe dispari: grigio chiarissimo
+                        comp.setBackground(Color.lightGray);
                     }
                 }
 
@@ -325,15 +325,15 @@ public class GUI extends JFrame{
           //Gestione eliminazione libro
           bottoneElimina.addActionListener(e -> Controller.eliminaLibro(controller, getLibroSelezionato(),modelloTabella));
 
-          //Ripristino colore riga selezioanta
+          //Ripristino colore riga ri-selezionata
           tabella.addMouseListener(Controller.ripristinaSelezione(tabella,ultimaRigaSelezionata));
 
           //Comparsa e scomparsa di 'Cerca libro'
           barraRicerca.addFocusListener(Controller.gestisciFocus(barraRicerca, "Cerca libro", ""));
 
-          bottoneSalvaJSON.addActionListener(e -> Controller.salvaJSON());
+          bottoneSalvaJSON.addActionListener(e->Controller.salva("json"));
 
-          bottoneSalvaCSV.addActionListener(e -> Controller.salvaCSV());
+          bottoneSalvaCSV.addActionListener(e->Controller.salva("csv"));
 
           comboFiltro.addActionListener(e -> Controller.applicaFiltro((String) comboFiltro.getSelectedItem(), modelloTabella));
 
