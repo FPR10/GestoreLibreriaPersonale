@@ -165,10 +165,10 @@ public class Controller {
      */
 
     public static void salva(String estensioneFile){
-        String downloadPath = cartellaDownload + File.separator + "salvataggio." + estensioneFile;
+        String path = cartellaDownload + File.separator + "salvataggio." + estensioneFile;
         SalvaRipristinaFactoryIF fact = new SalvaRipristinaFactory();
-        SalvaRipristinaStrategyIF sf = fact.scelta(downloadPath,estensioneFile);
-        sf.salva(libreria,downloadPath);
+        SalvaRipristinaStrategyIF sf = fact.scelta(path,estensioneFile);
+        sf.salva(libreria,path);
         JOptionPane.showMessageDialog(null, "Libreria salvata!", "Operazione avvenuta con successo", JOptionPane.INFORMATION_MESSAGE);
     }
 
@@ -222,21 +222,10 @@ public class Controller {
         }
     }
 
-    public static void applicaFiltroGenere(String genereLibro){
-        FiltroStrategyIF fs = new FiltroGenere(Genere_Libri.valueOf(cleanString(genereLibro)));
+    public static void applicaFiltro(String paramFiltro, String tipoFiltro){
+        FiltroFactoryIF fact = new FiltroFactory();
+        FiltroStrategyIF fs = fact.creaFiltro(paramFiltro, tipoFiltro);
         List<Libro> ret = fs.filtra(libreria);
-        for (Libro elem:ret){
-            System.out.println(ret.toString());
-        }
-        aggiornaTabellaGUI(ret);
-    }
-
-    public static void applicaFiltroStatLett(String statoLett){
-        FiltroStrategyIF fs = new FiltroStatoLettura(Stato_Lettura.valueOf(cleanString(statoLett)));
-        List<Libro> ret = fs.filtra(libreria);
-        for (Libro elem:ret){
-            System.out.println(ret.toString());
-        }
         aggiornaTabellaGUI(ret);
     }
 
@@ -263,7 +252,7 @@ public class Controller {
     Utils
      */
 
-    //Dati dati del form di compilazione (sia per aggiunta che per modifica) crea un Libro
+    //Creazione di un oggetto Libro partendo dai dati presenti nel modulo di compilazione
     private static Libro creaLibroDaForm (JTextField campoTitolo, JTextField campoAutoreNome, JTextField campoAutoreCognome, JTextField campoIsbn,
                                           JComboBox<String> campoGenere, JComboBox<String> campoStato, JComboBox<String> campoValutazione){
         String titolo = campoTitolo.getText();
