@@ -164,45 +164,33 @@ public class Controller {
     Gestione di salvataggio/caricamento su/da file
      */
 
-    public static void salvaJSON(){
-        String downloadPath = cartellaDownload + File.separator + "salvataggio.json";
-        SalvaRipristinaStrategyIF sf = new SalvaJSON();
-        sf.salva(libreria, downloadPath);
-        JOptionPane.showMessageDialog(null, "Libreria salvata in JSON!", "Operazione avvenuta con successo", JOptionPane.INFORMATION_MESSAGE);
+    public static void salva(String estensioneFile){
+        String downloadPath = cartellaDownload + File.separator + "salvataggio." + estensioneFile;
+        SalvaRipristinaFactoryIF fact = new SalvaRipristinaFactory();
+        SalvaRipristinaStrategyIF sf = fact.scelta(downloadPath,estensioneFile);
+        sf.salva(libreria,downloadPath);
+        JOptionPane.showMessageDialog(null, "Libreria salvata!", "Operazione avvenuta con successo", JOptionPane.INFORMATION_MESSAGE);
     }
-
-    public static void salvaCSV(){
-        String downloadPath = cartellaDownload + File.separator + "salvataggio.csv";
-        SalvaRipristinaStrategyIF sf = new SalvaCSV();
-        sf.salva(libreria, downloadPath);
-        JOptionPane.showMessageDialog(null, "Libreria salvata in CSV!", "Operazione avvenuta con successo", JOptionPane.INFORMATION_MESSAGE);
-    }
-
 
     public static void caricaLibreriaDaFile(DefaultTableModel modelloTabella){
-        //JFrame usato come parent del filechoser
         JFrame frame = new JFrame();
 
         //Inizializzazione del file choser nella cartella downloads
-        String userHome = System.getProperty("user.home");
-        File cartellaDownload = new File(userHome, "Downloads");
         JFileChooser fileChooser = new JFileChooser(cartellaDownload);
 
         //Scelta delle estensioni accettate
         FileNameExtensionFilter filtroEstensione = new FileNameExtensionFilter("file json e csv", "csv", "json");
-        fileChooser. setFileFilter(filtroEstensione);
+        fileChooser.setFileFilter(filtroEstensione);
 
 
         int ret = fileChooser.showOpenDialog(frame);
         if(ret == JFileChooser.APPROVE_OPTION) {
             File fileSelezionato = fileChooser.getSelectedFile();
             String pathFile = fileSelezionato.getAbsolutePath();
-
-            String nomeFile= FilenameUtils.getBaseName(pathFile);
             String estensioneFile = FilenameUtils.getExtension(pathFile);
 
             SalvaRipristinaFactoryIF srf = new SalvaRipristinaFactory();
-            SalvaRipristinaStrategyIF srs = srf.scelta(pathFile);
+            SalvaRipristinaStrategyIF srs = srf.scelta(pathFile, estensioneFile);
             srs.ripristina(libreria,pathFile);
             aggiornaTabellaGUI(libreria.getLibreria());
             grafica.setContatore(modelloTabella.getRowCount());
@@ -271,7 +259,7 @@ public class Controller {
     }
 
 
-    /*
+    /**
     Utils
      */
 
