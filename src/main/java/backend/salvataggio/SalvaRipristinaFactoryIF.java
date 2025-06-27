@@ -1,5 +1,5 @@
 package main.java.backend.salvataggio;
 
 public interface SalvaRipristinaFactoryIF {
-    SalvaRipristinaStrategyIF scelta (String filePath, String estensione);
+    SalvaRipristinaStrategyIF setStrategy (String filePath, String estensione);
 }

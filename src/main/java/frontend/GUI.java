@@ -335,7 +335,7 @@ public class GUI extends JFrame{
 
           bottoneSalvaCSV.addActionListener(e->Controller.salva("csv"));
 
-          comboFiltro.addActionListener(e -> Controller.applicaFiltro((String) comboFiltro.getSelectedItem(), modelloTabella));
+          comboFiltro.addActionListener(e -> Controller.selezionaFiltro((String) comboFiltro.getSelectedItem()));
 
           comboOrdinamento.addActionListener(e -> Controller.applicaOrdinamento((String) comboOrdinamento.getSelectedItem()));
 

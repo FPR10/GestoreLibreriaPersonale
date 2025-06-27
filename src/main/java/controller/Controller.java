@@ -167,7 +167,7 @@ public class Controller {
     public static void salva(String estensioneFile){
         String path = cartellaDownload + File.separator + "salvataggio." + estensioneFile;
         SalvaRipristinaFactoryIF fact = new SalvaRipristinaFactory();
-        SalvaRipristinaStrategyIF sf = fact.scelta(path,estensioneFile);
+        SalvaRipristinaStrategyIF sf = fact.setStrategy(path,estensioneFile);
         sf.salva(libreria,path);
         JOptionPane.showMessageDialog(null, "Libreria salvata!", "Operazione avvenuta con successo", JOptionPane.INFORMATION_MESSAGE);
     }
@@ -190,7 +190,7 @@ public class Controller {
             String estensioneFile = FilenameUtils.getExtension(pathFile);
 
             SalvaRipristinaFactoryIF srf = new SalvaRipristinaFactory();
-            SalvaRipristinaStrategyIF srs = srf.scelta(pathFile, estensioneFile);
+            SalvaRipristinaStrategyIF srs = srf.setStrategy(pathFile, estensioneFile);
             srs.ripristina(libreria,pathFile);
             aggiornaTabellaGUI(libreria.getLibreria());
             grafica.setContatore(modelloTabella.getRowCount());
@@ -207,7 +207,7 @@ public class Controller {
     /**
     Comparsa menù in base a filtro selezionato
      */
-    public static void applicaFiltro(String tipoFiltro, DefaultTableModel modelloTabella){
+    public static void selezionaFiltro(String tipoFiltro){
         switch(tipoFiltro){
             case "Filtra per genere": {
                 grafica.setPopupGeneri(true);
@@ -222,9 +222,12 @@ public class Controller {
         }
     }
 
+    /**
+    Filtraggio, ordinamento, ricerca
+     */
     public static void applicaFiltro(String paramFiltro, String tipoFiltro){
         FiltroFactoryIF fact = new FiltroFactory();
-        FiltroStrategyIF fs = fact.creaFiltro(paramFiltro, tipoFiltro);
+        FiltroStrategyIF fs = fact.setStrategy(paramFiltro, tipoFiltro);
         List<Libro> ret = fs.filtra(libreria);
         aggiornaTabellaGUI(ret);
     }
@@ -232,7 +235,7 @@ public class Controller {
 
     public static void applicaOrdinamento(String tipoOrdinamento){
         OrdinamentoFactoryIF ordFac = new OrdinamentoFactory();
-        OrdinamentoStrategyIF ordStr = ordFac.creaOrdinamento(tipoOrdinamento);
+        OrdinamentoStrategyIF ordStr = ordFac.setStrategy(tipoOrdinamento);
         List<Libro> ret = ordStr.ordina(libreria);
 
         aggiornaTabellaGUI(ret);
@@ -241,7 +244,7 @@ public class Controller {
 
     public static void ricerca (String testoDaRicercare, String tipoRicerca){
         RicercaFactoryIF ricFac = new RicercaFactory();
-        RicercaStrategyIF ricStr = ricFac.ricerca(testoDaRicercare,tipoRicerca);
+        RicercaStrategyIF ricStr = ricFac.setStrategy(testoDaRicercare,tipoRicerca);
         List<Libro>ret = ricStr.ricerca(libreria);
 
         aggiornaTabellaGUI(ret);

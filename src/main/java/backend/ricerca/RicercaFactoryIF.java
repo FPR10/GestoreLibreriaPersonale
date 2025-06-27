@@ -1,5 +1,5 @@
 package main.java.backend.ricerca;
 
 public interface RicercaFactoryIF {
-    RicercaStrategyIF ricerca (String toSearch,String tipoRicerca);
+    RicercaStrategyIF setStrategy (String toSearch,String tipoRicerca);
 }

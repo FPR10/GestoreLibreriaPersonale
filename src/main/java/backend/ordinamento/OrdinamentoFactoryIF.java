@@ -1,7 +1,7 @@
 package main.java.backend.ordinamento;
 
 public interface OrdinamentoFactoryIF {
-    OrdinamentoStrategyIF creaOrdinamento(String tipoOrdinamento);
+    OrdinamentoStrategyIF setStrategy(String tipoOrdinamento);
 
     static String clearString(String oldString){
         return oldString.replace(" ", "_");

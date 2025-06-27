@@ -6,7 +6,7 @@ import main.java.backend.libro.Stato_Lettura;
 public class OrdinamentoFactory implements OrdinamentoFactoryIF {
 
     @Override
-    public OrdinamentoStrategyIF creaOrdinamento(String tipoOrdinamento) {
+    public OrdinamentoStrategyIF setStrategy(String tipoOrdinamento) {
         switch(tipoOrdinamento){
             case "Ordina per autore" :
                 return new OrdinamentoPerAutore();

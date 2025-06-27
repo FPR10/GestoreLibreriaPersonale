@@ -9,7 +9,6 @@ import java.util.List;
 
 public enum LibreriaSingleton implements LibreriaIF{
 
-    //Istanza static final della classe enum
     INSTANCE;
 
     List<Libro> libreria = new ArrayList<>();
