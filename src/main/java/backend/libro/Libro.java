@@ -25,9 +25,6 @@ public class Libro {
         private Valutazione_Personale valPers;
 
         public Builder (String titolo,String autoreCognome, String ISBN){
-            //if (!checkISBN(ISBN)){
-            //    throw new IllegalArgumentException("Formato ISBN non valido");
-            //}
             this.titolo = titolo;
             //this.autoreNome = autoreNome;
             this.autoreCognome = autoreCognome;
