@@ -16,7 +16,8 @@ public class FiltroStatoLettura implements FiltroStrategyIF {
     }
 
     @Override
-    public List<Libro> filtra(LibreriaSingleton l) {
+    public List<Libro> filtra() {
+        LibreriaSingleton l = LibreriaSingleton.INSTANCE;
         List<Libro> ret = new ArrayList<>();
         for (Libro lib : l.getLibreria()){
             if (lib.getStatLett().equals(sl))

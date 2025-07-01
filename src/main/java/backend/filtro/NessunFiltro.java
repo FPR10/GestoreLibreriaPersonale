@@ -7,7 +7,8 @@ import java.util.List;
 
 public class NessunFiltro implements FiltroStrategyIF{
     @Override
-    public List<Libro> filtra(LibreriaSingleton l) {
+    public List<Libro> filtra() {
+        LibreriaSingleton l = LibreriaSingleton.INSTANCE;
         return l.getLibreria();
     }
 }

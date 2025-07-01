@@ -14,7 +14,8 @@ import java.util.List;
 public class SalvaJSON implements SalvaRipristinaStrategyIF {
 
     @Override
-    public void salva(LibreriaSingleton libreria, String filePath) {
+    public void salva(String filePath) {
+        LibreriaSingleton libreria = LibreriaSingleton.INSTANCE;
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try (FileWriter writer = new FileWriter(filePath)) {
             gson.toJson(libreria.getLibreria(), writer);
@@ -24,7 +25,8 @@ public class SalvaJSON implements SalvaRipristinaStrategyIF {
     }
 
     @Override
-    public void ripristina(LibreriaSingleton libreria, String filePath) {
+    public void ripristina(String filePath) {
+        LibreriaSingleton libreria = LibreriaSingleton.INSTANCE;
         Gson gson = new Gson();
         try (FileReader reader = new FileReader(filePath)) {
             Type listType = new TypeToken<List<Libro>>(){}.getType();

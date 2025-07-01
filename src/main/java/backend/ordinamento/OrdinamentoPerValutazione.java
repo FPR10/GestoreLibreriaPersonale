@@ -8,7 +8,8 @@ import java.util.List;
 
 public class OrdinamentoPerValutazione implements OrdinamentoStrategyIF {
     @Override
-    public List<Libro> ordina(LibreriaSingleton libri) {
+    public List<Libro> ordina() {
+        LibreriaSingleton libri = LibreriaSingleton.INSTANCE;
         List<Libro>copia = libri.getLibreria();
         copia.sort(Comparator.comparing(Libro::getValPers).reversed());
         return copia;

@@ -7,7 +7,8 @@ import java.util.List;
 public class OrdinamentoPerTitolo implements OrdinamentoStrategyIF {
 
     @Override
-    public List<Libro> ordina(LibreriaSingleton libri) {
+    public List<Libro> ordina() {
+        LibreriaSingleton libri = LibreriaSingleton.INSTANCE;
         List<Libro>copia = libri.getLibreria();
         copia.sort(Comparator.comparing(Libro::getTitolo));
         return copia;

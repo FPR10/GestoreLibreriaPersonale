@@ -7,7 +7,8 @@ import java.util.List;
 
 public class NessunOrdinamento implements OrdinamentoStrategyIF{
     @Override
-    public List<Libro> ordina(LibreriaSingleton l) {
+    public List<Libro> ordina() {
+        LibreriaSingleton l = LibreriaSingleton.INSTANCE;
         return l.getLibreria();
     }
 }
