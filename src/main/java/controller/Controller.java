@@ -30,8 +30,8 @@ public class Controller {
     private static GUI grafica;
 
     private static final String cartellaDownload = System.getProperty("user.home") + File.separator + "Downloads";
-    private static final String successoOperazione = "Operazione avvenuta con successo !";
-    private static final String fallimentoOperazione = "Errore !";
+    private static final String successoOperazione = "Operazione avvenuta con successo";
+    private static final String fallimentoOperazione = "Errore";
 
 
     public Controller(LibreriaSingleton impl, GUI front) {
@@ -45,7 +45,7 @@ public class Controller {
        Gestione degli ActionListener
      */
 
-    //Consente di ripristinare il colore originale di una riga della tabella selezionata
+    //Ripristino colore originale di una riga della tabella selezionata
     public static MouseAdapter ripristinaSelezione(JTable tabella, int[] ultimaRigaSelezionata) {
         return new MouseAdapter() {
             @Override
@@ -275,6 +275,7 @@ public class Controller {
         return l;
     }
 
+    //Boolean check per controllare che tutti i parametri obbligatori siano stati inseriti
     private static boolean campiObbligatoriOk(String titolo, String autoreCognome, String isbn, String segnaposto){
         return (titolo.isEmpty() || autoreCognome.isEmpty() || isbn.isEmpty() || titolo.equals(segnaposto) || autoreCognome.equals(segnaposto) || isbn.equals(segnaposto));
     }
@@ -297,6 +298,7 @@ public class Controller {
         }
     }
 
+    //Ripristina la visualizzazione originale della tabella ('eliminando' l'effetto di filtro/ordinamento/ricerca)
     public static void ripristinaVista() {
         aggiornaTabellaGUI(libreria.getLibreria());
     }
@@ -313,7 +315,7 @@ public class Controller {
         return null;
     }
 
-    //modelloTabella.addRow(new String[]{titolo,autoreCognome+" "+autoreNome,isbn,genere, valutazione, stato});
+   //Visualizzazione di un libro aggiunto nella tabella
     private static void aggiungiLibroGUI(DefaultTableModel modelloTabella, Libro l){
         String[] rigaTabella = new String[]{
                 l.getTitolo(),
@@ -327,7 +329,7 @@ public class Controller {
         modelloTabella.addRow(rigaTabella);
     }
 
-
+    //Visualizzazione di un libro modificato nella tabella
     private static void aggiornaLibroGUI(DefaultTableModel modelloTabella, int riga, Libro l) {
         modelloTabella.setValueAt(l.getTitolo(), riga, 0);
         modelloTabella.setValueAt(l.getAutore(), riga, 1);
