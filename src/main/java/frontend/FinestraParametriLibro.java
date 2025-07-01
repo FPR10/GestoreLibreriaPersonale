@@ -11,10 +11,7 @@ import java.util.Map;
 
 public class FinestraParametriLibro extends JFrame {
 
-    // Costanti
-    private static final String segnaposto_obbligatorio = "Obbligatorio";
-
-    // Campi della finestra di inserimento/modifica
+    // Campi della finestra di dialogo per inserimento/modifica libro
     private JTextField campoTitolo;
     private JTextField campoAutoreNome;
     private JTextField campoAutoreCognome;
@@ -33,15 +30,15 @@ public class FinestraParametriLibro extends JFrame {
     private DefaultTableModel modelloTabella;
 
     /**
-     * Costruttore per aggiungere un nuovo libro
+     * Costruttore per la finestra di AGGIUNTA di un nuovo libro
      */
     public FinestraParametriLibro(Controller controller, DefaultTableModel modelloTabella) {
         this.controller = controller;
         this.modelloTabella = modelloTabella;
 
-        inizializzaFinestra("Aggiungi un nuovo libro");
+        creaFinestra("Aggiungi un nuovo libro");
         creaComponenti();
-        aggiungiComponenti();
+        aggiungiComponentiFinestra();
         aggiungiSegnapostiCampiObbligatori();
         impostaControllerAggiunta();
 
@@ -49,7 +46,7 @@ public class FinestraParametriLibro extends JFrame {
     }
 
     /**
-     * Costruttore per modificare un libro esistente
+     * Costruttore per la finestra di MODIFICA un libro esistente
      */
     public FinestraParametriLibro(Controller controller, DefaultTableModel modelloTabella,
                                   Map.Entry<Integer, String> libroModifica) {
@@ -58,9 +55,9 @@ public class FinestraParametriLibro extends JFrame {
         this.libroDaModificare = Controller.getLibroFromISBN(libroModifica.getValue());
         this.rigaLibroDaModifica = libroModifica.getKey();
 
-        inizializzaFinestra("Modifica libro");
+        creaFinestra("Modifica libro");
         creaComponenti();
-        aggiungiComponenti();
+        aggiungiComponentiFinestra();
         precompilaCampi();
         impostaControllerModifica();
 
@@ -68,9 +65,9 @@ public class FinestraParametriLibro extends JFrame {
     }
 
     /**
-     * Inizializza le proprietà base della finestra
+     * Inizializza le proprietà base della finestra di dialogo
      */
-    private void inizializzaFinestra(String titolo) {
+    private void creaFinestra(String titolo) {
         setTitle(titolo);
         setSize(450,450);
         setLocationRelativeTo(null);
@@ -145,7 +142,7 @@ public class FinestraParametriLibro extends JFrame {
     }
 
     /**
-     * Crea il pulsante salva
+     * Crea il pulsante salva/modifica
      */
     private void creaPulsanteSalva() {
         String testoBottone;
@@ -161,7 +158,7 @@ public class FinestraParametriLibro extends JFrame {
     /**
      * Aggiunge tutti i componenti alla finestra
      */
-    private void aggiungiComponenti() {
+    private void aggiungiComponentiFinestra() {
         // Campi di testo
         add(new JLabel("Titolo:") {{ setBounds(30, 30, 110, 25); setForeground(Color.RED); }});
         add(campoTitolo);
@@ -193,13 +190,14 @@ public class FinestraParametriLibro extends JFrame {
      * Aggiunge i segnaposti ai campi obbligatori
      */
     private void aggiungiSegnapostiCampiObbligatori() {
-        aggiungiSegnapostoObbligatorio(campoTitolo, segnaposto_obbligatorio);
-        aggiungiSegnapostoObbligatorio(campoAutoreCognome, segnaposto_obbligatorio);
-        aggiungiSegnapostoObbligatorio(campoISBN, segnaposto_obbligatorio);
+        String segn_obbl = "Obbligatorio";
+        aggiungiSegnapostoObbligatorio(campoTitolo, segn_obbl);
+        aggiungiSegnapostoObbligatorio(campoAutoreCognome, segn_obbl);
+        aggiungiSegnapostoObbligatorio(campoISBN, segn_obbl);
     }
 
     /**
-     * Precompila i campi quando si modifica un libro
+     * Precompila i campi (con le info inserite in fase di creazione) quando si modifica un libro
      */
     private void precompilaCampi() {
         if (libroDaModificare != null) {
@@ -228,7 +226,7 @@ public class FinestraParametriLibro extends JFrame {
         salva.addActionListener(e -> Controller.SalvaLibro(
                 campoTitolo, campoAutoreNome, campoAutoreCognome,
                 campoISBN, comboGenere, comboStato, comboValutazione,
-                segnaposto_obbligatorio, this, modelloTabella));
+                "Obbligatorio", this, modelloTabella));
     }
 
     /**
@@ -242,7 +240,7 @@ public class FinestraParametriLibro extends JFrame {
     }
 
     /**
-     * Aggiunge un segnaposto a un campo di testo
+     * Gestisce la visualizzazione del segnaposto 'obbligatorio' in base al focus del mouse dell'utente
      */
     private void aggiungiSegnapostoObbligatorio(JTextField campo, String testoSegnaposto) {
         campo.setForeground(Color.GRAY);

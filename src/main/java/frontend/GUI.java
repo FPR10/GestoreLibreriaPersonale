@@ -57,7 +57,7 @@ public class GUI extends JFrame{
         INIZIALIZZAZIONE E MODIFICA TABELLA
          */
 
-        //Impedisco di modificare direttamente le celle della tabella
+        //Celle della tabella non direttamente modificabili
         modelloTabella = new DefaultTableModel() {
             @Override
             public boolean isCellEditable(int righe, int colonne) {
@@ -70,16 +70,16 @@ public class GUI extends JFrame{
         tabella = new JTable(modelloTabella);
 
 
-        // Personalizzazione tabella
+        //Setting di colori, dimensione e spaziatura della tabella
         tabella.setShowGrid(false);
         tabella.setRowHeight(28);
+        tabella.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
         tabella.setIntercellSpacing(new Dimension(0, 0));
         tabella.setSelectionMode(ListSelectionModel.SINGLE_SELECTION);
         tabella.setSelectionForeground(Color.WHITE);
-        tabella.setFont(new Font("Segoe UI", Font.PLAIN, 14));
-        tabella.getTableHeader().setFont(new Font("Segoe UI", Font.BOLD, 14));
         tabella.getTableHeader().setBackground(Color.LIGHT_GRAY);
         tabella.getTableHeader().setBorder(BorderFactory.createEmptyBorder(30, 0, 0, 0)); // Aggiungi padding superiore
+
 
         // Colore della riga selezionata
         tabella.setSelectionBackground(Color.BLACK);
@@ -152,7 +152,7 @@ public class GUI extends JFrame{
 
 
         // Bottone modifica libro
-        // \uD83D\uDD8A\uFE0F -> carattere della matita
+        // \uD83D\uDD8A\uFE0F: carattere della matita
         bottoneModifica = new JButton("\uD83D\uDD8A\uFE0F" + " "+ "Modifica libro");
         bottoneModifica.setBackground(Color.orange);
         bottoneModifica.setFocusPainted(false);
@@ -310,7 +310,7 @@ public class GUI extends JFrame{
     }
 
     /**
-    Set di controller e FinestraParametriLibro per gestire gli action listener
+    Setting del Controller e di FinestraParametriLibro per gestire gli action listener
      */
 
 
