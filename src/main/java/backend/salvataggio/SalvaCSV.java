@@ -28,7 +28,7 @@ public class SalvaCSV implements SalvaRipristinaStrategyIF {
                 fw.append(l.getStatLett().toString()).append("\n");
             }
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            System.err.println("Errore durante il salvataggio CSV: " + e.getMessage());
         }
     }
 
@@ -47,7 +47,7 @@ public class SalvaCSV implements SalvaRipristinaStrategyIF {
                         .build();
                 libreria.aggiungiLibro(libro);
             }
-        } catch (IOException | IllegalArgumentException e) {
+        } catch (IOException e) {
             System.err.println("Errore durante il ripristino CSV: " + e.getMessage());
         }
     }

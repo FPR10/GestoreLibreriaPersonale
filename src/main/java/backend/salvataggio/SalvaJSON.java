@@ -19,7 +19,7 @@ public class SalvaJSON implements SalvaRipristinaStrategyIF {
         try (FileWriter writer = new FileWriter(filePath)) {
             gson.toJson(libreria.getLibreria(), writer);
         } catch (IOException e) {
-            System.err.println("Errore durante l'esportazione: " + e.getMessage());
+            System.err.println("Errore durante il salvataggio JSON: " + e.getMessage());
         }
     }
 
@@ -29,7 +29,6 @@ public class SalvaJSON implements SalvaRipristinaStrategyIF {
         try (FileReader reader = new FileReader(filePath)) {
             Type listType = new TypeToken<List<Libro>>(){}.getType();
             List<Libro> libri = gson.fromJson(reader, listType);
-            //libreria.svuota();
             for (Libro l : libri) {
                 libreria.aggiungiLibro(l);
             }
