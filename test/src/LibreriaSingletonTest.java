@@ -58,7 +58,7 @@ public class LibreriaSingletonTest {
 
     @Test
     void testModificaNull(){
-        assertThrows(IllegalArgumentException.class, ()-> libreria.modificaLibro(null));
+        assertThrows(IllegalArgumentException.class, ()-> libreria.modificaLibro( null));
     }
 
     @Test
