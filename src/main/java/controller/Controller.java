@@ -168,7 +168,7 @@ public class Controller {
         String path = cartellaDownload + File.separator + "salvataggio." + estensioneFile;
         SalvaRipristinaFactoryIF fact = new SalvaRipristinaFactory();
         SalvaRipristinaStrategyIF sf = fact.setStrategy(path,estensioneFile);
-        sf.salva(libreria,path);
+        sf.salva(path);
         JOptionPane.showMessageDialog(null, "Libreria salvata!", "Operazione avvenuta con successo", JOptionPane.INFORMATION_MESSAGE);
     }
 
@@ -179,7 +179,7 @@ public class Controller {
         JFileChooser fileChooser = new JFileChooser(cartellaDownload);
 
         //Scelta delle estensioni accettate
-        FileNameExtensionFilter filtroEstensione = new FileNameExtensionFilter("file json e csv", "csv", "json");
+        FileNameExtensionFilter filtroEstensione = new FileNameExtensionFilter(".json,.csv", "csv", "json");
         fileChooser.setFileFilter(filtroEstensione);
 
 
@@ -191,7 +191,7 @@ public class Controller {
 
             SalvaRipristinaFactoryIF srf = new SalvaRipristinaFactory();
             SalvaRipristinaStrategyIF srs = srf.setStrategy(pathFile, estensioneFile);
-            srs.ripristina(libreria,pathFile);
+            srs.ripristina(pathFile);
             aggiornaTabellaGUI(libreria.getLibreria());
             grafica.setContatore(modelloTabella.getRowCount());
             JOptionPane.showMessageDialog(null, "Libreria importata da file !",
@@ -228,7 +228,7 @@ public class Controller {
     public static void applicaFiltro(String paramFiltro, String tipoFiltro){
         FiltroFactoryIF fact = new FiltroFactory();
         FiltroStrategyIF fs = fact.setStrategy(paramFiltro, tipoFiltro);
-        List<Libro> ret = fs.filtra(libreria);
+        List<Libro> ret = fs.filtra();
         aggiornaTabellaGUI(ret);
     }
 
@@ -236,8 +236,7 @@ public class Controller {
     public static void applicaOrdinamento(String tipoOrdinamento){
         OrdinamentoFactoryIF ordFac = new OrdinamentoFactory();
         OrdinamentoStrategyIF ordStr = ordFac.setStrategy(tipoOrdinamento);
-        List<Libro> ret = ordStr.ordina(libreria);
-
+        List<Libro> ret = ordStr.ordina();
         aggiornaTabellaGUI(ret);
     }
 
@@ -245,8 +244,7 @@ public class Controller {
     public static void ricerca (String testoDaRicercare, String tipoRicerca){
         RicercaFactoryIF ricFac = new RicercaFactory();
         RicercaStrategyIF ricStr = ricFac.setStrategy(testoDaRicercare,tipoRicerca);
-        List<Libro>ret = ricStr.ricerca(libreria);
-
+        List<Libro>ret = ricStr.ricerca();
         aggiornaTabellaGUI(ret);
     }
 
