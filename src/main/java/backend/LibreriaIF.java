@@ -13,4 +13,5 @@ public interface LibreriaIF extends Iterable<Libro> {
     void stampaLibreria();
     boolean contains(Libro l);
 
+    int size();
 }
