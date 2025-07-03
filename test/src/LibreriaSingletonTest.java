@@ -51,6 +51,15 @@ public class LibreriaSingletonTest {
         assertEquals(libreria.size(), listaLibriEsempio.size());
     }
 
+    @Test
+    void testInserimentoNull(){
+        assertThrows(IllegalArgumentException.class, ()-> libreria.aggiungiLibro(null));
+    }
+
+    @Test
+    void testModificaNull(){
+        assertThrows(IllegalArgumentException.class, ()-> libreria.modificaLibro(null));
+    }
 
     @Test
     void testModificaLibro(){
@@ -73,5 +82,19 @@ public class LibreriaSingletonTest {
         assertEquals("LibroMod", l.getTitolo());
         assertNotEquals("Ruffo", l.getCognomeAutore());
 
+    }
+
+    /**
+     * Modifiche su una copia non cambiano LibreriaSingleton
+     */
+    @Test
+    void testGetCopiaLibreria(){
+        Libro l = listaLibriEsempio.getFirst();
+        libreria.aggiungiLibro(l);
+
+        List<Libro> libri = libreria.getLibreria();
+        libri.remove(l);
+        assertFalse(libri.contains(l));
+        assertTrue(libreria.contains(l));
     }
 }
