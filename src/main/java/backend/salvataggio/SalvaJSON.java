@@ -15,6 +15,9 @@ public class SalvaJSON implements SalvaRipristinaStrategyIF {
 
     @Override
     public void salva(String filePath) {
+        if (filePath==null){
+            throw new IllegalArgumentException("File path scorretto");
+        }
         LibreriaSingleton libreria = LibreriaSingleton.INSTANCE;
         Gson gson = new GsonBuilder().setPrettyPrinting().create();
         try (FileWriter writer = new FileWriter(filePath)) {
@@ -26,6 +29,9 @@ public class SalvaJSON implements SalvaRipristinaStrategyIF {
 
     @Override
     public void ripristina(String filePath) {
+        if (filePath==null){
+            throw new IllegalArgumentException("File path scorretto");
+        }
         LibreriaSingleton libreria = LibreriaSingleton.INSTANCE;
         Gson gson = new Gson();
         try (FileReader reader = new FileReader(filePath)) {
