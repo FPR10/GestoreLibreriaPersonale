@@ -20,7 +20,7 @@ public class FiltroGenere implements FiltroStrategyIF {
         LibreriaSingleton l = LibreriaSingleton.INSTANCE;
         List<Libro> ret = new ArrayList<>();
         for (Libro lib : l.getLibreria()){
-            if (lib.getGenLib().equals(genere))
+            if (lib.getGenLib()!= null && lib.getGenLib().equals(genere))
                 ret.add(lib);
         }
         return ret;

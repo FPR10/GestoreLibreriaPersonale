@@ -20,7 +20,7 @@ public class FiltroStatoLettura implements FiltroStrategyIF {
         LibreriaSingleton l = LibreriaSingleton.INSTANCE;
         List<Libro> ret = new ArrayList<>();
         for (Libro lib : l.getLibreria()){
-            if (lib.getStatLett().equals(sl))
+            if (lib.getStatLett()!=null && lib.getStatLett().equals(sl))
                 ret.add(lib);
         }
         return ret;
