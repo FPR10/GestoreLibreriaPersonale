@@ -59,5 +59,35 @@ public class FiltroTest {
         assertEquals(0,res.size());
     }
 
+    /**
+     Test FiltroStatoLettura
+     */
+    @Test
+    void testFiltroStatLett(){
+        FiltroStatoLettura fs = new FiltroStatoLettura(Stato_Lettura.LETTO);
+        List<Libro> res = fs.filtra();
+        assertEquals(3, res.size());
+    }
+
+    @Test
+    void testNullFiltroStatLett(){
+        FiltroStatoLettura fs = new FiltroStatoLettura(null);
+        List<Libro> res = fs.filtra();
+        assertEquals(0, res.size());
+    }
+
+
+    //Test usando un libro senza stato lettura
+    @AfterAll
+    static void testFiltraLibroStatLettNull() {
+        libreria.clear();
+        Libro l = new Libro.Builder("Divina Commedia", "Dante Alighieri", "1234").build();
+        libreria.aggiungiLibro(l);
+
+        FiltroStatoLettura fs = new FiltroStatoLettura(Stato_Lettura.LETTO);
+        List<Libro> res = fs.filtra();
+        assertEquals(0,res.size());
+    }
+
 
 }
