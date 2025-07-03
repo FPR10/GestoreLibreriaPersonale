@@ -1,7 +1,9 @@
 import main.java.backend.LibreriaSingleton;
 import main.java.backend.filtro.FiltroGenere;
+import main.java.backend.filtro.FiltroStatoLettura;
 import main.java.backend.libro.Genere_Libri;
 import main.java.backend.libro.Libro;
+import main.java.backend.libro.Stato_Lettura;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
@@ -45,19 +47,6 @@ public class FiltroTest {
         assertEquals(0, res.size());
     }
 
-    /**
-     * Test usando un libro senza genere settato
-     */
-    @AfterAll
-    static void testFiltraLibroConGenereNull() {
-        libreria.clear();
-        Libro l = new Libro.Builder("Divina Commedia", "Dante Alighieri", "1234").build();
-        libreria.aggiungiLibro(l);
-
-        FiltroGenere fg = new FiltroGenere(Genere_Libri.ROMANZO);
-        List<Libro> res = fg.filtra();
-        assertEquals(0,res.size());
-    }
 
     /**
      Test FiltroStatoLettura
@@ -76,18 +65,20 @@ public class FiltroTest {
         assertEquals(0, res.size());
     }
 
-
-    //Test usando un libro senza stato lettura
+    //Test usando un libro senza genere e senza stato lettura
     @AfterAll
-    static void testFiltraLibroStatLettNull() {
+    static void testFiltraLibroValNull() {
         libreria.clear();
         Libro l = new Libro.Builder("Divina Commedia", "Dante Alighieri", "1234").build();
         libreria.aggiungiLibro(l);
 
-        FiltroStatoLettura fs = new FiltroStatoLettura(Stato_Lettura.LETTO);
-        List<Libro> res = fs.filtra();
-        assertEquals(0,res.size());
-    }
+        FiltroGenere fg = new FiltroGenere(Genere_Libri.ROMANZO);
+        List<Libro> resGenere = fg.filtra();
+        assertEquals(0,resGenere.size());
 
+        FiltroStatoLettura fs = new FiltroStatoLettura(Stato_Lettura.LETTO);
+        List<Libro> resStatLett = fs.filtra();
+        assertEquals(0,resStatLett.size());
+    }
 
 }
