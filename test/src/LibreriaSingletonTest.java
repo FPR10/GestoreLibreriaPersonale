@@ -16,7 +16,7 @@ public class LibreriaSingletonTest {
     static List<Libro> listaLibriEsempio;
 
     @BeforeAll
-    static void setUp() {
+    static void inizializza() {
         libreria = LibreriaSingleton.INSTANCE;
         datiInput = new LibriEsempio();
         datiInput.popolaLibreria();
@@ -42,7 +42,6 @@ public class LibreriaSingletonTest {
 
     @Test
     void testInserimento(){
-
         for (Libro l : listaLibriEsempio){
             libreria.aggiungiLibro(l);
         }
