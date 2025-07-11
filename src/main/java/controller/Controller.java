@@ -185,6 +185,7 @@ public class Controller {
 
         int ret = fileChooser.showOpenDialog(frame);
         if(ret == JFileChooser.APPROVE_OPTION) {
+            libreria.clear();
             File fileSelezionato = fileChooser.getSelectedFile();
             String pathFile = fileSelezionato.getAbsolutePath();
             String estensioneFile = FilenameUtils.getExtension(pathFile);
@@ -199,6 +200,38 @@ public class Controller {
         }
         else{
             JOptionPane.showMessageDialog(null, "Errore nell'importazione", "Errore", JOptionPane.WARNING_MESSAGE);
+        }
+    }
+
+    /**
+     * Caricamento della libreria in automatico all'avvio dell'applicazione
+     */
+    public static void caricaLibreriaAvvio(DefaultTableModel modelloTabella) {
+        File fileJson = new File(cartellaDownload + File.separator + "salvataggio.json");
+        File fileCsv = new File(cartellaDownload + File.separator + "salvataggio.csv");
+
+        File fileDaCaricare = null;
+
+        if (fileJson.exists()) {
+            fileDaCaricare = fileJson;
+        } else if (fileCsv.exists()) {
+            fileDaCaricare = fileCsv;
+        }
+
+        if (fileDaCaricare != null) {
+            String pathFile = fileDaCaricare.getAbsolutePath();
+            String estensioneFile = FilenameUtils.getExtension(pathFile);
+
+            SalvaRipristinaFactoryIF srf = new SalvaRipristinaFactory();
+            SalvaRipristinaStrategyIF srs = srf.setStrategy(pathFile, estensioneFile);
+            libreria.clear();
+            srs.ripristina(pathFile);
+            aggiornaTabellaGUI(libreria.getLibreria());
+            grafica.setContatore(modelloTabella.getRowCount());
+
+            //System.out.println("Libreria caricata all'avvio da: " + pathFile);
+        } else {
+            System.out.println("Nessun file JSON o CSV trovato in Downloads.");
         }
     }
 
