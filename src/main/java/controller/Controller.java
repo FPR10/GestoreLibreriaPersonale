@@ -134,17 +134,14 @@ public class Controller {
 
         Libro toMod = creaLibroDaForm(campoTitolo,campoAutoreNome,campoAutoreCognome,campoIsbn,campoGenere,campoStato,campoValutazione);
 
-        libreria.rimuoviLibro(libroDaModificare);
-
-        if (libreria.contains(toMod)) {
-            libreria.aggiungiLibro(libroDaModificare);
+        //Verifica se i dati modificati del libro sono già presenti nella libreria associati ad un altro libro già inserito
+        if (!libroDaModificare.equals(toMod) && libreria.contains(toMod)) {
             JOptionPane.showMessageDialog(null, "Libro con questi dati è già presente!", "Errore", JOptionPane.WARNING_MESSAGE);
             return;
         }
 
-        // Se non esiste, procedi con la modifica
-        libreria.aggiungiLibro(toMod);
-
+        // Libro con dati diversi (quindi modificabile)
+        libreria.modificaLibro(toMod);
         aggiornaLibroGUI(modelloTabella,rigaLibroMod,toMod);
         JOptionPane.showMessageDialog(null, "Libro modificato!", "Operazione avvenuta con successo", JOptionPane.INFORMATION_MESSAGE);
         finestra.dispose();
