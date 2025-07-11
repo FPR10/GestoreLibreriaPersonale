@@ -12,6 +12,7 @@ public class Launcher {
             GUI frame = new GUI();
             LibreriaSingleton libreria = LibreriaSingleton.INSTANCE;
             Controller controller = new Controller(libreria, frame);
+            controller.caricaLibreriaAvvio(frame.getModelloTabella());
             frame.setVisible(true);
         });
     }
