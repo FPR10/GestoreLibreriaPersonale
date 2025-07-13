@@ -4,7 +4,7 @@ Progetto relativo al corso di Ingegneria del Software, A.A. 2024/2025
 ## Descrizione
 Implementazione in Java di un gestore per la libreria personale. Consente all'utente di effettuare le operazioni di
 aggiunta, modifica, rimozione, ricerca, ordinamento e filtraggio dei libri.
-Il salvataggio/ripristino su/dacd file system vengono supportati nei formati JSON e CSV.
+Il salvataggio/ripristino su/dad file system vengono supportati nei formati JSON e CSV.
 
 ## Linguaggio
 - Java 21.0.1
@@ -12,10 +12,6 @@ Il salvataggio/ripristino su/dacd file system vengono supportati nei formati JSO
 ## Clone repository
 git clone https://github.com/FPR10/GestoreLibreriaPersonale.git
 
-## Esecuzione codice
-
-1. Scarica il file GestoreLibreriaPersonale.jar - nomecartella
-2. Esegui: java -jar GestoreLibreriaPersonale.jar
 
 ## Screenshot
 Si allegano alcuni screenshot, facenti riferimento all'applicazione in esecuzione:
