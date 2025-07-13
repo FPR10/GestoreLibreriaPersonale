@@ -13,8 +13,6 @@ import java.io.IOException;
 
 public class SalvaCSV implements SalvaRipristinaStrategyIF {
 
-    private static final String titoloCSV = "Titolo, nomeAutore,cognomeAutore, ISBN, Genere, Valutazione, Stato lettura";
-
     @Override
     public void salva(String filePath) {
         LibreriaSingleton libreria = LibreriaSingleton.INSTANCE;
