@@ -6,6 +6,7 @@ import main.java.backend.libro.Libro;
 import main.java.backend.libro.Stato_Lettura;
 import org.junit.jupiter.api.AfterAll;
 import org.junit.jupiter.api.BeforeAll;
+import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import java.util.List;
@@ -18,8 +19,8 @@ public class FiltroTest {
     static LibriEsempio datiInput;
     static List<Libro> listaLibriEsempio;
 
-    @BeforeAll
-    static void inizializza() {
+    @BeforeEach
+    void inizializza() {
         libreria = LibreriaSingleton.INSTANCE;
         datiInput = new LibriEsempio();
         datiInput.popolaLibreria();
@@ -66,8 +67,8 @@ public class FiltroTest {
     }
 
     //Test usando un libro senza genere e senza stato lettura
-    @AfterAll
-    static void testFiltraLibroValNull() {
+    @Test
+    void testFiltraLibroValNull() {
         libreria.clear();
         Libro l = new Libro.Builder("Divina Commedia", "Dante Alighieri", "1234").build();
         libreria.aggiungiLibro(l);
