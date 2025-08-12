@@ -23,7 +23,7 @@ Si allegano alcuni screenshot, facenti riferimento all'applicazione in esecuzion
 ![Modifica](src/images/6.png)
 
 ## Relazione
-![Relazione](src/images/GestoreLibreriaPersonale_FrancescoPioRuffo_240044.pdf)
+![](src/images/GestoreLibreriaPersonale_FrancescoPioRuffo_240044.pdf)
 ## Info personali
 - Francesco Pio Ruffo
 - Matricola: 240044
