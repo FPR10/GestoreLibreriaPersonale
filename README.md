@@ -4,7 +4,7 @@ Progetto relativo al corso di Ingegneria del Software, A.A. 2024/2025
 ## Descrizione
 Implementazione in Java di un gestore per la libreria personale. Consente all'utente di effettuare le operazioni di
 aggiunta, modifica, rimozione, ricerca, ordinamento e filtraggio dei libri.
-Il salvataggio/ripristino su/dad file system vengono supportati nei formati JSON e CSV.
+Il salvataggio/ripristino su/da file system vengono supportati nei formati JSON e CSV.
 
 ## Linguaggio
 - Java 21.0.1
